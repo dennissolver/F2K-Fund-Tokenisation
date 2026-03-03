@@ -60,9 +60,12 @@ describe("F2KNavAttestation", function () {
   });
 
   it("Events emitted correctly", async function () {
-    await expect(nav.publishNav(1_000_000, 10_000_000_000, 10_000_000_000))
+    const tx = await nav.publishNav(1_000_000, 10_000_000_000, 10_000_000_000);
+    const receipt = await tx.wait();
+    const block = await ethers.provider.getBlock(receipt!.blockNumber);
+    await expect(tx)
       .to.emit(nav, "NavPublished")
-      .withArgs(0, 1_000_000, 10_000_000_000, 10_000_000_000, await getBlockTimestamp(), admin.address);
+      .withArgs(0, 1_000_000, 10_000_000_000, 10_000_000_000, block!.timestamp, admin.address);
   });
 
   it("Index out of bounds rejected", async function () {

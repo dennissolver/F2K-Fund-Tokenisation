@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { createSupabaseService } from "@/lib/supabase-service";
-import { MIN_INVESTMENT_USDC } from "@f2k/shared";
+import { subscribeSchema } from "@f2k/shared/validation";
 
 export async function POST(request: Request) {
   const supabase = createSupabaseServer();
@@ -14,14 +14,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { amount_usdc } = await request.json();
-
-  if (!amount_usdc || amount_usdc < MIN_INVESTMENT_USDC) {
-    return NextResponse.json(
-      { error: `Minimum investment is $${MIN_INVESTMENT_USDC.toLocaleString()} USDC` },
-      { status: 400 }
-    );
+  const body = await request.json();
+  const parsed = subscribeSchema.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
+
+  const { amount_usdc, tx_hash } = parsed.data;
 
   // Get investor
   const { data: investor } = await serviceClient
@@ -64,6 +63,7 @@ export async function POST(request: Request) {
       amount_usdc,
       token_price: tokenPrice,
       tokens_to_mint: tokensToMint,
+      tx_hash: tx_hash ?? null,
       status: "pending",
     })
     .select()
