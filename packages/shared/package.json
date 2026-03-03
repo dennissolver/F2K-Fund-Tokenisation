@@ -4,9 +4,17 @@
   "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./contracts": "./src/contracts.ts",
+    "./abis": "./src/abis/index.ts"
+  },
   "scripts": {
     "typecheck": "tsc --noEmit",
     "lint": "echo 'no lint configured'"
+  },
+  "dependencies": {
+    "viem": "^2.21.0"
   },
   "devDependencies": {
     "typescript": "^5.7.0"
