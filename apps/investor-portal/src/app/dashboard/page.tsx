@@ -1,6 +1,8 @@
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { TOKEN_SYMBOL } from "@f2k/shared";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const supabase = createSupabaseServer();
 
