@@ -9,30 +9,29 @@ export default function MarketingHome() {
         <div className="relative z-10 max-w-[900px] text-center">
           {/* Beat 1: The crisis */}
           <p className="font-ibm-mono text-[0.75rem] tracking-[0.5em] uppercase text-ember mb-8">
-            Australia will fall 375,000 homes short by 2029
+            375,000 homes short by 2029
           </p>
-          <h1 className="font-playfair text-[clamp(3rem,8vw,6rem)] font-black leading-[0.95] mb-4">
-            The Housing Crisis
+          <h1 className="font-playfair text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1] mb-4">
+            The Australian Housing Crisis
             <br />
-            Won&apos;t Be Built
+            Won&apos;t Be Solved
             <br />
-            <em className="text-brass">The Old Way.</em>
+            <em className="text-brass">the Old Way.</em>
           </h1>
 
           {/* Beat 2: F2K is the answer */}
           <p className="font-archivo text-lg text-off-white/80 max-w-[700px] mx-auto leading-relaxed mt-8">
-            Governments have committed <strong className="text-brass">$70 billion</strong> to
-            build 100,000+ homes. Traditional construction can&apos;t deliver them.
-            Modular can — but no one is coordinating the manufacturers, the
-            compliance, and the logistics at national scale.{" "}
-            <strong className="text-off-white">That&apos;s what F2K does.</strong> We&apos;re
-            the impartial integrator connecting factories to keys — across every
-            state, every building type, every manufacturer.
+            These homes will be built in factories — not on building sites.
+            But the modular industry is fragmented across states, manufacturers,
+            and compliance regimes.{" "}
+            <strong className="text-off-white">F2K is the national integrator</strong> that
+            coordinates the manufacturers, the compliance, and the logistics.
+            From factory to key.
           </p>
 
           {/* Beat 3: The fund is how */}
           <p className="font-archivo text-base text-off-white/60 max-w-[600px] mx-auto leading-relaxed mt-4">
-            The F2K Housing Token lets wholesale investors back this
+            The F2K Housing Token lets wholesale investors fund this
             infrastructure directly — with quarterly distributions from housing
             project revenue and full on-chain transparency.
           </p>
