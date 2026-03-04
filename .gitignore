@@ -45,5 +45,8 @@ typechain-types/
 # vercel
 .vercel
 
+# supabase
+.temp/
+
 # misc
 *.tsbuildinfo
