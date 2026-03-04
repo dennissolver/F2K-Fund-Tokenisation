@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getAdminUser, hasPermission, auditLog } from "@/lib/auth";
 import { createSupabaseService } from "@/lib/supabase-service";
+import { kycOverrideSchema } from "@f2k/shared/validation";
 
 export async function POST(
   request: Request,
@@ -11,10 +12,11 @@ export async function POST(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { status } = await request.json();
-  if (!["approved", "rejected"].includes(status)) {
-    return NextResponse.json({ error: "Invalid status" }, { status: 400 });
+  const parsed = kycOverrideSchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
+  const { status } = parsed.data;
 
   const supabase = createSupabaseService();
   const { error } = await supabase

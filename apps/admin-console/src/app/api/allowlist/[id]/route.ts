@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getAdminUser, hasPermission, auditLog } from "@/lib/auth";
 import { createSupabaseService } from "@/lib/supabase-service";
 import { getPublicClient, getWalletClient } from "@/lib/blockchain";
+import { allowlistActionSchema } from "@f2k/shared/validation";
 
 // Identity Registry ABI (simplified — register/remove)
 const IDENTITY_REGISTRY_ABI = [
@@ -34,10 +35,11 @@ export async function PATCH(
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
-  const { action } = await request.json();
-  if (!["approve", "deny", "revoke"].includes(action)) {
-    return NextResponse.json({ error: "Invalid action" }, { status: 400 });
+  const parsed = allowlistActionSchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
+  const { action } = parsed.data;
 
   const statusMap: Record<string, string> = {
     approve: "approved",

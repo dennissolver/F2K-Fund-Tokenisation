@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { createSupabaseService } from "@/lib/supabase-service";
 import { verifyMessage } from "viem";
+import { walletVerifySchema } from "@f2k/shared/validation";
 
 export async function POST(request: Request) {
   const supabase = createSupabaseServer();
@@ -14,14 +15,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { wallet_address, message, signature } = await request.json();
-
-  if (!wallet_address || !message || !signature) {
-    return NextResponse.json(
-      { error: "Missing required fields" },
-      { status: 400 }
-    );
+  const parsed = walletVerifySchema.safeParse(await request.json());
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
   }
+  const { address: wallet_address, signature, message } = parsed.data;
 
   // Verify the signature
   const valid = await verifyMessage({

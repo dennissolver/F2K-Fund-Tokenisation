@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createSupabaseService } from "@/lib/supabase-service";
 import crypto from "crypto";
+import { kycWebhookSchema } from "@f2k/shared/validation";
 
 export async function POST(request: Request) {
   const supabase = createSupabaseService();
@@ -19,8 +20,12 @@ export async function POST(request: Request) {
     }
   }
 
-  const payload = JSON.parse(body);
-  const { type, externalUserId, reviewResult } = payload;
+  const raw = JSON.parse(body);
+  const parsed = kycWebhookSchema.safeParse(raw);
+  if (!parsed.success) {
+    return NextResponse.json({ error: parsed.error.issues[0].message }, { status: 400 });
+  }
+  const { type, externalUserId, reviewResult } = parsed.data;
 
   if (type === "applicantReviewed") {
     const kycStatus =
