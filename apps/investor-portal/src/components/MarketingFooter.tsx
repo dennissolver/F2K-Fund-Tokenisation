@@ -66,7 +66,7 @@ export default function MarketingFooter() {
             </h4>
             <div className="space-y-2">
               <a
-                href="/register"
+                href="/invest"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >
                 Apply to Invest

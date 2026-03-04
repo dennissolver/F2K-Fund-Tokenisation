@@ -43,7 +43,7 @@ export default function MarketingHome() {
 
           <div className="flex gap-4 justify-center mt-12 flex-wrap">
             <a
-              href="/register"
+              href="/invest"
               className="bg-ember hover:bg-ember/90 text-white px-8 py-3 font-archivo font-semibold transition-colors"
             >
               Apply to Invest
@@ -536,7 +536,7 @@ export default function MarketingHome() {
               Read the Whitepaper
             </a>
             <a
-              href="/register"
+              href="/invest"
               className="border-2 border-white text-white hover:bg-white hover:text-ember px-8 py-3 font-archivo font-semibold transition-colors"
             >
               Apply to Invest

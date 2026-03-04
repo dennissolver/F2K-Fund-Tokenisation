@@ -49,7 +49,7 @@ export default function MarketingNav() {
               Sign In
             </a>
             <a
-              href="/register"
+              href="/invest"
               className="text-sm bg-ember hover:bg-ember/90 text-white px-5 py-2 font-archivo font-semibold transition-colors"
             >
               Apply to Invest
@@ -108,7 +108,7 @@ export default function MarketingNav() {
               Sign In
             </a>
             <a
-              href="/register"
+              href="/invest"
               className="inline-block text-sm bg-ember hover:bg-ember/90 text-white px-5 py-2 font-archivo font-semibold transition-colors mt-2"
             >
               Apply to Invest

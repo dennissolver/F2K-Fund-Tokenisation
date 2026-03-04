@@ -88,7 +88,7 @@ export default function WhitepaperPage() {
             Ready to invest in Australia&apos;s housing future?
           </p>
           <a
-            href="/register"
+            href="/invest"
             className="inline-block bg-ember hover:bg-ember/90 text-white px-8 py-3 font-archivo font-semibold transition-colors"
           >
             Apply to Invest
