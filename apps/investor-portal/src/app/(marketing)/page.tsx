@@ -32,8 +32,9 @@ export default function MarketingHome() {
           {/* Beat 3: The fund is how */}
           <p className="font-archivo text-base text-off-white/60 max-w-[600px] mx-auto leading-relaxed mt-4">
             The F2K Housing Token lets wholesale investors fund this
-            infrastructure directly — with quarterly distributions from housing
-            project revenue and full on-chain transparency.
+            infrastructure directly — with quarterly distributions from
+            integration fees, rental income, and development profit, all with
+            full on-chain transparency.
           </p>
 
           {/* Stats strip */}
@@ -230,35 +231,170 @@ export default function MarketingHome() {
       {/* ===== HOW IT WORKS ===== */}
       <section id="how-it-works" className="py-20 px-4 bg-off-white">
         <div className="max-w-[900px] mx-auto">
+          {/* Sub-section A: Capital Deployment */}
           <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-ember mb-4">
             How It Works
           </p>
-          <h2 className="font-playfair text-[2.8rem] font-black text-deep-blue leading-tight mb-8">
-            The Tokenisation Model
+          <h2 className="font-playfair text-[2.8rem] font-black text-deep-blue leading-tight mb-6">
+            How Your Capital Is Deployed
           </h2>
-
           <p className="text-lg text-slate leading-relaxed mb-10 font-archivo">
-            F2K Housing Token (F2K-HT) is a regulated security token
-            representing units in a Managed Investment Scheme backed by
-            Australian residential property. Here&apos;s how it works:
+            Your capital enters the fund as equity and is deployed into housing
+            projects through ring-fenced SPVs, amplified by senior construction
+            finance.
           </p>
+
+          {/* 5-step capital flow */}
+          <div className="space-y-0 mb-12">
+            {[
+              {
+                step: "1",
+                title: "You Subscribe",
+                desc: "USDC or contributed assets enter the fund as equity capital.",
+              },
+              {
+                step: "2",
+                title: "Fund Equity → Project SPV",
+                desc: "30-40% of project cost is committed as equity to a ring-fenced Special Purpose Vehicle (SPV) — a separate legal entity that isolates each project's risk from the wider fund.",
+              },
+              {
+                step: "3",
+                title: "SPV Raises Senior Debt",
+                desc: "The SPV raises 60-70% construction finance from senior lenders. Every $1 of investor equity funds $2.50-$3.00 of housing.",
+              },
+              {
+                step: "4",
+                title: "Housing Is Built",
+                desc: "F2K is contracted as the project integrator — coordinating manufacturers, compliance, and logistics — and earns a 12% of Gross Development Value (GDV) integration fee.",
+              },
+              {
+                step: "5",
+                title: "Revenue → Distributions",
+                desc: "Completed housing is sold en-bloc or held under long-term government leases. Revenue repays senior debt, flows to the fund income pool, and is distributed quarterly to token holders.",
+              },
+            ].map((item, i) => (
+              <div key={item.step} className="flex gap-4 items-start">
+                <div className="flex flex-col items-center shrink-0">
+                  <div className="w-12 h-12 rounded-full bg-deep-blue text-brass font-playfair text-lg font-bold flex items-center justify-center">
+                    {item.step}
+                  </div>
+                  {i < 4 && <div className="w-0.5 h-8 bg-warm-grey mt-1" />}
+                </div>
+                <div className="pb-4">
+                  <h3 className="font-archivo font-bold text-deep-blue mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-slate leading-relaxed font-archivo">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Capital Stack Panel */}
+          <div className="bg-deep-blue text-off-white p-8 mb-16">
+            <h3 className="font-playfair text-xl font-bold mb-6">
+              Capital Stack
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div>
+                <p className="text-brass font-ibm-mono text-xs uppercase tracking-wider mb-4">
+                  Project Funding Split
+                </p>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex justify-between font-archivo text-sm mb-1">
+                      <span className="text-off-white/70">
+                        Senior Construction Debt
+                      </span>
+                      <span className="text-brass font-semibold">60-70%</span>
+                    </div>
+                    <div className="w-full bg-off-white/10 h-3">
+                      <div className="bg-brass/70 h-3" style={{ width: "65%" }} />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex justify-between font-archivo text-sm mb-1">
+                      <span className="text-off-white/70">Fund Equity</span>
+                      <span className="text-ember font-semibold">30-40%</span>
+                    </div>
+                    <div className="w-full bg-off-white/10 h-3">
+                      <div className="bg-ember h-3" style={{ width: "35%" }} />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <p className="text-brass font-ibm-mono text-xs uppercase tracking-wider mb-4">
+                  Revenue Sources
+                </p>
+                <div className="space-y-3 font-archivo text-sm">
+                  <div className="flex gap-3 items-start">
+                    <div className="w-2 h-2 rounded-full bg-ember mt-1.5 shrink-0" />
+                    <div>
+                      <p className="text-off-white font-semibold">
+                        Integration Fee
+                      </p>
+                      <p className="text-off-white/60">
+                        12% of GDV on every project
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <div className="w-2 h-2 rounded-full bg-brass mt-1.5 shrink-0" />
+                    <div>
+                      <p className="text-off-white font-semibold">
+                        Development Profit
+                      </p>
+                      <p className="text-off-white/60">
+                        Margin on completed housing sales
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <div className="w-2 h-2 rounded-full bg-off-white/50 mt-1.5 shrink-0" />
+                    <div>
+                      <p className="text-off-white font-semibold">
+                        Rental Income
+                      </p>
+                      <p className="text-off-white/60">
+                        Long-term government leases on held assets
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <hr className="border-warm-grey mb-16" />
+
+          {/* Sub-section B: The Token */}
+          <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-ember mb-4">
+            The Token
+          </p>
+          <h2 className="font-playfair text-[2.8rem] font-black text-deep-blue leading-tight mb-8">
+            ERC-3643 Security Token
+          </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             {[
               {
                 step: "01",
-                title: "Stake Real Assets",
-                desc: "Contribute qualifying assets — property, bonds, or cash — to the fund. Each asset is independently appraised and verified against the fund's NAV.",
+                title: "Subscribe",
+                desc: "Invest with USDC or contribute qualifying assets (property, bonds, cash). Independent appraisal determines value. Tokens minted at current NAV per unit.",
               },
               {
                 step: "02",
-                title: "Receive Tokens",
-                desc: "ERC-3643 security tokens are minted to your verified wallet, proportional to your contribution. On-chain compliance ensures only KYC'd wholesale investors can hold tokens.",
+                title: "Tokens Minted",
+                desc: "ERC-3643 security tokens are minted to your verified wallet, proportional to your subscription. On-chain compliance ensures only KYC'd wholesale investors can hold tokens.",
               },
               {
                 step: "03",
                 title: "Quarterly Distributions",
-                desc: "Fund income from housing projects flows back to token holders as USDC distributions every quarter, calculated pro-rata from your token holdings.",
+                desc: "Fund income from integration fees, development profit, and rental income flows to token holders as USDC distributions every quarter, calculated pro-rata.",
               },
             ].map((step) => (
               <div key={step.step} className="text-center">

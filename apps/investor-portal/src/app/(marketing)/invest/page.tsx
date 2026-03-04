@@ -23,8 +23,9 @@ export default function InvestPage() {
           </h1>
           <p className="font-archivo text-lg text-off-white/70 max-w-[600px] mx-auto leading-relaxed">
             The F2K Housing Token is a regulated security token backed by real
-            Australian residential property. Here&apos;s everything you need to
-            know before you apply.
+            Australian residential property — with returns driven by integration
+            fees, leveraged development profits, and long-term government
+            leases. Here&apos;s everything you need to know before you apply.
           </p>
         </div>
       </section>
@@ -156,7 +157,7 @@ export default function InvestPage() {
               </div>
             </div>
 
-            <p className="text-slate leading-relaxed font-archivo">
+            <p className="text-slate leading-relaxed font-archivo mb-4">
               Each F2K Housing Token represents a unit in a{" "}
               <strong className="text-[#0B0B0B]">
                 Managed Investment Scheme
@@ -169,6 +170,15 @@ export default function InvestPage() {
               — the institutional-grade permissioned token with on-chain identity
               verification and transfer restrictions. Only KYC-verified,
               allowlisted wallets can hold or transfer tokens.
+            </p>
+            <p className="text-slate leading-relaxed font-archivo">
+              The 8-12% target yield is generated from three sources: a 12% of
+              GDV integration fee earned on every project F2K delivers,
+              development profit on completed housing, and rental income from
+              properties held under long-term government leases. Because each
+              project uses construction finance (60-70% senior debt), every $1
+              of investor equity funds $2.50-$3.00 of housing — amplifying the
+              revenue base without recourse to the wider fund.
             </p>
           </div>
 
@@ -290,7 +300,7 @@ export default function InvestPage() {
             </table>
           </div>
 
-          <p className="text-sm text-slate mt-6 font-archivo leading-relaxed">
+          <p className="text-sm text-slate mt-6 font-archivo leading-relaxed mb-10">
             All fees are deducted from fund income before distributions.
             Performance fee applies only to returns above the 8% hurdle rate.
             Full fee structure detailed in the{" "}
@@ -302,6 +312,132 @@ export default function InvestPage() {
             </a>
             .
           </p>
+
+          {/* Leverage Multiplier */}
+          <div className="bg-warm-grey border-l-4 border-ember p-8 mb-10">
+            <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-ember mb-3">
+              Leverage Multiplier
+            </p>
+            <p className="font-playfair text-[3rem] font-black text-deep-blue leading-none mb-1">
+              $2.50–$3.00
+            </p>
+            <p className="font-archivo text-slate mb-6">
+              of housing built per $1 of investor equity
+            </p>
+            <div className="bg-off-white p-6 border border-black/5">
+              <p className="font-archivo font-semibold text-deep-blue mb-3">
+                Worked Example
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-archivo text-sm text-slate">
+                <div>
+                  <p className="text-xs font-ibm-mono tracking-wider uppercase text-slate/60 mb-1">
+                    Project Value
+                  </p>
+                  <p className="font-semibold text-deep-blue">$10,000,000</p>
+                </div>
+                <div>
+                  <p className="text-xs font-ibm-mono tracking-wider uppercase text-slate/60 mb-1">
+                    Fund Equity (35%)
+                  </p>
+                  <p className="font-semibold text-deep-blue">$3,500,000</p>
+                </div>
+                <div>
+                  <p className="text-xs font-ibm-mono tracking-wider uppercase text-slate/60 mb-1">
+                    Senior Debt (65%)
+                  </p>
+                  <p className="font-semibold text-deep-blue">$6,500,000</p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-black/5">
+                <p className="font-archivo text-sm text-slate">
+                  <strong className="text-deep-blue">Integration fee (12% GDV):</strong>{" "}
+                  $1,200,000 earned by fund on $3.5M equity deployed
+                </p>
+              </div>
+            </div>
+            <p className="text-xs text-slate/60 font-archivo mt-4 italic">
+              Illustrative only. Not a forecast. Actual leverage ratios vary by
+              project and lender.
+            </p>
+          </div>
+
+          {/* Revenue Waterfall */}
+          <div className="mb-10">
+            <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-ember mb-4">
+              Revenue Waterfall
+            </p>
+            <h3 className="font-playfair text-xl font-bold text-deep-blue mb-6">
+              How Project Revenue Flows to You
+            </h3>
+            <div className="space-y-0">
+              {[
+                {
+                  level: "1",
+                  label: "Gross Project Revenue",
+                  detail: "Sale proceeds or lease income from completed housing",
+                  bg: "bg-deep-blue",
+                  text: "text-off-white",
+                },
+                {
+                  level: "2",
+                  label: "Repay Senior Construction Debt",
+                  detail: "Priority repayment to construction lender",
+                  bg: "bg-deep-blue/80",
+                  text: "text-off-white",
+                },
+                {
+                  level: "3",
+                  label: "Integration Fee Income",
+                  detail: "12% of GDV earned by F2K as project integrator",
+                  bg: "bg-ember",
+                  text: "text-white",
+                },
+                {
+                  level: "4",
+                  label: "Fund Income Pool",
+                  detail:
+                    "Management fee (1.5%) → Preferred return (8%) → Performance fee (20% above hurdle)",
+                  bg: "bg-brass/20",
+                  text: "text-deep-blue",
+                },
+                {
+                  level: "5",
+                  label: "Quarterly Distribution to Token Holders",
+                  detail: "Pro-rata USDC to your connected wallet",
+                  bg: "bg-off-white",
+                  text: "text-deep-blue",
+                },
+              ].map((step, i) => (
+                <div key={step.level} className="flex items-stretch">
+                  <div className="flex flex-col items-center shrink-0 mr-4">
+                    <div className="w-10 h-10 rounded-full bg-deep-blue text-brass font-playfair text-sm font-bold flex items-center justify-center">
+                      {step.level}
+                    </div>
+                    {i < 4 && <div className="w-0.5 flex-1 bg-warm-grey" />}
+                  </div>
+                  <div
+                    className={`${step.bg} ${step.text} p-4 mb-2 flex-1 border border-black/5`}
+                  >
+                    <p className="font-archivo font-semibold text-sm">
+                      {step.label}
+                    </p>
+                    <p className="text-xs opacity-80 font-archivo mt-1">
+                      {step.detail}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Sell vs Hold */}
+          <blockquote className="border-l-4 border-ember pl-8 py-4">
+            <p className="font-playfair text-lg italic text-deep-blue leading-relaxed">
+              Completed developments are either sold en-bloc to institutional
+              buyers or held under long-term government leases — providing the
+              fund with a blend of capital gains and recurring rental income.
+            </p>
+          </blockquote>
         </div>
       </section>
 

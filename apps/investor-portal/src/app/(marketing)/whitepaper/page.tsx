@@ -17,9 +17,11 @@ export default function WhitepaperPage() {
           F2K Housing Token Whitepaper
         </h1>
         <p className="text-lg text-slate leading-relaxed mb-10 font-archivo max-w-[700px]">
-          The complete technical and financial specification for the F2K Housing
-          Token — a regulated ERC-3643 security token representing units in a
-          Managed Investment Scheme backed by Australian residential property.
+          The F2K Housing Token is a regulated ERC-3643 security token
+          representing units in a Managed Investment Scheme that deploys capital
+          into leveraged Australian residential construction projects. The fund
+          earns revenue through integration fees, development profit, and rental
+          income — distributed quarterly to token holders.
         </p>
 
         {/* Key sections */}
@@ -35,15 +37,15 @@ export default function WhitepaperPage() {
             },
             {
               title: "NAV & Pricing",
-              desc: "Net Asset Value calculated weekly from independently appraised real assets. Token price directly reflects per-unit NAV. Transparent methodology.",
+              desc: "Net Asset Value calculated weekly from independently appraised real assets, SPV equity positions, and accrued fee receivables. Token price directly reflects per-unit NAV. Transparent methodology.",
             },
             {
               title: "Distribution Model",
-              desc: "Quarterly USDC distributions to all token holders, calculated pro-rata. Fund income sourced from housing project revenues and asset appreciation.",
+              desc: "Quarterly USDC distributions follow the fund waterfall: gross project revenue → repay senior construction debt → integration fee income (12% GDV) → fund income pool → management fee (1.5%) → preferred return (8%) → performance fee (20% above hurdle) → pro-rata distribution to token holders.",
             },
             {
-              title: "Staking Process",
-              desc: "Contribute qualifying assets (property, bonds, cash) to the fund. Independent appraisal determines contribution value. Tokens minted proportionally.",
+              title: "Subscription & Entry",
+              desc: "Subscribe with USDC or contribute qualifying assets (property, bonds, cash) to the fund. Independent appraisal determines contribution value. Tokens minted proportionally at current NAV per unit.",
             },
             {
               title: "Security Architecture",
@@ -62,6 +64,53 @@ export default function WhitepaperPage() {
               </p>
             </div>
           ))}
+        </div>
+
+        {/* Fund Operations */}
+        <div className="mb-12">
+          <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-ember mb-4">
+            Fund Operations
+          </p>
+          <h2 className="font-playfair text-[2rem] font-black text-deep-blue leading-tight mb-6">
+            How the Fund Generates Returns
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
+              <h3 className="font-archivo font-bold text-deep-blue mb-2">
+                Capital Deployment
+              </h3>
+              <p className="text-sm text-slate leading-relaxed font-archivo">
+                Fund equity (30-40%) is committed to ring-fenced Special Purpose
+                Vehicles (SPVs) — one per project. Each SPV raises senior
+                construction debt (60-70%), so every $1 of investor equity funds
+                $2.50-$3.00 of housing. SPV structure isolates project risk from
+                the wider fund.
+              </p>
+            </div>
+            <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
+              <h3 className="font-archivo font-bold text-deep-blue mb-2">
+                Revenue Model
+              </h3>
+              <p className="text-sm text-slate leading-relaxed font-archivo">
+                F2K is contracted as integrator on every project and earns a 12%
+                of Gross Development Value (GDV) integration fee. Additional
+                income comes from development profit on completed projects and
+                rental income from properties held under long-term government
+                leases.
+              </p>
+            </div>
+            <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
+              <h3 className="font-archivo font-bold text-deep-blue mb-2">
+                Exit & Liquidity
+              </h3>
+              <p className="text-sm text-slate leading-relaxed font-archivo">
+                Completed developments are either sold en-bloc or held under
+                long-term government leases. The fund is open-ended with
+                quarterly redemption windows. Tokens are transferable to other
+                allowlisted investors, providing secondary liquidity.
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Download CTA */}
