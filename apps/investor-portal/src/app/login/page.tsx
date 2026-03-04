@@ -37,10 +37,22 @@ export default function LoginPage() {
         .eq("auth_user_id", user.id)
         .single();
 
-      if (investor?.kyc_status === "approved") {
+      if (!investor) {
+        // Investor record doesn't exist yet (e.g. email confirmed via Site URL redirect)
+        // Create it now
+        const meta = user.user_metadata || {};
+        await supabase.from("investors").insert({
+          auth_user_id: user.id,
+          email: user.email!,
+          investor_type: meta.investor_type || null,
+          net_assets_declared: meta.net_assets_declared || false,
+          income_declared: meta.income_declared || false,
+        });
+        window.location.href = "/onboarding";
+      } else if (investor.kyc_status === "approved") {
         window.location.href = "/dashboard";
       } else {
-        window.location.href = "/onboarding?step=eligibility";
+        window.location.href = "/onboarding";
       }
     }
 

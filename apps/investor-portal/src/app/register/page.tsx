@@ -25,7 +25,7 @@ export default function RegisterPage() {
 
     const supabase = createSupabaseBrowser();
 
-    const redirectTo = `${window.location.origin}/api/auth/callback?next=/onboarding`;
+    const redirectTo = `${window.location.origin}/api/auth/callback`;
 
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,

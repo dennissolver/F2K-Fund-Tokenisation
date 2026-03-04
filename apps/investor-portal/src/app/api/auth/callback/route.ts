@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const code = searchParams.get("code");
   const token_hash = searchParams.get("token_hash");
   const type = searchParams.get("type");
-  const next = searchParams.get("next") ?? "/dashboard";
+  const next = searchParams.get("next");
 
   const cookieStore = cookies();
   const supabase = createServerClient(
@@ -60,6 +60,8 @@ export async function GET(request: Request) {
     data: { user },
   } = await supabase.auth.getUser();
 
+  let isNewUser = false;
+
   if (user) {
     // Use service role to bypass RLS for the initial insert
     const serviceClient = createClient(
@@ -75,6 +77,7 @@ export async function GET(request: Request) {
       .single();
 
     if (!existing) {
+      isNewUser = true;
       // Pull eligibility data from user metadata (set during signUp)
       const meta = user.user_metadata || {};
 
@@ -88,5 +91,7 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}${next}`);
+  // New users go to onboarding, returning users go to dashboard
+  const destination = next ?? (isNewUser ? "/onboarding" : "/dashboard");
+  return NextResponse.redirect(`${origin}${destination}`);
 }
