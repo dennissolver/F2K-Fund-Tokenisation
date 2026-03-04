@@ -7,26 +7,41 @@ export default function MarketingHome() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_85%,rgba(184,66,15,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_85%_15%,rgba(200,168,78,0.08)_0%,transparent_50%)]" />
 
         <div className="relative z-10 max-w-[900px] text-center">
-          <p className="font-ibm-mono text-[0.75rem] tracking-[0.5em] uppercase text-brass mb-8">
-            The Case for the National Integrator
+          {/* Beat 1: The crisis */}
+          <p className="font-ibm-mono text-[0.75rem] tracking-[0.5em] uppercase text-ember mb-8">
+            Australia will fall 375,000 homes short by 2029
           </p>
-          <h1 className="font-playfair text-[clamp(3.5rem,9vw,7rem)] font-black leading-[0.95] mb-4">
-            Why <em className="text-brass">Us.</em>
+          <h1 className="font-playfair text-[clamp(3rem,8vw,6rem)] font-black leading-[0.95] mb-4">
+            The Housing Crisis
             <br />
-            Why <em className="text-brass">Now.</em>
+            Won&apos;t Be Built
+            <br />
+            <em className="text-brass">The Old Way.</em>
           </h1>
-          <p className="font-archivo text-lg text-off-white/70 max-w-[650px] mx-auto leading-relaxed mt-6">
-            $70 billion committed. 100,000+ homes to build. Every state
-            tendering. The modular industry is at 5% market share and needs to
-            reach 25%+ in three years. This is the moment for an impartial,
-            manufacturer-agnostic integrator to pull all hands to the wheel.
+
+          {/* Beat 2: F2K is the answer */}
+          <p className="font-archivo text-lg text-off-white/80 max-w-[700px] mx-auto leading-relaxed mt-8">
+            Governments have committed <strong className="text-brass">$70 billion</strong> to
+            build 100,000+ homes. Traditional construction can&apos;t deliver them.
+            Modular can — but no one is coordinating the manufacturers, the
+            compliance, and the logistics at national scale.{" "}
+            <strong className="text-off-white">That&apos;s what F2K does.</strong> We&apos;re
+            the impartial integrator connecting factories to keys — across every
+            state, every building type, every manufacturer.
+          </p>
+
+          {/* Beat 3: The fund is how */}
+          <p className="font-archivo text-base text-off-white/60 max-w-[600px] mx-auto leading-relaxed mt-4">
+            The F2K Housing Token lets wholesale investors back this
+            infrastructure directly — with quarterly distributions from housing
+            project revenue and full on-chain transparency.
           </p>
 
           {/* Stats strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-12">
             {[
-              { value: "$70B", label: "Committed" },
-              { value: "100K+", label: "Homes to Build" },
+              { value: "$70B", label: "Gov't Committed" },
+              { value: "375K", label: "Homes Short" },
               { value: "5%→25%", label: "Modular Target" },
               { value: "14-16wk", label: "Factory to Key" },
             ].map((stat) => (
