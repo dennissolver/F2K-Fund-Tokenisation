@@ -1,6 +1,6 @@
 {
   "buildCommand": "pnpm turbo build --filter=investor-portal",
-  "outputDirectory": "apps/investor-portal/.next",
+  "outputDirectory": ".next",
   "installCommand": "pnpm install",
   "framework": "nextjs"
 }

@@ -3,7 +3,27 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "dist/**"]
+      "outputs": [".next/**", "dist/**"],
+      "env": [
+        "NEXT_PUBLIC_SUPABASE_URL",
+        "NEXT_PUBLIC_SUPABASE_ANON_KEY",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "SUPABASE_PROJECT_ID",
+        "NEXT_PUBLIC_ALCHEMY_API_KEY",
+        "NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID",
+        "NEXT_PUBLIC_CHAIN_ID",
+        "NEXT_PUBLIC_APP_URL",
+        "NEXT_PUBLIC_TOKEN_ADDRESS",
+        "NEXT_PUBLIC_NAV_ADDRESS",
+        "NEXT_PUBLIC_DISTRIBUTION_ADDRESS",
+        "NEXT_PUBLIC_SUBSCRIPTION_ADDRESS",
+        "NEXT_PUBLIC_USDC_ADDRESS",
+        "NEXT_PUBLIC_IDENTITY_REGISTRY_ADDRESS",
+        "DEPLOYER_PRIVATE_KEY",
+        "WALLET_ADDRESS",
+        "SUMSUB_APP_TOKEN",
+        "SUMSUB_SECRET_KEY"
+      ]
     },
     "dev": {
       "cache": false,
