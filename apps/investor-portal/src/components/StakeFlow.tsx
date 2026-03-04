@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { TOKEN_SYMBOL } from "@f2k/shared";
+import { TOKEN_SYMBOL, CONCENTRATION_LIMITS } from "@f2k/shared";
 import type { AssetClass } from "@f2k/shared";
 
 type Step = "select" | "details" | "review" | "submit" | "success";
@@ -24,6 +24,8 @@ export function StakeFlow() {
   const [error, setError] = useState<string | null>(null);
   const [navPerToken, setNavPerToken] = useState(1.0);
   const [stakeResult, setStakeResult] = useState<StakeResult | null>(null);
+  const [concentration, setConcentration] = useState<Record<string, number>>({});
+  const [tier12Pct, setTier12Pct] = useState(1.0);
 
   const valueNum = parseFloat(declaredValue) || 0;
   const ltvRatio = selectedClass?.ltv_ratio ?? 0;
@@ -40,6 +42,8 @@ export function StakeFlow() {
       if (classRes.ok) {
         const data = await classRes.json();
         setClasses(data.classes || []);
+        if (data.concentration) setConcentration(data.concentration);
+        if (data.tier12Pct !== undefined) setTier12Pct(data.tier12Pct);
       }
       if (navRes.ok) {
         const data = await navRes.json();
@@ -189,31 +193,57 @@ export function StakeFlow() {
             All non-crypto/fiat contributions require Contributions Committee approval.
             Haircuts provide a fire-sale buffer protecting the fund.
           </p>
+          {tier12Pct < CONCENTRATION_LIMITS.minTier12Pct && (
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800">
+              The fund currently has low Tier 1+2 liquidity ({(tier12Pct * 100).toFixed(1)}%).
+              Staking <strong>cash</strong> or <strong>bonds</strong> is encouraged to maintain the 25% minimum threshold.
+            </div>
+          )}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {classes.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => {
-                  setSelectedClass(c);
-                  setStep("details");
-                }}
-                className="bg-white rounded-xl p-5 shadow-sm border hover:border-f2k-blue hover:shadow-md transition-all text-left"
-              >
-                <div className="font-semibold text-navy mb-1">{c.label}</div>
-                <div className="text-sm text-gray-500 mb-3">
-                  Min. ${Number(c.min_value_usd).toLocaleString()}
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-400">LTV Ratio</span>
-                  <span className="text-lg font-bold text-f2k-blue">
-                    {(Number(c.ltv_ratio) * 100).toFixed(0)}%
-                  </span>
-                </div>
-                {c.requires_appraisal && (
-                  <div className="mt-2 text-xs text-amber-600">Requires independent appraisal</div>
-                )}
-              </button>
-            ))}
+            {classes.map((c) => {
+              const classPct = (concentration[c.code] || 0) * 100;
+              const atLimit = classPct >= CONCENTRATION_LIMITS.maxAssetClassPct * 100;
+              const nearLimit = classPct > 35;
+              const warning = classPct > 30;
+              return (
+                <button
+                  key={c.id}
+                  onClick={() => {
+                    if (atLimit) return;
+                    setSelectedClass(c);
+                    setStep("details");
+                  }}
+                  disabled={atLimit}
+                  className={`bg-white rounded-xl p-5 shadow-sm border transition-all text-left ${
+                    atLimit
+                      ? "opacity-50 cursor-not-allowed border-red-200"
+                      : "hover:border-f2k-blue hover:shadow-md"
+                  }`}
+                >
+                  <div className="font-semibold text-navy mb-1">{c.label}</div>
+                  <div className="text-sm text-gray-500 mb-3">
+                    Min. ${Number(c.min_value_usd).toLocaleString()}
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-400">LTV Ratio</span>
+                    <span className="text-lg font-bold text-f2k-blue">
+                      {(Number(c.ltv_ratio) * 100).toFixed(0)}%
+                    </span>
+                  </div>
+                  {classPct > 0 && (
+                    <div className={`mt-2 text-xs font-medium ${
+                      atLimit ? "text-red-600" : nearLimit ? "text-red-500" : warning ? "text-amber-600" : "text-gray-400"
+                    }`}>
+                      Current exposure: {classPct.toFixed(1)}% of NAV
+                      {atLimit && " — limit reached"}
+                    </div>
+                  )}
+                  {c.requires_appraisal && (
+                    <div className="mt-2 text-xs text-amber-600">Requires independent appraisal</div>
+                  )}
+                </button>
+              );
+            })}
           </div>
           {classes.length === 0 && (
             <p className="text-gray-400 text-sm">Loading asset classes...</p>

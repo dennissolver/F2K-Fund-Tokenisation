@@ -3,6 +3,7 @@ import { getAdminUser, hasPermission, auditLog } from "@/lib/auth";
 import { createSupabaseService } from "@/lib/supabase-service";
 import { getPublicClient, getWalletClient } from "@/lib/blockchain";
 import { CONTRACTS } from "@f2k/shared/contracts";
+import { checkConcentrationLimits } from "@f2k/shared/concentration";
 import { parseUnits } from "viem";
 
 export async function POST(
@@ -16,10 +17,10 @@ export async function POST(
 
   const supabase = createSupabaseService();
 
-  // Fetch stake with investor — must be lien_registered
+  // Fetch stake with investor and asset class — must be lien_registered
   const { data: stake, error: fetchError } = await supabase
     .from("asset_stakes")
-    .select("*, investors!inner(id, wallet_address)")
+    .select("*, investors!inner(id, wallet_address), asset_classes!inner(code)")
     .eq("id", params.id)
     .eq("status", "lien_registered")
     .single();
@@ -34,7 +35,7 @@ export async function POST(
   // Get current NAV
   const { data: latestNav } = await supabase
     .from("nav_records")
-    .select("nav_per_token")
+    .select("nav_per_token, total_nav")
     .eq("status", "published")
     .order("calculated_at", { ascending: false })
     .limit(1)
@@ -42,6 +43,41 @@ export async function POST(
 
   const navPerToken = latestNav ? Number(latestNav.nav_per_token) : 1.0;
   const collateralValue = Number(stake.collateral_value);
+
+  // Concentration limit check — HARD BLOCK at mint (no force override)
+  const activeStatuses = ["approved", "lien_registered", "tokens_minted"];
+  const { data: activeStakes } = await supabase
+    .from("asset_stakes")
+    .select("id, collateral_value, asset_classes(code)")
+    .in("status", activeStatuses)
+    .neq("id", params.id);
+
+  const currentStakes = (activeStakes || []).map((s: Record<string, unknown>) => ({
+    id: s.id as string,
+    collateral_value: Number(s.collateral_value) || 0,
+    asset_class_code: ((s.asset_classes as unknown) as { code: string })?.code || "",
+  }));
+
+  const assetClassCode = (stake.asset_classes as { code: string }).code;
+  const totalFundNav = latestNav ? Number(latestNav.total_nav) : 0;
+
+  const concentrationResult = checkConcentrationLimits({
+    currentStakes,
+    proposedClassCode: assetClassCode,
+    proposedCollateralValue: collateralValue,
+    totalFundNav,
+  });
+
+  if (!concentrationResult.allowed) {
+    return NextResponse.json(
+      {
+        error: "Concentration limit violated — minting blocked",
+        violations: concentrationResult.violations,
+        exposure: concentrationResult.exposure,
+      },
+      { status: 400 }
+    );
+  }
   const tokensToMint = collateralValue / navPerToken;
 
   const investor = stake.investors as { id: string; wallet_address: string | null };

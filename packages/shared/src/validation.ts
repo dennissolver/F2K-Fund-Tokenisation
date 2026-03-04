@@ -61,6 +61,7 @@ export const stakeReviewSchema = z.object({
   appraised_value: z.number().positive().optional(),
   ltv_override: z.number().min(0).max(1).optional(),
   review_notes: z.string().optional(),
+  force: z.boolean().optional(),
 });
 
 // Asset staking: admin registers lien

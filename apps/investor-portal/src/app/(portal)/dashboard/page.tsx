@@ -1,5 +1,6 @@
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { TOKEN_SYMBOL } from "@f2k/shared";
+import { DashboardOnChain } from "./DashboardOnChain";
 
 export const dynamic = "force-dynamic";
 
@@ -80,7 +81,7 @@ export default async function DashboardPage() {
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold text-navy mb-6">Dashboard</h1>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
         {/* Holdings */}
         <div className="bg-white rounded-xl p-6 shadow-sm border">
           <h3 className="text-sm font-medium text-gray-500 mb-4">Holdings</h3>
@@ -149,6 +150,9 @@ export default async function DashboardPage() {
             <p className="text-gray-400 text-sm">No NAV published yet.</p>
           )}
         </div>
+
+        {/* On-Chain Balances (client component — requires wallet) */}
+        <DashboardOnChain />
       </div>
 
       {/* Distributions */}

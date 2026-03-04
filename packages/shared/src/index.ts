@@ -150,6 +150,33 @@ export interface AdminUser {
   created_at: string;
 }
 
+// Concentration limits (Whitepaper Section 8)
+export const CONCENTRATION_LIMITS = {
+  maxAssetClassPct: 0.40, // No single asset class >40% of total fund NAV
+  maxSingleAssetPct: 0.05, // No single real asset >5% of total fund NAV
+  minTier12Pct: 0.25, // Minimum 25% in Tier 1+2 assets (cash + bonds)
+} as const;
+
+export const ASSET_CLASS_TIERS: Record<AssetClassCode, number> = {
+  cash: 1,
+  bonds: 2,
+  art: 3,
+  property: 4,
+};
+
+export interface ConcentrationExposure {
+  byClass: Record<string, { value: number; pct: number }>;
+  tier12Pct: number;
+  largestSingleAssetPct: number;
+  totalStakedValue: number;
+}
+
+export interface ConcentrationCheck {
+  allowed: boolean;
+  violations: string[];
+  exposure: ConcentrationExposure;
+}
+
 // Asset Staking
 export type AssetClassCode = "cash" | "art" | "property" | "bonds";
 
