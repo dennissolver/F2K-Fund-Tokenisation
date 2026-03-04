@@ -48,7 +48,39 @@ export const kycOverrideSchema = z.object({
   status: z.enum(["approved", "rejected"]),
 });
 
+// Asset staking: investor submits a stake
+export const stakeSubmitSchema = z.object({
+  asset_class_id: z.string().uuid(),
+  description: z.string().min(10, "Description must be at least 10 characters"),
+  declared_value: z.number().positive("Value must be positive"),
+});
+
+// Asset staking: admin reviews a stake
+export const stakeReviewSchema = z.object({
+  action: z.enum(["approve", "reject"]),
+  appraised_value: z.number().positive().optional(),
+  ltv_override: z.number().min(0).max(1).optional(),
+  review_notes: z.string().optional(),
+});
+
+// Asset staking: admin registers lien
+export const stakeLienSchema = z.object({
+  lien_reference: z.string().min(1, "Lien reference is required"),
+});
+
+// Asset staking: admin updates asset class
+export const assetClassUpdateSchema = z.object({
+  ltv_ratio: z.number().min(0).max(1).optional(),
+  description: z.string().optional(),
+  enabled: z.boolean().optional(),
+  min_value_usd: z.number().positive().optional(),
+});
+
 export type SubscribeInput = z.infer<typeof subscribeSchema>;
 export type WalletVerifyInput = z.infer<typeof walletVerifySchema>;
 export type AllowlistActionInput = z.infer<typeof allowlistActionSchema>;
 export type NavSubmitInput = z.infer<typeof navSubmitSchema>;
+export type StakeSubmitInput = z.infer<typeof stakeSubmitSchema>;
+export type StakeReviewInput = z.infer<typeof stakeReviewSchema>;
+export type StakeLienInput = z.infer<typeof stakeLienSchema>;
+export type AssetClassUpdateInput = z.infer<typeof assetClassUpdateSchema>;

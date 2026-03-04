@@ -43,6 +43,12 @@ export default function RootLayout({
                   Subscribe
                 </a>
                 <a
+                  href="/stake"
+                  className="hover:text-gold transition-colors"
+                >
+                  Stake
+                </a>
+                <a
                   href="/statements"
                   className="hover:text-gold transition-colors"
                 >

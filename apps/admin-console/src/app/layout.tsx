@@ -29,6 +29,8 @@ export default function RootLayout({
                 { href: "/investors", label: "Investors" },
                 { href: "/allowlist", label: "Allowlist" },
                 { href: "/subscriptions", label: "Subscriptions" },
+                { href: "/stakes", label: "Asset Stakes" },
+                { href: "/asset-classes", label: "Asset Classes" },
                 { href: "/nav", label: "NAV Management" },
                 { href: "/distributions", label: "Distributions" },
                 { href: "/reports", label: "Reports" },

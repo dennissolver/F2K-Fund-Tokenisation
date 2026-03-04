@@ -51,6 +51,13 @@ export default async function DashboardPage() {
     .limit(1)
     .single();
 
+  // Fetch asset stakes
+  const { data: stakes } = await supabase
+    .from("asset_stakes")
+    .select("*, asset_classes(*)")
+    .eq("investor_id", investor?.id)
+    .order("created_at", { ascending: false });
+
   // Calculate holdings
   const mintedSubs = subscriptions?.filter((s) => s.status === "minted") || [];
   const tokenBalance = mintedSubs.reduce(
@@ -202,6 +209,79 @@ export default async function DashboardPage() {
           </table>
         ) : (
           <p className="text-gray-400 text-sm">No distributions yet.</p>
+        )}
+      </div>
+
+      {/* Staked Assets */}
+      <div className="bg-white rounded-xl p-6 shadow-sm border mb-6">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-sm font-medium text-gray-500">Staked Assets</h3>
+          <a
+            href="/stake"
+            className="text-sm bg-f2k-blue hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg transition-colors"
+          >
+            Stake Asset
+          </a>
+        </div>
+        {stakes && stakes.length > 0 ? (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-gray-500 border-b">
+                <th className="pb-2">Date</th>
+                <th className="pb-2">Asset Class</th>
+                <th className="pb-2">Declared Value</th>
+                <th className="pb-2">LTV</th>
+                <th className="pb-2">Tokens</th>
+                <th className="pb-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stakes.map((s: Record<string, unknown>) => (
+                <tr key={s.id as string} className="border-b last:border-0">
+                  <td className="py-2">
+                    {new Date(s.created_at as string).toLocaleDateString()}
+                  </td>
+                  <td className="py-2">
+                    {(s.asset_classes as Record<string, unknown>)?.label as string ?? "—"}
+                  </td>
+                  <td className="py-2">
+                    ${Number(s.declared_value).toLocaleString()}
+                  </td>
+                  <td className="py-2">
+                    {s.ltv_ratio_applied
+                      ? `${(Number(s.ltv_ratio_applied) * 100).toFixed(0)}%`
+                      : "—"}
+                  </td>
+                  <td className="py-2">
+                    {s.tokens_to_mint
+                      ? Number(s.tokens_to_mint).toLocaleString()
+                      : "—"}
+                  </td>
+                  <td className="py-2">
+                    <span
+                      className={`px-2 py-0.5 rounded text-xs ${
+                        s.status === "tokens_minted"
+                          ? "bg-green-100 text-green-700"
+                          : s.status === "lien_registered"
+                          ? "bg-blue-100 text-blue-700"
+                          : s.status === "approved"
+                          ? "bg-emerald-100 text-emerald-700"
+                          : s.status === "rejected"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {(s.status as string).replace(/_/g, " ")}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-gray-400 text-sm">
+            No staked assets yet. Stake eligible real-world assets to receive {TOKEN_SYMBOL} tokens.
+          </p>
         )}
       </div>
 

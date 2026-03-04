@@ -149,3 +149,53 @@ export interface AdminUser {
   full_name: string | null;
   created_at: string;
 }
+
+// Asset Staking
+export type AssetClassCode = "cash" | "art" | "property" | "bonds";
+
+export type AssetStakeStatus =
+  | "draft"
+  | "submitted"
+  | "under_review"
+  | "approved"
+  | "rejected"
+  | "lien_registered"
+  | "tokens_minted";
+
+export type SubscriptionSource = "direct" | "asset_stake";
+
+export interface AssetClass {
+  id: string;
+  code: AssetClassCode;
+  label: string;
+  ltv_ratio: number;
+  requires_appraisal: boolean;
+  required_documents: string[];
+  enabled: boolean;
+  min_value_usd: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AssetStake {
+  id: string;
+  investor_id: string;
+  asset_class_id: string;
+  description: string;
+  declared_value: number;
+  appraised_value: number | null;
+  ltv_ratio_applied: number | null;
+  collateral_value: number | null;
+  nav_at_stake: number | null;
+  tokens_to_mint: number | null;
+  subscription_id: string | null;
+  appraisal_doc_url: string | null;
+  supporting_docs: string[];
+  lien_reference: string | null;
+  status: AssetStakeStatus;
+  review_notes: string | null;
+  reviewed_by: string | null;
+  reviewed_at: string | null;
+  created_at: string;
+  updated_at: string;
+}

@@ -33,6 +33,8 @@ export function hasPermission(
     create_distributions: ["super_admin", "fund_manager"],
     view_audit_log: ["super_admin", "fund_manager", "compliance", "read_only"],
     manage_admin_users: ["super_admin"],
+    manage_stakes: ["super_admin", "fund_manager", "compliance"],
+    manage_asset_classes: ["super_admin", "fund_manager"],
   };
 
   return permissions[action]?.includes(role) ?? false;
