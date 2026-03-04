@@ -52,6 +52,15 @@ ALTER TABLE subscriptions
   ADD COLUMN source TEXT NOT NULL DEFAULT 'direct'
     CHECK (source IN ('direct', 'asset_stake'));
 
+-- Updated_at trigger function (create if not exists)
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 -- Updated_at triggers
 CREATE TRIGGER set_asset_classes_updated_at
   BEFORE UPDATE ON asset_classes
