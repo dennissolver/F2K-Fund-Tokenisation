@@ -27,15 +27,18 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const ip = getClientIp(request);
 
-  // Rate limit auth endpoints: 5 req/min
-  if (pathname.startsWith("/api/auth") || pathname === "/login" || pathname === "/register") {
+  // Don't rate-limit the auth callback (user clicking email confirmation link)
+  const isAuthCallback = pathname === "/api/auth/callback";
+
+  // Rate limit auth endpoints: 5 req/min (but not the callback)
+  if (!isAuthCallback && (pathname.startsWith("/api/auth") || pathname === "/login" || pathname === "/register")) {
     if (!rateLimit(`auth:${ip}`, 5, 60_000)) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
   }
 
-  // Rate limit API routes: 30 req/min
-  if (pathname.startsWith("/api/")) {
+  // Rate limit API routes: 30 req/min (exclude auth callback)
+  if (pathname.startsWith("/api/") && !isAuthCallback) {
     if (!rateLimit(`api:${ip}`, 30, 60_000)) {
       return NextResponse.json({ error: "Too many requests" }, { status: 429 });
     }
@@ -52,7 +55,15 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   response.headers.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; connect-src 'self' https://*.supabase.co https://*.alchemy.com wss://*.walletconnect.com https://*.walletconnect.com https://verify.walletconnect.com; frame-src 'self' https://verify.walletconnect.com;"
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: https:",
+      "font-src 'self' https://fonts.gstatic.com",
+      "connect-src 'self' https://*.supabase.co https://*.alchemy.com wss://*.walletconnect.com https://*.walletconnect.com https://verify.walletconnect.com https://pulse.walletconnect.org https://api.web3modal.org https://explorer-api.walletconnect.com",
+      "frame-src 'self' https://verify.walletconnect.com https://vercel.live",
+    ].join("; ")
   );
   response.headers.set("X-Frame-Options", "DENY");
   response.headers.set("X-Content-Type-Options", "nosniff");

@@ -10,6 +10,7 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [emailSent, setEmailSent] = useState(false);
 
   // Eligibility gate
   const [eligibility, setEligibility] = useState<EligibilityPath>(null);
@@ -24,9 +25,20 @@ export default function RegisterPage() {
 
     const supabase = createSupabaseBrowser();
 
+    const redirectTo = `${window.location.origin}/api/auth/callback?next=/onboarding`;
+
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: redirectTo,
+        data: {
+          eligibility_path: eligibility,
+          investor_type: eligibility === "income" ? "sophisticated" : "wholesale",
+          net_assets_declared: eligibility === "net_assets" || eligibility === "entity",
+          income_declared: eligibility === "income",
+        },
+      },
     });
 
     if (signUpError) {
@@ -36,25 +48,44 @@ export default function RegisterPage() {
     }
 
     if (data.user) {
-      // Create investor record with eligibility info
-      const { error: insertError } = await supabase.from("investors").insert({
-        auth_user_id: data.user.id,
-        email: data.user.email!,
-        net_assets_declared: eligibility === "net_assets" || eligibility === "entity",
-        income_declared: eligibility === "income",
-        investor_type: eligibility === "income" ? "sophisticated" : "wholesale",
-      });
-
-      if (insertError) {
-        setError(insertError.message);
-        setLoading(false);
-        return;
-      }
-
-      window.location.href = "/onboarding?step=eligibility";
+      setEmailSent(true);
     }
 
     setLoading(false);
+  }
+
+  // Success state: check your email
+  if (emailSent) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center px-4 py-12">
+        <div className="w-full max-w-md text-center">
+          <div className="bg-white rounded-xl shadow-sm border p-8">
+            <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-bold text-navy mb-2">Check Your Email</h1>
+            <p className="text-gray-600 mb-4">
+              We&apos;ve sent a confirmation link to <strong>{email}</strong>
+            </p>
+            <p className="text-sm text-gray-500 mb-6">
+              Click the link in your email to verify your account and continue
+              to the onboarding process. The link expires in 24 hours.
+            </p>
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800">
+              Don&apos;t see the email? Check your spam folder or{" "}
+              <button
+                onClick={() => setEmailSent(false)}
+                className="text-f2k-blue hover:underline font-medium"
+              >
+                try again
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -201,7 +232,7 @@ export default function RegisterPage() {
             </h2>
             <p className="text-xs text-gray-500 mb-4 ml-7">
               You&apos;ll complete full verification (KYC + wallet) after
-              registration
+              confirming your email
             </p>
 
             <form onSubmit={handleRegister} className="space-y-4 ml-7">
