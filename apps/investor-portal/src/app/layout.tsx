@@ -1,11 +1,31 @@
 import type { Metadata } from "next";
+import { Playfair_Display, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
 
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
+  display: "swap",
+});
+
+const ibmMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-ibm-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "F2K Housing Token — Investor Portal",
+  title: "F2K — Factory to Key | Tokenised National Housing Fund",
   description:
-    "Tokenised National Housing Fund. Invest in Australian residential property via security tokens.",
+    "Australia's impartial national housing integrator. Invest in residential property through regulated security tokens backed by real assets.",
 };
 
 export default function RootLayout({
@@ -14,51 +34,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-gray-50 text-gray-900">
-        <Providers>
-          <header className="bg-navy text-white">
-            <div className="mx-auto max-w-7xl px-4 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <a href="/" className="flex items-center gap-3">
-                  <div className="h-8 w-8 rounded bg-gold flex items-center justify-center font-bold text-navy text-sm">
-                    F2K
-                  </div>
-                  <span className="text-lg font-semibold">
-                    F2K Housing Token
-                  </span>
-                </a>
-              </div>
-              <nav className="flex items-center gap-6 text-sm">
-                <a
-                  href="/dashboard"
-                  className="hover:text-gold transition-colors"
-                >
-                  Dashboard
-                </a>
-                <a
-                  href="/subscribe"
-                  className="hover:text-gold transition-colors"
-                >
-                  Subscribe
-                </a>
-                <a
-                  href="/stake"
-                  className="hover:text-gold transition-colors"
-                >
-                  Stake
-                </a>
-                <a
-                  href="/statements"
-                  className="hover:text-gold transition-colors"
-                >
-                  Statements
-                </a>
-              </nav>
-            </div>
-          </header>
-          <main>{children}</main>
-        </Providers>
+    <html
+      lang="en"
+      className={`${playfair.variable} ${archivo.variable} ${ibmMono.variable}`}
+    >
+      <body className="min-h-screen">
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
