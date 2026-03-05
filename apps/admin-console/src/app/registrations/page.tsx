@@ -14,6 +14,7 @@ const typeLabels: Record<string, string> = {
   government: "Government",
   offtaker: "Offtaker",
   career: "Career",
+  introducer: "Introducer",
 };
 
 export default async function RegistrationsPage({
@@ -51,6 +52,7 @@ export default async function RegistrationsPage({
             { label: "Government", value: "government" },
             { label: "Offtaker", value: "offtaker" },
             { label: "Career", value: "career" },
+            { label: "Introducer", value: "introducer" },
           ].map((f) => {
             const isActive = (searchParams.type || "") === f.value;
             const href = f.value

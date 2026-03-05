@@ -7,6 +7,7 @@ const navLinks = [
   { label: "Lenders", href: "/lenders" },
   { label: "Government", href: "/government" },
   { label: "Offtakers", href: "/offtakers" },
+  { label: "Introducers", href: "/introducers" },
   { label: "Structure", href: "/structure" },
   { label: "Careers", href: "/careers" },
   { label: "Platform", href: "/platform" },

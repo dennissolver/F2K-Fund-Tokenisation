@@ -51,6 +51,12 @@ export default function MarketingFooter() {
                 Offtakers
               </a>
               <a
+                href="/introducers"
+                className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
+              >
+                Introducers
+              </a>
+              <a
                 href="/structure"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >

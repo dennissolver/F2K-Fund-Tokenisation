@@ -261,6 +261,25 @@ export default function InvestPage() {
                 </tr>
                 <tr>
                   <td className="px-6 py-4 font-archivo font-semibold text-deep-blue">
+                    Entry Fee
+                  </td>
+                  <td className="px-6 py-4 text-right">
+                    <span className="font-ibm-mono text-slate">Up to 3%</span>
+                    <span className="block text-xs text-slate/60 font-archivo mt-0.5">
+                      May be reduced or waived for direct subscriptions
+                    </span>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 font-archivo font-semibold text-deep-blue">
+                    Exit Fee
+                  </td>
+                  <td className="px-6 py-4 text-right font-ibm-mono text-slate">
+                    Nil
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 font-archivo font-semibold text-deep-blue">
                     Management Fee
                   </td>
                   <td className="px-6 py-4 text-right font-ibm-mono text-slate">
@@ -293,6 +312,14 @@ export default function InvestPage() {
                 </tr>
                 <tr>
                   <td className="px-6 py-4 font-archivo font-semibold text-deep-blue">
+                    Redemption Notice
+                  </td>
+                  <td className="px-6 py-4 text-right font-ibm-mono text-slate">
+                    30 days
+                  </td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 font-archivo font-semibold text-deep-blue">
                     Target Fund Size
                   </td>
                   <td className="px-6 py-4 text-right font-ibm-mono text-slate">
@@ -304,8 +331,12 @@ export default function InvestPage() {
           </div>
 
           <p className="text-sm text-slate mt-6 font-archivo leading-relaxed mb-10">
-            All fees are deducted from fund income before distributions.
-            Performance fee applies only to returns above the 8% hurdle rate.
+            The entry fee covers distribution and onboarding costs and may be
+            reduced or waived for direct subscriptions without an introducer.
+            Tokens are minted based on the net subscription amount after any
+            entry fee. All ongoing fees are deducted from fund income before
+            distributions. Performance fee applies only to returns above the 8%
+            hurdle rate. No exit fee — redemption is at NAV with 30 days notice.
             Full fee structure detailed in the{" "}
             <a
               href="/whitepaper"

@@ -79,7 +79,7 @@ export const assetClassUpdateSchema = z.object({
 
 // Registration of Interest
 export const registerInterestSchema = z.object({
-  type: z.enum(["lender", "government", "offtaker", "career"]),
+  type: z.enum(["lender", "government", "offtaker", "career", "introducer"]),
   org_name: z.string().min(2),
   contact_name: z.string().min(2),
   contact_email: z.string().email(),
