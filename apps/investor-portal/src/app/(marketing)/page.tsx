@@ -7,53 +7,41 @@ export default function MarketingHome() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_85%,rgba(184,66,15,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_85%_15%,rgba(200,168,78,0.08)_0%,transparent_50%)]" />
 
         <div className="relative z-10 max-w-[900px] text-center">
-          {/* Beat 1: The problem */}
-          <p className="font-ibm-mono text-[0.75rem] tracking-[0.5em] uppercase text-ember mb-8">
-            Government & Workforce Housing
+          {/* Beat 1: The fund — front and centre */}
+          <p className="font-ibm-mono text-[0.75rem] tracking-[0.5em] uppercase text-ember mb-6">
+            Now Raising — Wholesale Investors Only
           </p>
-          <h1 className="font-playfair text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1] mb-4">
-            They Need the Housing.
-            <br />
-            <em className="text-brass">We Fund the Build.</em>
+          <h1 className="font-playfair text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1] mb-2">
+            F2K Housing Fund
           </h1>
-
-          {/* Beat 2: The procurement problem */}
-          <p className="font-archivo text-lg text-off-white/80 max-w-[700px] mx-auto leading-relaxed mt-8">
-            Governments need housing for regional staff — teachers, nurses,
-            police. Employers need housing for workforces in areas where
-            there&apos;s nothing to rent. But capital procurement is slow,
-            complex, and politically fraught.{" "}
-            <strong className="text-off-white">
-              What if they didn&apos;t have to fund the build at all?
-            </strong>
+          <p className="font-playfair text-[clamp(1.6rem,4vw,2.8rem)] font-bold text-brass leading-tight">
+            $600M Tokenised Housing Fund
           </p>
 
-          {/* Beat 3: The fund solves it */}
-          <p className="font-archivo text-base text-off-white/80 max-w-[700px] mx-auto leading-relaxed mt-4">
-            The F2K Housing Fund finances the design and construction of
-            modular housing, then delivers it to government departments and
+          {/* Beat 2: What the fund does — one line */}
+          <p className="font-archivo text-xl text-off-white/90 max-w-[700px] mx-auto leading-relaxed mt-8">
+            We finance and deliver modular housing for government and
             employers under{" "}
             <strong className="text-off-white">
               10-year take-or-pay leases
             </strong>
-            . No capital outlay for the tenant — just an operating lease.
-            Once leases are in place, each stabilised asset is sold to a REIT,
-            and the capital recycles into the next project.
+            , then sell each stabilised asset to institutional investors —
+            recycling capital into the next build.
           </p>
 
-          {/* Beat 4: The token is how you participate */}
-          <p className="font-archivo text-base text-off-white/50 max-w-[600px] mx-auto leading-relaxed mt-4">
-            The F2K Housing Token lets wholesale investors finance this
-            pipeline directly — on-chain, transparent, with quarterly
-            distributions as stabilised assets are sold.
+          {/* Beat 3: The token is how you participate */}
+          <p className="font-archivo text-base text-off-white/60 max-w-[650px] mx-auto leading-relaxed mt-4">
+            The F2K Housing Token (ERC-3643) lets wholesale investors
+            participate on-chain — transparent, permissioned, with quarterly
+            distributions as assets are sold.
           </p>
 
           {/* Stats strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-12">
             {[
-              { value: "10yr", label: "Take-or-Pay Leases" },
+              { value: "$600M", label: "Fund Target" },
               { value: "$2.50", label: "Per $1 Equity" },
-              { value: "12%", label: "Integration Fee" },
+              { value: "10yr", label: "Take-or-Pay Leases" },
               { value: "14-16wk", label: "Factory to Key" },
             ].map((stat) => (
               <div key={stat.label}>
