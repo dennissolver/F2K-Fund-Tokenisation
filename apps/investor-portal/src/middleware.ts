@@ -60,8 +60,8 @@ export function middleware(request: NextRequest) {
       "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live",
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: https:",
-      "font-src 'self' https://fonts.gstatic.com",
-      "connect-src 'self' https://*.supabase.co https://*.alchemy.com wss://*.walletconnect.com https://*.walletconnect.com https://verify.walletconnect.com https://pulse.walletconnect.org https://api.web3modal.org https://explorer-api.walletconnect.com",
+      "font-src 'self' https://fonts.gstatic.com https://vercel.live",
+      "connect-src 'self' https://*.supabase.co https://*.alchemy.com wss://*.walletconnect.com https://*.walletconnect.com https://verify.walletconnect.com https://pulse.walletconnect.org https://api.web3modal.org https://explorer-api.walletconnect.com https://*.rpc.thirdweb.com",
       "frame-src 'self' https://verify.walletconnect.com https://vercel.live",
     ].join("; ")
   );
