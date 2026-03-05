@@ -3,9 +3,10 @@
 import { useState } from "react";
 
 const navLinks = [
-  { label: "Why Now", href: "/#why-now" },
-  { label: "Why Us", href: "/#why-us" },
-  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Contribute", href: "/invest" },
+  { label: "Lenders", href: "/lenders" },
+  { label: "Government", href: "/government" },
+  { label: "Offtakers", href: "/offtakers" },
   { label: "Documents", href: "/documents" },
 ];
 

@@ -84,6 +84,66 @@ export default function MarketingHome() {
         </div>
       </section>
 
+      {/* ===== WHO WE SERVE ===== */}
+      <section id="ecosystem" className="py-20 px-4 bg-off-white">
+        <div className="max-w-[900px] mx-auto">
+          <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-ember mb-4">
+            The Ecosystem
+          </p>
+          <h2 className="font-playfair text-[2.8rem] font-black text-deep-blue leading-tight mb-4">
+            Four Roles. One Pipeline.
+          </h2>
+          <p className="text-lg text-slate leading-relaxed mb-10 font-archivo">
+            F2K connects capital, construction, tenancy, and long-term ownership into a single repeatable cycle.
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[
+              {
+                title: "Asset Contributors",
+                text: "Contribute assets. Receive tokens. Earn distributions as stabilised assets are sold.",
+                href: "/invest",
+                cta: "Contribute to the Fund",
+              },
+              {
+                title: "Construction Lenders",
+                text: "Provide senior debt to ring-fenced SPVs. Pre-committed leases. Senior priority on exit.",
+                href: "/lenders",
+                cta: "Lender Information",
+              },
+              {
+                title: "Government & Employers",
+                text: "Zero capital outlay. 10-year operating leases. Housing from factory to key.",
+                href: "/government",
+                cta: "Tenant Information",
+              },
+              {
+                title: "Offtakers",
+                text: "Acquire stabilised, lease-backed assets with predictable income from day one.",
+                href: "/offtakers",
+                cta: "Offtaker Information",
+              },
+            ].map((card) => (
+              <a
+                key={card.title}
+                href={card.href}
+                className="bg-white p-8 border border-black/5 hover:border-ember transition-colors group block"
+              >
+                <h3 className="font-archivo text-sm font-bold text-deep-blue uppercase tracking-wide mb-3 group-hover:text-ember transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-sm text-slate leading-relaxed font-archivo mb-4">
+                  {card.text}
+                </p>
+                <span className="font-ibm-mono text-xs tracking-wider uppercase text-ember">
+                  {card.cta} &rarr;
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ===== WHY NOW ===== */}
       <section id="why-now" className="py-20 px-4 bg-off-white">
         <div className="max-w-[900px] mx-auto">
@@ -255,38 +315,50 @@ export default function MarketingHome() {
             institutional investor — recycling capital into the next project.
           </p>
 
-          {/* 6-step capital flow */}
+          {/* 7-step capital flow — full ecosystem */}
           <div className="space-y-0 mb-12">
             {[
               {
                 step: "1",
-                title: "You Subscribe",
+                title: "Contributors Subscribe",
                 desc: "USDC or contributed assets enter the fund as equity capital.",
+                bold: "Contributors",
               },
               {
                 step: "2",
                 title: "Fund Equity → Project SPV",
-                desc: "30-40% of project cost is committed as equity to a ring-fenced Special Purpose Vehicle (SPV) — a separate legal entity that isolates each project's risk from the wider fund.",
+                desc: "30-40% of project cost is committed as equity to a ring-fenced Special Purpose Vehicle (SPV) — isolating each project's risk.",
+                bold: "",
               },
               {
                 step: "3",
-                title: "SPV Raises Senior Debt",
+                title: "Lenders Provide Senior Debt",
                 desc: "The SPV raises 60-70% construction finance from senior lenders. Every $1 of investor equity funds $2.50-$3.00 of housing.",
+                bold: "Lenders",
               },
               {
                 step: "4",
-                title: "Housing Is Built & Leased",
-                desc: "F2K delivers housing as integrator (earning a 12% GDV fee) and places tenants — government regional staff or employer workforces — under 10-year take-or-pay leases.",
+                title: "F2K Delivers as Integrator",
+                desc: "F2K delivers modular housing (earning a 12% GDV fee), managing compliance, manufacturer selection, and logistics.",
+                bold: "",
               },
               {
                 step: "5",
-                title: "Stabilised Asset Sold",
-                desc: "Once leases are operational, the income-producing SPV is sold to a REIT or institutional long-hold investor at a yield premium over development cost. The spread is the fund's primary return.",
+                title: "Government/Employer Tenants Sign Leases",
+                desc: "Government departments and employers sign 10-year take-or-pay leases. Zero capital outlay — just an operating expense.",
+                bold: "Government/Employer Tenants",
               },
               {
                 step: "6",
+                title: "Offtakers Purchase Stabilised Assets",
+                desc: "REITs and institutional investors purchase the stabilised, income-producing SPV at a yield premium over development cost.",
+                bold: "Offtakers",
+              },
+              {
+                step: "7",
                 title: "Capital Recycled → Distributions",
-                desc: "Sale proceeds repay senior debt, flow through the fund waterfall, and are distributed quarterly to token holders. Remaining capital is redeployed into the next project.",
+                desc: "Sale proceeds repay senior debt, flow through the fund waterfall, and are distributed quarterly to token holders. Remaining capital is redeployed.",
+                bold: "",
               },
             ].map((item, i) => (
               <div key={item.step} className="flex gap-4 items-start">
@@ -294,7 +366,7 @@ export default function MarketingHome() {
                   <div className="w-12 h-12 rounded-full bg-deep-blue text-brass font-playfair text-lg font-bold flex items-center justify-center">
                     {item.step}
                   </div>
-                  {i < 5 && <div className="w-0.5 h-8 bg-warm-grey mt-1" />}
+                  {i < 6 && <div className="w-0.5 h-8 bg-warm-grey mt-1" />}
                 </div>
                 <div className="pb-4">
                   <h3 className="font-archivo font-bold text-deep-blue mb-1">
@@ -733,16 +805,16 @@ export default function MarketingHome() {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <a
-              href="/whitepaper"
+              href="/invest"
               className="bg-white text-ember hover:bg-off-white px-8 py-3 font-archivo font-semibold transition-colors"
             >
-              Read the Whitepaper
+              Contribute to the Fund
             </a>
             <a
-              href="/invest"
+              href="#ecosystem"
               className="border-2 border-white text-white hover:bg-white hover:text-ember px-8 py-3 font-archivo font-semibold transition-colors"
             >
-              Apply to Invest
+              Explore the Ecosystem
             </a>
           </div>
         </div>

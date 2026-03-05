@@ -77,6 +77,28 @@ export const assetClassUpdateSchema = z.object({
   min_value_usd: z.number().positive().optional(),
 });
 
+// Registration of Interest
+export const registerInterestSchema = z.object({
+  type: z.enum(["lender", "government", "offtaker"]),
+  org_name: z.string().min(2),
+  contact_name: z.string().min(2),
+  contact_email: z.string().email(),
+  contact_phone: z.string().optional(),
+  organisation_type: z.string().optional(),
+  region: z.enum(["NSW","VIC","QLD","WA","SA","TAS","NT","ACT","National"]).optional(),
+  message: z.string().max(2000).optional(),
+  honeypot: z.string().optional(),
+  details: z.record(z.unknown()).optional(),
+});
+export type RegisterInterestInput = z.infer<typeof registerInterestSchema>;
+
+// Admin: ROI status update
+export const roiStatusUpdateSchema = z.object({
+  status: z.enum(["new", "contacted", "qualified", "declined"]),
+  notes: z.string().optional(),
+});
+export type RoiStatusUpdateInput = z.infer<typeof roiStatusUpdateSchema>;
+
 export type SubscribeInput = z.infer<typeof subscribeSchema>;
 export type WalletVerifyInput = z.infer<typeof walletVerifySchema>;
 export type AllowlistActionInput = z.infer<typeof allowlistActionSchema>;

@@ -27,22 +27,28 @@ export default function MarketingFooter() {
             </h4>
             <div className="space-y-2">
               <a
-                href="/#why-now"
+                href="/invest"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >
-                Why Now
+                Contribute
               </a>
               <a
-                href="/#why-us"
+                href="/lenders"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >
-                Why Us
+                Lenders
               </a>
               <a
-                href="/#how-it-works"
+                href="/government"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >
-                How It Works
+                Government
+              </a>
+              <a
+                href="/offtakers"
+                className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
+              >
+                Offtakers
               </a>
               <a
                 href="/documents"
@@ -70,6 +76,12 @@ export default function MarketingFooter() {
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >
                 Apply to Invest
+              </a>
+              <a
+                href="/lenders"
+                className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
+              >
+                Register Interest
               </a>
               <a
                 href="/login"

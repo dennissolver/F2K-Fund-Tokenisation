@@ -30,6 +30,7 @@ export default function RootLayout({
                 { href: "/allowlist", label: "Allowlist" },
                 { href: "/subscriptions", label: "Subscriptions" },
                 { href: "/stakes", label: "Asset Stakes" },
+                { href: "/registrations", label: "Registrations" },
                 { href: "/asset-classes", label: "Asset Classes" },
                 { href: "/nav", label: "NAV Management" },
                 { href: "/distributions", label: "Distributions" },

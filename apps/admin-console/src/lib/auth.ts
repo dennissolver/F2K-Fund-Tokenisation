@@ -35,6 +35,7 @@ export function hasPermission(
     manage_admin_users: ["super_admin"],
     manage_stakes: ["super_admin", "fund_manager", "compliance"],
     manage_asset_classes: ["super_admin", "fund_manager"],
+    manage_registrations: ["super_admin", "fund_manager", "compliance"],
   };
 
   return permissions[action]?.includes(role) ?? false;
