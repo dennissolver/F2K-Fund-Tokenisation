@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd ../.. && pnpm turbo build --filter=admin-console",
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "nextjs"
+}
