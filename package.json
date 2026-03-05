@@ -10,7 +10,9 @@
   },
   "devDependencies": {
     "@supabase/supabase-js": "^2.98.0",
+    "dotenv": "^16.6.1",
     "next": "^14.2.0",
+    "tsx": "^4.21.0",
     "turbo": "^2.3.0",
     "typescript": "^5.7.0"
   },
