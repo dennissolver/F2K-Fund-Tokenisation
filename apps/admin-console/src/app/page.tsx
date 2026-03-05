@@ -211,6 +211,108 @@ export default async function AdminDashboard() {
         </div>
       </div>
 
+      {/* Fundraise Progress Tracker */}
+      {(() => {
+        const TRANCHE_1_TARGET = 1_000_000;
+        const TRANCHE_2_TARGET = 600_000_000;
+        const TOTAL_TARGET = TRANCHE_1_TARGET + TRANCHE_2_TARGET;
+
+        // Pipeline: confirmed but not yet minted subscriptions + stakes in review/approved
+        const confirmedSubs = (mintedSubs || []).length > 0 ? subsAum : 0;
+        const pendingSubsValue = subsByStatus
+          ?.filter((s) => s.status === "pending" || s.status === "confirmed")
+          .length ?? 0;
+
+        const inTranche1 = totalAum <= TRANCHE_1_TARGET;
+        const currentTarget = inTranche1 ? TRANCHE_1_TARGET : TOTAL_TARGET;
+        const currentLabel = inTranche1 ? "Tranche 1 — $1M Seed" : "Tranche 2 — $600M Wholesale";
+        const pctOfCurrent = currentTarget > 0 ? Math.min((totalAum / currentTarget) * 100, 100) : 0;
+        const pctOfTotal = TOTAL_TARGET > 0 ? Math.min((totalAum / TOTAL_TARGET) * 100, 100) : 0;
+
+        return (
+          <div className="bg-white rounded-xl p-6 shadow-sm border mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-lg font-semibold text-navy">Fundraise Progress</h3>
+              <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-navy text-white">
+                {currentLabel}
+              </span>
+            </div>
+
+            {/* Current tranche progress */}
+            <div className="mb-4">
+              <div className="flex justify-between text-sm mb-1">
+                <span className="text-gray-600">
+                  {fmt(totalAum)} raised
+                </span>
+                <span className="text-gray-500">
+                  {fmt(currentTarget)} target
+                </span>
+              </div>
+              <div className="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
+                <div
+                  className="h-full rounded-full transition-all duration-500"
+                  style={{
+                    width: `${pctOfCurrent}%`,
+                    background: inTranche1
+                      ? "linear-gradient(90deg, #1e3a5f, #2d5a8e)"
+                      : "linear-gradient(90deg, #1e3a5f, #c9a84c)",
+                  }}
+                />
+              </div>
+              <p className="text-right text-xs text-gray-400 mt-1">
+                {pctOfCurrent.toFixed(1)}% of {inTranche1 ? "Tranche 1" : "total raise"}
+              </p>
+            </div>
+
+            {/* Overall progress (always show both tranches) */}
+            <div className="grid grid-cols-3 gap-4 text-center text-sm">
+              <div>
+                <div className="text-gray-500">Tranche 1</div>
+                <div className="font-semibold text-navy">
+                  {fmt(Math.min(totalAum, TRANCHE_1_TARGET))}
+                  <span className="text-gray-400 font-normal"> / {fmt(TRANCHE_1_TARGET)}</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-1.5 mt-1">
+                  <div
+                    className="h-full rounded-full bg-navy"
+                    style={{ width: `${Math.min((totalAum / TRANCHE_1_TARGET) * 100, 100)}%` }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="text-gray-500">Tranche 2</div>
+                <div className="font-semibold text-navy">
+                  {fmt(Math.max(totalAum - TRANCHE_1_TARGET, 0))}
+                  <span className="text-gray-400 font-normal"> / {fmt(TRANCHE_2_TARGET)}</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-1.5 mt-1">
+                  <div
+                    className="h-full rounded-full bg-gold"
+                    style={{ width: `${Math.min((Math.max(totalAum - TRANCHE_1_TARGET, 0) / TRANCHE_2_TARGET) * 100, 100)}%` }}
+                  />
+                </div>
+              </div>
+              <div>
+                <div className="text-gray-500">Total Raise</div>
+                <div className="font-semibold text-navy">
+                  {fmt(totalAum)}
+                  <span className="text-gray-400 font-normal"> / {fmt(TOTAL_TARGET)}</span>
+                </div>
+                <div className="w-full bg-gray-100 rounded-full h-1.5 mt-1">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${pctOfTotal}%`,
+                      background: "linear-gradient(90deg, #1e3a5f, #c9a84c)",
+                    }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
       {/* Row 2: Pipeline */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div className="bg-white rounded-xl p-6 shadow-sm border">
