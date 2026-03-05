@@ -43,6 +43,17 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
   const [ltvOverride, setLtvOverride] = useState("");
   const [reviewNotes, setReviewNotes] = useState("");
 
+  // AI appraisal
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiAppraisal, setAiAppraisal] = useState<{
+    suggested_appraised_value: number;
+    suggested_ltv: number;
+    confidence: "high" | "medium" | "low";
+    risk_flags: string[];
+    reasoning: string;
+    document_checklist: { document: string; status: string }[];
+  } | null>(null);
+
   // Lien form
   const [lienReference, setLienReference] = useState("");
 
@@ -129,6 +140,30 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
       setError(data.error || "Failed to mint tokens");
     }
     setActionLoading(false);
+  }
+
+  async function handleAiAppraise() {
+    setAiLoading(true);
+    setError(null);
+
+    const res = await fetch(`/api/stakes/${params.id}/appraise`, {
+      method: "POST",
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setAiAppraisal(data.appraisal);
+      // Pre-fill form with AI suggestions
+      setAppraisedValue(String(data.appraisal.suggested_appraised_value));
+      setLtvOverride(String((data.appraisal.suggested_ltv * 100).toFixed(0)));
+      setReviewNotes(
+        `[AI ${data.appraisal.confidence} confidence] ${data.appraisal.reasoning}`
+      );
+    } else {
+      const data = await res.json();
+      setError(data.error || "AI appraisal failed");
+    }
+    setAiLoading(false);
   }
 
   if (loading) {
@@ -253,7 +288,84 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
       {/* Action Forms */}
       {["submitted", "under_review"].includes(stake.status) && (
         <div className="bg-white rounded-xl p-5 shadow-sm border mb-6">
-          <h3 className="text-sm font-medium text-gray-500 mb-4">Review Stake</h3>
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-gray-500">Review Stake</h3>
+            <button
+              onClick={handleAiAppraise}
+              disabled={aiLoading || actionLoading}
+              className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-sm font-medium disabled:opacity-50 flex items-center gap-2"
+            >
+              {aiLoading ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Analysing...
+                </>
+              ) : (
+                "AI Appraise"
+              )}
+            </button>
+          </div>
+
+          {/* AI Appraisal Results */}
+          {aiAppraisal && (
+            <div className="mb-4 p-4 bg-violet-50 border border-violet-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-sm font-semibold text-violet-800">AI Appraisal</span>
+                <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                  aiAppraisal.confidence === "high" ? "bg-green-100 text-green-700" :
+                  aiAppraisal.confidence === "medium" ? "bg-yellow-100 text-yellow-700" :
+                  "bg-red-100 text-red-700"
+                }`}>
+                  {aiAppraisal.confidence} confidence
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 text-sm mb-3">
+                <div>
+                  <span className="text-violet-600">Suggested Value</span>
+                  <div className="font-semibold">${Number(aiAppraisal.suggested_appraised_value).toLocaleString()}</div>
+                </div>
+                <div>
+                  <span className="text-violet-600">Suggested LTV</span>
+                  <div className="font-semibold">{(aiAppraisal.suggested_ltv * 100).toFixed(0)}%</div>
+                </div>
+              </div>
+
+              <p className="text-sm text-violet-900 mb-3">{aiAppraisal.reasoning}</p>
+
+              {aiAppraisal.risk_flags.length > 0 && (
+                <div className="mb-3">
+                  <span className="text-xs font-medium text-red-600">Risk Flags</span>
+                  <ul className="mt-1 space-y-1">
+                    {aiAppraisal.risk_flags.map((flag, i) => (
+                      <li key={i} className="text-xs text-red-700 flex items-start gap-1">
+                        <span className="mt-0.5 shrink-0">!</span>
+                        <span>{flag}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div>
+                <span className="text-xs font-medium text-violet-600">Document Checklist</span>
+                <ul className="mt-1 space-y-1">
+                  {aiAppraisal.document_checklist.map((doc, i) => (
+                    <li key={i} className="text-xs flex items-center gap-1.5">
+                      <span className={doc.status === "present" ? "text-green-600" : doc.status === "missing" ? "text-red-600" : "text-yellow-600"}>
+                        {doc.status === "present" ? "+" : doc.status === "missing" ? "x" : "?"}
+                      </span>
+                      <span className="text-gray-700">{doc.document}</span>
+                      <span className={`text-xs ${doc.status === "present" ? "text-green-600" : doc.status === "missing" ? "text-red-600" : "text-yellow-600"}`}>
+                        ({doc.status})
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-3">
             <div className="grid grid-cols-2 gap-3">
               <div>
@@ -284,7 +396,7 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
               <textarea
                 value={reviewNotes}
                 onChange={(e) => setReviewNotes(e.target.value)}
-                rows={2}
+                rows={3}
                 className="w-full px-3 py-2 border rounded text-sm focus:ring-2 focus:ring-f2k-blue outline-none"
               />
             </div>
