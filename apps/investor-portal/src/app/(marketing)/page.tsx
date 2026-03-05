@@ -100,10 +100,10 @@ export default function MarketingHome() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {[
               {
-                title: "Asset Contributors",
-                text: "Contribute assets. Receive tokens. Earn distributions as stabilised assets are sold.",
+                title: "Investors",
+                text: "Invest with USDC or qualifying assets. Receive tokens. Earn distributions as stabilised assets are sold.",
                 href: "/invest",
-                cta: "Contribute to the Fund",
+                cta: "Apply to Invest",
               },
               {
                 title: "Construction Lenders",
@@ -320,9 +320,9 @@ export default function MarketingHome() {
             {[
               {
                 step: "1",
-                title: "Contributors Subscribe",
-                desc: "USDC or contributed assets enter the fund as equity capital.",
-                bold: "Contributors",
+                title: "Investors Subscribe",
+                desc: "USDC or qualifying assets enter the fund as equity capital.",
+                bold: "Investors",
               },
               {
                 step: "2",
@@ -808,7 +808,7 @@ export default function MarketingHome() {
               href="/invest"
               className="bg-white text-ember hover:bg-off-white px-8 py-3 font-archivo font-semibold transition-colors"
             >
-              Contribute to the Fund
+              Apply to Invest
             </a>
             <a
               href="#ecosystem"

@@ -30,7 +30,7 @@ export default function MarketingFooter() {
                 href="/invest"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >
-                Contribute
+                Invest
               </a>
               <a
                 href="/lenders"

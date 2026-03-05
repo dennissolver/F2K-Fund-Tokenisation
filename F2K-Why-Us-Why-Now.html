@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F2K — Why Us. Why Now.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Archivo:wght@400;500;600;700;900&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #0B0B0B;
+  --off-white: #FAF7F2;
+  --ember: #B8420F;
+  --deep-blue: #1A2744;
+  --brass: #C8A84E;
+  --slate: #4A5568;
+  --warm-grey: #E8E2D8;
+  --forest: #1B4332;
+  --blood: #8B1A1A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--off-white);
+  color: var(--black);
+  font-family: 'Archivo', 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===== HEADER BAR ===== */
+.top-bar {
+  background: var(--black);
+  color: var(--brass);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  padding: 0.6rem 2rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ===== HERO ===== */
+.hero {
+  background: var(--deep-blue);
+  color: var(--off-white);
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 85%, rgba(184,66,15,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(200,168,78,0.08) 0%, transparent 50%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  text-align: center;
+}
+
+.hero-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: rise 0.7s ease 0.2s forwards;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(3.5rem, 9vw, 7rem);
+  font-weight: 900;
+  line-height: 0.95;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: rise 0.7s ease 0.4s forwards;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--brass);
+}
+
+.hero-sub {
+  font-family: 'Archivo', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgba(250,247,242,0.7);
+  max-width: 650px;
+  margin: 1.5rem auto 0;
+  line-height: 1.8;
+  opacity: 0;
+  animation: rise 0.7s ease 0.6s forwards;
+}
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== SECTION UTILITY ===== */
+.section { padding: 5rem 2rem; }
+.section-inner { max-width: 900px; margin: 0 auto; }
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--ember);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: var(--deep-blue);
+  margin-bottom: 2rem;
+  line-height: 1.1;
+}
+
+.prose {
+  font-size: 1.05rem;
+  line-height: 1.9;
+  color: var(--slate);
+  margin-bottom: 1.5rem;
+}
+
+.prose strong { color: var(--black); }
+
+.callout {
+  border-left: 4px solid var(--ember);
+  padding: 1.5rem 0 1.5rem 2rem;
+  margin: 2.5rem 0;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-style: italic;
+  color: var(--deep-blue);
+  line-height: 1.6;
+}
+
+/* ===== WHY NOW SECTION ===== */
+.why-now {
+  background: var(--off-white);
+}
+
+/* ===== WHY US SECTION ===== */
+.why-us {
+  background: var(--warm-grey);
+}
+
+.advantage-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+
+.advantage {
+  background: var(--off-white);
+  padding: 2rem;
+  border: 1px solid rgba(0,0,0,0.06);
+  position: relative;
+  transition: border-color 0.3s;
+}
+
+.advantage:hover {
+  border-color: var(--ember);
+}
+
+.advantage-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: rgba(184,66,15,0.12);
+  position: absolute;
+  top: 0.5rem;
+  right: 1.2rem;
+  line-height: 1;
+}
+
+.advantage h3 {
+  font-family: 'Archivo', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.advantage p {
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--slate);
+}
+
+/* ===== BOARD SECTION ===== */
+.board-section {
+  background: var(--deep-blue);
+  color: var(--off-white);
+  padding: 5rem 2rem;
+}
+
+.board-section .section-label { color: var(--brass); }
+.board-section .section-title { color: var(--off-white); }
+.board-section .prose { color: rgba(250,247,242,0.75); }
+.board-section .prose strong { color: var(--off-white); }
+
+.board-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  margin-top: 3rem;
+  background: rgba(250,247,242,0.08);
+}
+
+.board-role {
+  background: var(--deep-blue);
+  padding: 2rem 2.5rem;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 2rem;
+  align-items: start;
+  transition: background 0.3s;
+}
+
+.board-role:hover {
+  background: rgba(255,255,255,0.03);
+}
+
+.role-title {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--brass);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 0.15rem;
+}
+
+.role-tag {
+  display: inline-block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  margin-top: 0.4rem;
+  border: 1px solid;
+  border-radius: 1px;
+}
+
+.tag-critical { border-color: var(--ember); color: var(--ember); }
+.tag-strategic { border-color: var(--brass); color: var(--brass); }
+.tag-advisory { border-color: rgba(250,247,242,0.4); color: rgba(250,247,242,0.4); }
+
+.role-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: rgba(250,247,242,0.7);
+}
+
+.role-desc strong { color: var(--off-white); }
+
+.role-profile {
+  margin-top: 0.6rem;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  color: rgba(250,247,242,0.5);
+  line-height: 1.6;
+}
+
+/* ===== GOVERNANCE MODEL ===== */
+.governance {
+  background: var(--black);
+  color: var(--off-white);
+  padding: 4rem 2rem;
+}
+
+.gov-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.governance .section-label { color: var(--brass); }
+.governance .section-title { color: var(--off-white); font-size: 2.2rem; }
+
+.gov-structure {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.gov-tier {
+  border: 1px solid rgba(250,247,242,0.1);
+  padding: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.gov-tier::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.gov-tier:nth-child(1)::after { background: var(--ember); }
+.gov-tier:nth-child(2)::after { background: var(--brass); }
+.gov-tier:nth-child(3)::after { background: var(--forest); }
+
+.gov-tier h3 {
+  font-family: 'Archivo', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.gov-tier:nth-child(1) h3 { color: var(--ember); }
+.gov-tier:nth-child(2) h3 { color: var(--brass); }
+.gov-tier:nth-child(3) h3 { color: #4CAF50; }
+
+.gov-tier p {
+  font-size: 0.82rem;
+  color: rgba(250,247,242,0.6);
+  line-height: 1.7;
+}
+
+.gov-tier ul {
+  list-style: none;
+  margin-top: 1rem;
+  text-align: left;
+}
+
+.gov-tier li {
+  font-size: 0.8rem;
+  color: rgba(250,247,242,0.55);
+  padding: 0.3rem 0;
+  border-bottom: 1px solid rgba(250,247,242,0.05);
+}
+
+.gov-tier li::before {
+  content: '→ ';
+  color: rgba(250,247,242,0.3);
+}
+
+/* ===== TIMELINE ===== */
+.timeline-section {
+  background: var(--off-white);
+  padding: 5rem 2rem;
+}
+
+.timeline {
+  max-width: 800px;
+  margin: 2.5rem auto 0;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 140px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--warm-grey);
+}
+
+.tl-item {
+  display: grid;
+  grid-template-columns: 120px 40px 1fr;
+  gap: 0;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.tl-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ember);
+  text-align: right;
+  padding-top: 0.2rem;
+  font-weight: 600;
+}
+
+.tl-dot {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.3rem;
+}
+
+.tl-dot::before {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--ember);
+  border: 2px solid var(--off-white);
+  box-shadow: 0 0 0 2px var(--ember);
+}
+
+.tl-content h4 {
+  font-family: 'Archivo', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--deep-blue);
+  margin-bottom: 0.3rem;
+}
+
+.tl-content p {
+  font-size: 0.85rem;
+  color: var(--slate);
+  line-height: 1.6;
+}
+
+/* ===== CTA ===== */
+.final-cta {
+  background: var(--ember);
+  color: white;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.final-cta h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  line-height: 1.05;
+}
+
+.final-cta p {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--black);
+  padding: 1.5rem 2rem;
+  text-align: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.65rem;
+  color: rgba(250,247,242,0.25);
+  letter-spacing: 0.1em;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .board-role {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .gov-structure {
+    grid-template-columns: 1fr;
+  }
+  .advantage-grid {
+    grid-template-columns: 1fr;
+  }
+  .tl-item {
+    grid-template-columns: 90px 30px 1fr;
+  }
+  .timeline::before {
+    left: 105px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  F2K — Factory to Key &nbsp;·&nbsp; National Housing Integrator &nbsp;·&nbsp; Confidential — February 2026
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-label">The Case for the National Integrator</div>
+    <h1>Why <em>Us.</em><br>Why <em>Now.</em></h1>
+    <p class="hero-sub">
+      $70 billion committed. 100,000+ homes to build. Every state tendering. 
+      The modular industry is at 5% market share and needs to reach 25%+ 
+      in three years. This is the moment for an impartial, manufacturer-agnostic 
+      integrator to pull all hands to the wheel.
+    </p>
+  </div>
+</section>
+
+<!-- ===== WHY NOW ===== -->
+<section class="section why-now">
+  <div class="section-inner">
+    <div class="section-label">Why Now</div>
+    <div class="section-title">Seven Forces Converging</div>
+
+    <p class="prose">
+      There has never been a moment in Australian housing history where this many conditions 
+      have aligned simultaneously. Each one alone would create opportunity. Together, they 
+      create an emergency that demands a fundamentally new delivery model.
+    </p>
+
+    <div class="callout">
+      "The Australian housing system remains far from healthy and is continuing to experience 
+      immense pressure. Systemic reform and ongoing investment from government and industry 
+      are urgently needed."<br>
+      <span style="font-size: 0.85rem; font-style: normal; color: var(--slate);">
+        — Susan Lloyd-Hurwitz, Chair, National Housing Supply and Affordability Council, May 2025
+      </span>
+    </div>
+
+    <p class="prose">
+      <strong>1. The money is committed and it needs to move.</strong> Every state and territory 
+      has multi-billion dollar housing commitments on their books. Housing Australia's Round 3 
+      launched in January 2026 to fund the remaining 21,350 homes. The federal government has 
+      committed $54 million specifically to modern methods of construction. This isn't aspirational — 
+      these are appropriated budgets with delivery timelines and political accountability attached.
+    </p>
+
+    <p class="prose">
+      <strong>2. Traditional construction cannot meet the target.</strong> Australia will fall 
+      375,000 homes short of its 1.2 million target by 2029. Labour shortages persist for key trades. 
+      Material costs remain elevated above pre-pandemic levels. Builder insolvencies have thinned 
+      the industry. The construction sector's productivity has actually declined over two decades. 
+      Business as usual is mathematically incapable of closing the gap.
+    </p>
+
+    <p class="prose">
+      <strong>3. Modular is now policy, not experiment.</strong> Queensland has set a 50% MMC 
+      target for government projects. NSW has 28 suppliers on its MMC Procurement List and is 
+      legislating Building Productivity Reforms in 2026. WA has a $50 million Housing Innovation 
+      Program. Victoria is building a $50 million Centre of Excellence. The Australian Building 
+      Codes Board has published national standards for offsite construction. CommBank has 
+      launched prefab-specific lending products. This sector has moved from fringe to mainstream 
+      in 18 months.
+    </p>
+
+    <p class="prose">
+      <strong>4. Aboriginal housing is the moral imperative with the biggest pipeline.</strong> 
+      The NT's $4 billion remote housing agreement alone requires 2,700 homes in communities 
+      where traditional construction costs are extreme and skilled labour is scarce. There are 
+      328 Aboriginal Community Housing Providers across Australia. Closing the Gap targets 
+      are legally binding commitments. This work requires cultural competence, community 
+      consultation, and remote logistics capability that most builders simply don't have.
+    </p>
+
+    <p class="prose">
+      <strong>5. No integrator exists at national scale.</strong> Every existing modular player 
+      is either a manufacturer competing for individual contracts, a state-based builder limited 
+      to one jurisdiction, or a community housing provider focused on tenancy. Nobody is stitching 
+      the supply chain together across state boundaries, across manufacturers, across building 
+      typologies. The coordination gap is the bottleneck.
+    </p>
+
+    <p class="prose">
+      <strong>6. Asian manufacturing capacity is available and proven.</strong> Australia 
+      imported $175 million in prefabricated buildings from China alone in 2024, with Chinese 
+      goods accounting for 70% of prefabricated imports. The manufacturing capacity exists. 
+      What's needed is an integrator who can ensure NCC compliance, manage quality assurance, 
+      coordinate logistics, and guarantee that offshore production meets Australian standards — 
+      particularly for cyclone ratings and bushfire zones.
+    </p>
+
+    <p class="prose">
+      <strong>7. National certification is being created right now.</strong> The $4.7 million 
+      federal commitment to a voluntary national certification process for modular manufacturers 
+      will transform the regulatory landscape. An integrator who is deeply embedded in this 
+      certification framework from day one will be positioned as the trusted bridge between 
+      manufacturers and government procurement.
+    </p>
+  </div>
+</section>
+
+<!-- ===== WHY US ===== -->
+<section class="section why-us">
+  <div class="section-inner">
+    <div class="section-label">Why Us</div>
+    <div class="section-title">The Impartial Integrator Advantage</div>
+
+    <p class="prose">
+      F2K is not a manufacturer. Not a builder. Not a community housing provider. 
+      We are the execution layer that connects all of them — finding the best-fit 
+      solution for every use case, ensuring compliance across every jurisdiction, 
+      and delivering from factory to key handover.
+    </p>
+
+    <div class="advantage-grid">
+      <div class="advantage">
+        <div class="advantage-num">01</div>
+        <h3>Manufacturer Agnostic</h3>
+        <p>No equity stake in any factory. No exclusive supply deals. Every project gets 
+        an open, competitive assessment of the best manufacturer for the specific use case — 
+        whether that's an Australian steel fabricator, an Asian modular producer, a timber 
+        SIP manufacturer, or a hybrid approach. Impartial means best-fit, not cheapest.</p>
+      </div>
+
+      <div class="advantage">
+        <div class="advantage-num">02</div>
+        <h3>Specification Intelligence</h3>
+        <p>We have mapped the complete specification frameworks of the WA Department of 
+        Housing and Works — 12 documents, July 2025 edition — covering all five program 
+        streams from metro dwellings to cyclone-rated remote Aboriginal housing. This deep 
+        compliance knowledge extends to every state's procurement requirements and the NCC 
+        framework that underpins them all.</p>
+      </div>
+
+      <div class="advantage">
+        <div class="advantage-num">03</div>
+        <h3>Multi-Typology Capability</h3>
+        <p>Single dwellings (BCA Class 1a). Apartments (Class 2 & 3). GROH regional officer 
+        housing. Northwest cyclone-rated communities. Remote Aboriginal housing. Prefabricated 
+        modular designed for future disassembly and relocation. We don't specialise in one 
+        type — we match the right method to the right place.</p>
+      </div>
+
+      <div class="advantage">
+        <div class="advantage-num">04</div>
+        <h3>Cross-Border Economies</h3>
+        <p>The same Asian manufacturer building cyclone-rated modules for WA's Kimberley can 
+        supply NT's Arnhem Land and QLD's Cape York. The same Australian steel fabricator 
+        supplying Perth metro can supply Adelaide and Hobart. National coordination creates 
+        production volumes that reduce per-unit cost — something no state-based operator can achieve.</p>
+      </div>
+
+      <div class="advantage">
+        <div class="advantage-num">05</div>
+        <h3>Cultural and Community Competence</h3>
+        <p>Aboriginal housing isn't a product variant — it's a different way of working. 
+        Local Decision Making. Community consultation. Cultural design requirements. 42% Aboriginal 
+        employment targets. Partnership with Land Councils and Aboriginal Housing organisations. 
+        F2K builds this into the operating model from day one, not as a compliance afterthought.</p>
+      </div>
+
+      <div class="advantage">
+        <div class="advantage-num">06</div>
+        <h3>Speed Through Coordination</h3>
+        <p>NSW has demonstrated 14-16 weeks from DA to completion using modular. The bottleneck 
+        isn't manufacturing speed — it's coordination: design compliance, manufacturer selection, 
+        QA hold points, transport permits, site preparation, service connections, commissioning. 
+        That's what an integrator exists to solve.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== NATIONAL BOARD ===== -->
+<section class="board-section">
+  <div class="section-inner" style="max-width: 1000px;">
+    <div class="section-label">The National Team</div>
+    <div class="section-title">Who We Need at the Table</div>
+    
+    <p class="prose">
+      To be credible as Australia's impartial national housing integrator, the F2K board 
+      and advisory team must represent every critical domain: Indigenous leadership, MMC 
+      industry authority, government procurement expertise, housing finance, remote logistics, 
+      and cross-border construction compliance. This isn't about name-dropping — it's about 
+      assembling the specific capabilities that no existing organisation combines.
+    </p>
+
+    <div class="callout" style="border-left-color: var(--brass); color: var(--off-white);">
+      The board must demonstrate to Housing Australia, state housing departments, and Aboriginal 
+      community organisations that F2K has the governance, cultural authority, technical expertise, 
+      and financial credibility to be trusted with public money at national scale.
+    </div>
+
+    <div class="board-grid">
+
+      <!-- ROLE 1 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Chair — Aboriginal &amp; First Nations Housing Leader</div>
+          <div class="role-tag tag-critical">Critical Appointment</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why this role matters most:</strong> Aboriginal housing represents the largest single 
+            pipeline ($4B NT alone) and the work that requires the deepest trust. The Chair must be a 
+            recognised First Nations leader with authority in the Aboriginal housing sector — someone 
+            who can walk into a Land Council meeting, a federal minister's office, and a community 
+            consultation with equal credibility. This signals that F2K is led by the communities it serves.
+          </div>
+          <div class="role-profile">
+            Profile: Senior Aboriginal leader with board governance experience across housing, community 
+            organisations, and government advisory roles. Deep relationships with NATSIHA, Aboriginal 
+            Housing NT, state Aboriginal Housing offices, and Land Councils. Understanding of Closing 
+            the Gap targets and community-controlled housing models. Ideally experience across multiple 
+            jurisdictions — not locked to one state.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 2 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Deputy Chair — MMC Industry Authority</div>
+          <div class="role-tag tag-critical">Critical Appointment</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> The modular/prefab industry needs to see F2K as a genuine partner, 
+            not a competitor or a middleman. The Deputy Chair must be recognised within the MMC sector 
+            as someone who has shaped the industry — with direct relationships to prefabAUS, the 
+            Australian Building Codes Board, Building 4.0 CRC, and the key manufacturers.
+          </div>
+          <div class="role-profile">
+            Profile: Established leader in offsite construction with 15+ years in the Australian MMC 
+            ecosystem. Board or advisory involvement with prefabAUS, ACIF, or Building 4.0 CRC. 
+            Understanding of both volumetric modular and panelised/flat-pack systems. Relationships 
+            with key manufacturers (Modscape, Fleetwood, Ausco, Prebuilt, etc.) and awareness of 
+            Asian manufacturing capability. Technical credibility on NCC compliance for offsite production.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 3 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Director — State Housing Procurement &amp; Policy</div>
+          <div class="role-tag tag-critical">Critical Appointment</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> F2K's revenue comes from government procurement. Someone who has been 
+            inside the machine — who understands how DHW, Homes NSW, QBuild, Homes Victoria, and 
+            SA Housing Trust actually procure, assess, and contract — is indispensable. This person 
+            knows where the tenders are published, how panel arrangements work, what the evaluation 
+            criteria really mean, and how to navigate the intersection of political timelines and 
+            construction schedules.
+          </div>
+          <div class="role-profile">
+            Profile: Former senior executive from a state housing authority or DevelopmentWA / Landcom / 
+            Renewal SA equivalent. Experience managing social housing delivery programs at scale. 
+            Understanding of head contractor panel arrangements, design-and-construct procurement, 
+            and government reporting requirements. Relationships across multiple state jurisdictions.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 4 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Director — Housing Finance &amp; Investment</div>
+          <div class="role-tag tag-strategic">Strategic</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> Housing Australia, NAIF, state housing investment funds, and 
+            CommBank's new prefab lending products are the financial architecture that makes these 
+            projects viable. F2K needs someone who speaks the language of concessional loans, 
+            blended finance, HAFF funding rounds, and community housing provider capital structures. 
+            This person can also help structure F2K's own revenue model and growth financing.
+          </div>
+          <div class="role-profile">
+            Profile: Background in infrastructure or social housing finance — potentially from Housing 
+            Australia / NHFIC, a major bank's institutional housing team, or a Tier 1 community housing 
+            provider's CFO office. Understanding of HAFF application processes, NHIF funding mechanisms, 
+            NAIF lending criteria. Experience with project finance structures for construction programs.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 5 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Director — Remote &amp; Northern Australia Logistics</div>
+          <div class="role-tag tag-strategic">Strategic</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> The highest-value, lowest-competition opportunities are in remote 
+            Australia — the Kimberley, Pilbara, Top End, Cape York, APY Lands, western Queensland. 
+            These are logistically brutal environments: wet season shutdowns, oversize load permits, 
+            barge access, airstrip-only communities, extreme heat, cyclone ratings. Someone who has 
+            actually delivered infrastructure in these locations is worth their weight in gold.
+          </div>
+          <div class="role-profile">
+            Profile: Senior operator from resources sector logistics, Defence infrastructure delivery, 
+            or remote community service delivery. Experience with oversize transport, port operations 
+            (Broome, Wyndham, Port Hedland, Darwin), wet season construction management. Understanding 
+            of Aboriginal community access protocols and local employment requirements.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 6 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Director — Construction Compliance &amp; Engineering</div>
+          <div class="role-tag tag-strategic">Strategic</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> Every dwelling F2K coordinates must comply with the NCC, state-specific 
+            construction specifications, Australian Standards (AS/NZS 4600 for steel framing, AS 4055 
+            for wind loading, AS 3740 for waterproofing, and dozens more), and local authority 
+            requirements. Offshore-manufactured components require particular rigour. F2K's credibility 
+            depends on zero tolerance for non-compliance.
+          </div>
+          <div class="role-profile">
+            Profile: Registered Professional Engineer (structural or building services) with experience 
+            certifying modular or prefabricated structures. Knowledge of NASH standards for light steel 
+            framing, wind region classifications (A through D), bushfire attack levels, and cyclone 
+            debris impact requirements. Experience with factory QA programs and third-party inspection 
+            of offshore manufacturing.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 7 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Director — Asian Manufacturing &amp; Supply Chain</div>
+          <div class="role-tag tag-strategic">Strategic</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> Australia imported $175M in prefab buildings from China alone in 2024. 
+            The capacity exists offshore, but the compliance bridge doesn't. F2K needs someone who 
+            understands Asian manufacturing ecosystems — factory capabilities, QA systems, shipping 
+            logistics, import compliance — and can qualify manufacturers against Australian standards. 
+            This person is also critical for managing geopolitical and supply chain diversification 
+            considerations.
+          </div>
+          <div class="role-profile">
+            Profile: Executive with direct experience in Asian building products manufacturing and 
+            export to Australia. Understanding of factory audit processes, QA hold points, container 
+            and oversize shipping logistics, Australian customs and biosecurity requirements. 
+            Relationships with manufacturers across China, Vietnam, Malaysia, Thailand, and Indonesia. 
+            Awareness of trade compliance and sovereign risk considerations.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 8 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">Director — Community Housing Sector</div>
+          <div class="role-tag tag-advisory">Advisory</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>Why:</strong> Community Housing Providers are the eligible applicants for HAFF 
+            funding, NHIF loans, and most state social housing programs. F2K doesn't replace CHPs — 
+            it works alongside them as the construction delivery partner. Having a CHP leader on the 
+            board ensures F2K understands the sector's needs, speaks its language, and is positioned 
+            as a trusted delivery partner rather than an outsider.
+          </div>
+          <div class="role-profile">
+            Profile: CEO or senior executive from a Tier 1 registered Community Housing Provider — 
+            ideally one operating across multiple states. Understanding of NRSCH registration, HAFF 
+            application processes, tenant outcome frameworks, and CHP capital structures. Relationships 
+            with Community Housing Industry Association (CHIA) and state shelter bodies.
+          </div>
+        </div>
+      </div>
+
+      <!-- ROLE 9 -->
+      <div class="board-role">
+        <div>
+          <div class="role-title">CEO / Managing Director</div>
+          <div class="role-tag tag-critical">Critical Appointment</div>
+        </div>
+        <div>
+          <div class="role-desc">
+            <strong>The person who makes it all work.</strong> The CEO must be a rare combination: 
+            enough construction industry credibility to command respect from manufacturers, enough 
+            government relations ability to navigate procurement, enough commercial acumen to build 
+            a viable business, and enough cultural sensitivity to work authentically with Aboriginal 
+            communities. This is a nation-building role.
+          </div>
+          <div class="role-profile">
+            Profile: 20+ years in construction project management or development delivery. Track record 
+            of multi-stakeholder coordination at scale. Experience across at least two Australian 
+            jurisdictions. Demonstrated commitment to Aboriginal engagement and employment. 
+            Understanding of both traditional and modular construction methods. Commercial orientation 
+            with social purpose alignment.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== GOVERNANCE MODEL ===== -->
+<section class="governance">
+  <div class="gov-inner">
+    <div class="section-label">Governance Architecture</div>
+    <div class="section-title">Three-Tier Operating Structure</div>
+
+    <div class="gov-structure">
+      <div class="gov-tier">
+        <h3>National Board</h3>
+        <p>Strategic oversight, stakeholder relationships, government engagement</p>
+        <ul>
+          <li>Chair + 7 Directors + CEO</li>
+          <li>Quarterly board meetings</li>
+          <li>Aboriginal Advisory Sub-Committee</li>
+          <li>Audit & Risk Sub-Committee</li>
+          <li>Manufacturer Accreditation Panel</li>
+        </ul>
+      </div>
+      <div class="gov-tier">
+        <h3>State Delivery Hubs</h3>
+        <p>Procurement, compliance, local trade coordination</p>
+        <ul>
+          <li>WA/NT Hub (Perth)</li>
+          <li>QLD/FNQ Hub (Brisbane/Cairns)</li>
+          <li>NSW Hub (Sydney/Western NSW)</li>
+          <li>VIC/SA/TAS Hub (Melbourne)</li>
+          <li>Hub managers report to CEO</li>
+        </ul>
+      </div>
+      <div class="gov-tier">
+        <h3>Manufacturing Network</h3>
+        <p>Accredited suppliers, QA programs, production coordination</p>
+        <ul>
+          <li>Australian steel fabricators</li>
+          <li>Australian modular (volumetric)</li>
+          <li>Australian panelised / SIPs</li>
+          <li>Asian modular producers</li>
+          <li>Asian component suppliers</li>
+          <li>Specialist sub-assemblies (pods)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section class="timeline-section">
+  <div class="section-inner">
+    <div class="section-label">Mobilisation Roadmap</div>
+    <div class="section-title">From Formation to First Delivery</div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Q1 2026</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Entity Formation &amp; Board Assembly</h4>
+          <p>Incorporate national entity. Secure Chair and 3 critical director appointments (Aboriginal leadership, MMC authority, government procurement). Register with prefabAUS. Begin CHIA engagement.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Q2 2026</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Manufacturer Pre-Qualification</h4>
+          <p>Audit and accredit initial manufacturer network: 3-5 Australian, 2-3 Asian. Map capabilities against state specification frameworks. Develop QA hold-point protocols. Apply for Homes NSW MMC Procurement List.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Q3 2026</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>First State Registrations</h4>
+          <p>Register on WA DHW head contractor panel. Apply for QBuild Standing Offer Arrangement. Register with DevelopmentWA. Submit EOI for Housing Australia HAFF Round 3 as delivery partner to CHP applicants.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">Q4 2026</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Prototype &amp; First Contract</h4>
+          <p>Deliver prototype dwelling(s) per DHW Prefabricated Housing specification. Target first contract — likely WA prefab housing or NT remote housing. Establish WA/NT delivery hub in Perth.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">H1 2027</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>Multi-State Operations</h4>
+          <p>Activate QLD and NSW hubs. Pursue QBuild MMC program opportunities and Homes NSW modular pipeline. Scale manufacturer network to 8-10 accredited suppliers. Target 50+ dwellings in active pipeline.</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-date">H2 2027</div>
+        <div class="tl-dot"></div>
+        <div class="tl-content">
+          <h4>National Scale</h4>
+          <p>All four hubs operational. 100+ dwellings in pipeline across 3+ states. Aboriginal housing contracts in NT and/or WA. Asian manufacturer supply chain proven and delivering. Revenue covering operations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="final-cta">
+  <h2>All Hands to the Wheel.<br>This Is Our Moment.</h2>
+  <p>
+    The emergency is real. The money is committed. The specifications are published. 
+    The manufacturers are ready. The communities are waiting. What's missing is the 
+    impartial integrator who brings it all together. That's F2K.
+  </p>
+</section>
+
+<footer>
+  F2K — Factory to Key &nbsp;|&nbsp; Why Us. Why Now. &nbsp;|&nbsp; Confidential — February 2026
+</footer>
+
+</body>
+</html>
