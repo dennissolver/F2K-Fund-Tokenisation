@@ -19,25 +19,35 @@ export default function MarketingHome() {
             <em className="text-brass">the Old Way.</em>
           </h1>
 
-          {/* Beat 2: F2K is the answer */}
+          {/* Beat 2: The procurement problem */}
           <p className="font-archivo text-lg text-off-white/80 max-w-[700px] mx-auto leading-relaxed mt-8">
-            These homes will be built in factories — not on building sites.
-            But the modular industry is fragmented across states, manufacturers,
-            and compliance regimes.{" "}
+            Governments need housing for regional staff — teachers, nurses,
+            police. Employers need housing for workforces in areas where
+            there&apos;s nothing to rent. But capital procurement is slow,
+            complex, and politically fraught.{" "}
             <strong className="text-off-white">
-              F2K is the national integrator
-            </strong>{" "}
-            that funds the build, coordinates the supply chain, and delivers
-            tenanted housing under long-term leases — so governments and
-            employers pay no capital costs. Just an operating lease.
+              What if they didn&apos;t have to fund the build at all?
+            </strong>
           </p>
 
-          {/* Beat 3: The fund is how */}
-          <p className="font-archivo text-base text-off-white/60 max-w-[600px] mx-auto leading-relaxed mt-4">
+          {/* Beat 3: The fund solves it */}
+          <p className="font-archivo text-base text-off-white/80 max-w-[700px] mx-auto leading-relaxed mt-4">
+            The F2K Housing Fund finances the design and construction of
+            modular housing, then delivers it to government departments and
+            employers under{" "}
+            <strong className="text-off-white">
+              10-year take-or-pay leases
+            </strong>
+            . No capital outlay for the tenant — just an operating lease.
+            Once leases are in place, each stabilised asset is sold to a REIT,
+            and the capital recycles into the next project.
+          </p>
+
+          {/* Beat 4: The token is how you participate */}
+          <p className="font-archivo text-base text-off-white/50 max-w-[600px] mx-auto leading-relaxed mt-4">
             The F2K Housing Token lets wholesale investors finance this
-            infrastructure directly. The fund builds, leases to government and
-            employer tenants, then sells each stabilised asset to a REIT —
-            recycling capital into the next project. Full on-chain transparency.
+            pipeline directly — on-chain, transparent, with quarterly
+            distributions as stabilised assets are sold.
           </p>
 
           {/* Stats strip */}
