@@ -7,16 +7,14 @@ export default function MarketingHome() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_85%,rgba(184,66,15,0.12)_0%,transparent_50%),radial-gradient(ellipse_at_85%_15%,rgba(200,168,78,0.08)_0%,transparent_50%)]" />
 
         <div className="relative z-10 max-w-[900px] text-center">
-          {/* Beat 1: The crisis */}
+          {/* Beat 1: The problem */}
           <p className="font-ibm-mono text-[0.75rem] tracking-[0.5em] uppercase text-ember mb-8">
-            375,000 homes short by 2029
+            Government & Workforce Housing
           </p>
           <h1 className="font-playfair text-[clamp(2.8rem,7vw,5.5rem)] font-black leading-[1] mb-4">
-            The Australian Housing Crisis
+            They Need the Housing.
             <br />
-            Won&apos;t Be Solved
-            <br />
-            <em className="text-brass">the Old Way.</em>
+            <em className="text-brass">We Fund the Build.</em>
           </h1>
 
           {/* Beat 2: The procurement problem */}
@@ -53,9 +51,9 @@ export default function MarketingHome() {
           {/* Stats strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-12">
             {[
-              { value: "$70B", label: "Gov't Committed" },
-              { value: "375K", label: "Homes Short" },
-              { value: "5%→25%", label: "Modular Target" },
+              { value: "10yr", label: "Take-or-Pay Leases" },
+              { value: "$2.50", label: "Per $1 Equity" },
+              { value: "12%", label: "Integration Fee" },
               { value: "14-16wk", label: "Factory to Key" },
             ].map((stat) => (
               <div key={stat.label}>
