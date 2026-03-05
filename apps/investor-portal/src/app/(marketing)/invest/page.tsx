@@ -22,10 +22,10 @@ export default function InvestPage() {
             <em className="text-brass">Housing Future</em>
           </h1>
           <p className="font-archivo text-lg text-off-white/70 max-w-[600px] mx-auto leading-relaxed">
-            The F2K Housing Token is a regulated security token backed by real
-            Australian residential property — with returns driven by integration
-            fees, leveraged development profits, and long-term government
-            leases. Here&apos;s everything you need to know before you apply.
+            The F2K Housing Token is a regulated security token that finances
+            government and workforce housing — with returns driven by
+            integration fees and the sale of stabilised, lease-backed assets to
+            institutional investors. Here&apos;s everything you need to know.
           </p>
         </div>
       </section>
@@ -162,8 +162,8 @@ export default function InvestPage() {
               <strong className="text-[#0B0B0B]">
                 Managed Investment Scheme
               </strong>{" "}
-              backed by Australian residential property. Tokens are issued on
-              Ethereum using the{" "}
+              that finances government and workforce housing across Australia.
+              Tokens are issued on Ethereum using the{" "}
               <strong className="text-[#0B0B0B]">
                 ERC-3643 (T-REX) standard
               </strong>{" "}
@@ -172,13 +172,13 @@ export default function InvestPage() {
               allowlisted wallets can hold or transfer tokens.
             </p>
             <p className="text-slate leading-relaxed font-archivo">
-              The 8-12% target yield is generated from three sources: a 12% of
-              GDV integration fee earned on every project F2K delivers,
-              development profit on completed housing, and rental income from
-              properties held under long-term government leases. Because each
-              project uses construction finance (60-70% senior debt), every $1
-              of investor equity funds $2.50-$3.00 of housing — amplifying the
-              revenue base without recourse to the wider fund.
+              The 8-12% target yield comes from two sources: a 12% of GDV
+              integration fee earned during construction, and the sale of each
+              completed, lease-backed project to a REIT or institutional
+              investor at a premium over development cost. Because each project
+              uses construction finance (60-70% senior debt), every $1 of
+              investor equity funds $2.50-$3.00 of housing — amplifying returns
+              without recourse to the wider fund.
             </p>
           </div>
 
@@ -189,8 +189,9 @@ export default function InvestPage() {
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
                 Token price is directly linked to the fund&apos;s Net Asset
-                Value, calculated weekly from independently appraised real
-                assets. Transparent methodology, no hidden markups.
+                Value, calculated weekly from SPV equity positions, accrued fee
+                receivables, and lease-backed asset valuations. Transparent
+                methodology, no hidden markups.
               </p>
             </div>
             <div className="bg-off-white p-6 border border-black/5">
@@ -198,19 +199,21 @@ export default function InvestPage() {
                 Quarterly USDC Distributions
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                Fund income flows back to token holders as USDC distributions
-                every quarter, calculated pro-rata from your token holdings.
-                Paid directly to your connected wallet.
+                As stabilised assets are sold, proceeds flow through the
+                waterfall and are distributed quarterly as USDC to all token
+                holders, calculated pro-rata. Paid directly to your connected
+                wallet.
               </p>
             </div>
             <div className="bg-off-white p-6 border border-black/5">
               <h3 className="font-archivo font-bold text-deep-blue mb-2">
-                Real Asset Backing
+                Lease-Backed Assets
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                Every token is backed by tangible assets in the fund — primarily
-                Australian residential property, with diversification across
-                bonds and other asset classes per concentration limits.
+                Every project is underpinned by 10-year take-or-pay leases from
+                government departments or employers. Contracted income streams
+                de-risk the asset and command premium pricing from institutional
+                buyers.
               </p>
             </div>
             <div className="bg-off-white p-6 border border-black/5">
@@ -348,16 +351,26 @@ export default function InvestPage() {
                   <p className="font-semibold text-deep-blue">$6,500,000</p>
                 </div>
               </div>
-              <div className="mt-4 pt-4 border-t border-black/5">
+              <div className="mt-4 pt-4 border-t border-black/5 space-y-2">
                 <p className="font-archivo text-sm text-slate">
-                  <strong className="text-deep-blue">Integration fee (12% GDV):</strong>{" "}
-                  $1,200,000 earned by fund on $3.5M equity deployed
+                  <strong className="text-deep-blue">
+                    Integration fee (12% GDV):
+                  </strong>{" "}
+                  $1,200,000 earned during construction
+                </p>
+                <p className="font-archivo text-sm text-slate">
+                  <strong className="text-deep-blue">
+                    Stabilised asset sale:
+                  </strong>{" "}
+                  Once 10-year leases are in place, the SPV is sold to a REIT at
+                  a yield premium — the spread over build cost is the fund&apos;s
+                  primary return
                 </p>
               </div>
             </div>
             <p className="text-xs text-slate/60 font-archivo mt-4 italic">
-              Illustrative only. Not a forecast. Actual leverage ratios vary by
-              project and lender.
+              Illustrative only. Not a forecast. Actual leverage ratios and sale
+              pricing vary by project and market conditions.
             </p>
           </div>
 
@@ -373,22 +386,24 @@ export default function InvestPage() {
               {[
                 {
                   level: "1",
-                  label: "Gross Project Revenue",
-                  detail: "Sale proceeds or lease income from completed housing",
+                  label: "Stabilised Asset Sale",
+                  detail:
+                    "Lease-backed SPV sold to REIT or institutional investor once tenants are in place",
                   bg: "bg-deep-blue",
                   text: "text-off-white",
                 },
                 {
                   level: "2",
                   label: "Repay Senior Construction Debt",
-                  detail: "Priority repayment to construction lender",
+                  detail: "Priority repayment to construction lender from sale proceeds",
                   bg: "bg-deep-blue/80",
                   text: "text-off-white",
                 },
                 {
                   level: "3",
                   label: "Integration Fee Income",
-                  detail: "12% of GDV earned by F2K as project integrator",
+                  detail:
+                    "12% of GDV earned by F2K as project integrator (accrued during build)",
                   bg: "bg-ember",
                   text: "text-white",
                 },
@@ -430,12 +445,51 @@ export default function InvestPage() {
             </div>
           </div>
 
-          {/* Sell vs Hold */}
+          {/* The Lease Model */}
+          <div className="bg-deep-blue text-off-white p-8 mb-10">
+            <h3 className="font-playfair text-xl font-bold mb-4">
+              The Lease Model
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-archivo text-sm">
+              <div>
+                <p className="text-brass font-ibm-mono text-xs uppercase tracking-wider mb-2">
+                  Government Regional Housing
+                </p>
+                <p className="text-off-white/70 leading-relaxed">
+                  Housing for regional government staff — teachers, nurses,
+                  police, and essential workers posted to regional and remote
+                  communities. Government departments commit to 10-year
+                  take-or-pay leases. No capital outlay for government — just an
+                  operating lease.
+                </p>
+              </div>
+              <div>
+                <p className="text-brass font-ibm-mono text-xs uppercase tracking-wider mb-2">
+                  Workforce Housing
+                </p>
+                <p className="text-off-white/70 leading-relaxed">
+                  Housing for employer workforces in regional areas where private
+                  rental supply is inadequate. Employers commit to long-term
+                  take-or-pay leases, guaranteeing occupancy. The employer pays
+                  an operating lease — no capital procurement required.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 pt-6 border-t border-off-white/10">
+              <p className="text-off-white/50 text-sm font-archivo leading-relaxed">
+                Contracted, long-term lease income de-risks each asset and makes
+                it attractive to REITs and institutional buyers at premium
+                pricing — which is how fund returns are generated.
+              </p>
+            </div>
+          </div>
+
+          {/* Capital Recycling callout */}
           <blockquote className="border-l-4 border-ember pl-8 py-4">
             <p className="font-playfair text-lg italic text-deep-blue leading-relaxed">
-              Completed developments are either sold en-bloc to institutional
-              buyers or held under long-term government leases — providing the
-              fund with a blend of capital gains and recurring rental income.
+              Every stabilised asset sale returns capital to the fund for
+              redeployment — allowing more projects to be onboarded without
+              raising new equity. Build, stabilise, sell, recycle.
             </p>
           </blockquote>
         </div>

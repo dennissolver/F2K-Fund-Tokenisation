@@ -24,17 +24,20 @@ export default function MarketingHome() {
             These homes will be built in factories — not on building sites.
             But the modular industry is fragmented across states, manufacturers,
             and compliance regimes.{" "}
-            <strong className="text-off-white">F2K is the national integrator</strong> that
-            coordinates the manufacturers, the compliance, and the logistics.
-            From factory to key.
+            <strong className="text-off-white">
+              F2K is the national integrator
+            </strong>{" "}
+            that funds the build, coordinates the supply chain, and delivers
+            tenanted housing under long-term leases — so governments and
+            employers pay no capital costs. Just an operating lease.
           </p>
 
           {/* Beat 3: The fund is how */}
           <p className="font-archivo text-base text-off-white/60 max-w-[600px] mx-auto leading-relaxed mt-4">
-            The F2K Housing Token lets wholesale investors fund this
-            infrastructure directly — with quarterly distributions from
-            integration fees, rental income, and development profit, all with
-            full on-chain transparency.
+            The F2K Housing Token lets wholesale investors finance this
+            infrastructure directly. The fund builds, leases to government and
+            employer tenants, then sells each stabilised asset to a REIT —
+            recycling capital into the next project. Full on-chain transparency.
           </p>
 
           {/* Stats strip */}
@@ -236,15 +239,15 @@ export default function MarketingHome() {
             How It Works
           </p>
           <h2 className="font-playfair text-[2.8rem] font-black text-deep-blue leading-tight mb-6">
-            How Your Capital Is Deployed
+            Build → Stabilise → Sell → Recycle
           </h2>
           <p className="text-lg text-slate leading-relaxed mb-10 font-archivo">
-            Your capital enters the fund as equity and is deployed into housing
-            projects through ring-fenced SPVs, amplified by senior construction
-            finance.
+            The fund finances housing construction, delivers tenanted assets
+            under long-term leases, then sells each stabilised entity to an
+            institutional investor — recycling capital into the next project.
           </p>
 
-          {/* 5-step capital flow */}
+          {/* 6-step capital flow */}
           <div className="space-y-0 mb-12">
             {[
               {
@@ -264,13 +267,18 @@ export default function MarketingHome() {
               },
               {
                 step: "4",
-                title: "Housing Is Built",
-                desc: "F2K is contracted as the project integrator — coordinating manufacturers, compliance, and logistics — and earns a 12% of Gross Development Value (GDV) integration fee.",
+                title: "Housing Is Built & Leased",
+                desc: "F2K delivers housing as integrator (earning a 12% GDV fee) and places tenants — government regional staff or employer workforces — under 10-year take-or-pay leases.",
               },
               {
                 step: "5",
-                title: "Revenue → Distributions",
-                desc: "Completed housing is sold en-bloc or held under long-term government leases. Revenue repays senior debt, flows to the fund income pool, and is distributed quarterly to token holders.",
+                title: "Stabilised Asset Sold",
+                desc: "Once leases are operational, the income-producing SPV is sold to a REIT or institutional long-hold investor at a yield premium over development cost. The spread is the fund's primary return.",
+              },
+              {
+                step: "6",
+                title: "Capital Recycled → Distributions",
+                desc: "Sale proceeds repay senior debt, flow through the fund waterfall, and are distributed quarterly to token holders. Remaining capital is redeployed into the next project.",
               },
             ].map((item, i) => (
               <div key={item.step} className="flex gap-4 items-start">
@@ -278,7 +286,7 @@ export default function MarketingHome() {
                   <div className="w-12 h-12 rounded-full bg-deep-blue text-brass font-playfair text-lg font-bold flex items-center justify-center">
                     {item.step}
                   </div>
-                  {i < 4 && <div className="w-0.5 h-8 bg-warm-grey mt-1" />}
+                  {i < 5 && <div className="w-0.5 h-8 bg-warm-grey mt-1" />}
                 </div>
                 <div className="pb-4">
                   <h3 className="font-archivo font-bold text-deep-blue mb-1">
@@ -292,8 +300,8 @@ export default function MarketingHome() {
             ))}
           </div>
 
-          {/* Capital Stack Panel */}
-          <div className="bg-deep-blue text-off-white p-8 mb-16">
+          {/* Capital Stack + Tenant Model Panel */}
+          <div className="bg-deep-blue text-off-white p-8 mb-10">
             <h3 className="font-playfair text-xl font-bold mb-6">
               Capital Stack
             </h3>
@@ -311,7 +319,10 @@ export default function MarketingHome() {
                       <span className="text-brass font-semibold">60-70%</span>
                     </div>
                     <div className="w-full bg-off-white/10 h-3">
-                      <div className="bg-brass/70 h-3" style={{ width: "65%" }} />
+                      <div
+                        className="bg-brass/70 h-3"
+                        style={{ width: "65%" }}
+                      />
                     </div>
                   </div>
                   <div>
@@ -320,7 +331,10 @@ export default function MarketingHome() {
                       <span className="text-ember font-semibold">30-40%</span>
                     </div>
                     <div className="w-full bg-off-white/10 h-3">
-                      <div className="bg-ember h-3" style={{ width: "35%" }} />
+                      <div
+                        className="bg-ember h-3"
+                        style={{ width: "35%" }}
+                      />
                     </div>
                   </div>
                 </div>
@@ -334,10 +348,10 @@ export default function MarketingHome() {
                     <div className="w-2 h-2 rounded-full bg-ember mt-1.5 shrink-0" />
                     <div>
                       <p className="text-off-white font-semibold">
-                        Integration Fee
+                        Stabilised Asset Sale
                       </p>
                       <p className="text-off-white/60">
-                        12% of GDV on every project
+                        Lease-backed SPV sold to REIT at yield premium
                       </p>
                     </div>
                   </div>
@@ -345,10 +359,10 @@ export default function MarketingHome() {
                     <div className="w-2 h-2 rounded-full bg-brass mt-1.5 shrink-0" />
                     <div>
                       <p className="text-off-white font-semibold">
-                        Development Profit
+                        Integration Fee
                       </p>
                       <p className="text-off-white/60">
-                        Margin on completed housing sales
+                        12% of GDV earned during construction
                       </p>
                     </div>
                   </div>
@@ -356,15 +370,46 @@ export default function MarketingHome() {
                     <div className="w-2 h-2 rounded-full bg-off-white/50 mt-1.5 shrink-0" />
                     <div>
                       <p className="text-off-white font-semibold">
-                        Rental Income
+                        Interim Lease Income
                       </p>
                       <p className="text-off-white/60">
-                        Long-term government leases on held assets
+                        Take-or-pay income between completion and sale
                       </p>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Tenant Model */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            <div className="bg-white p-6 border border-black/5">
+              <p className="font-ibm-mono text-[0.6rem] tracking-wider uppercase text-ember mb-2">
+                Government Regional Housing
+              </p>
+              <h3 className="font-archivo font-bold text-deep-blue mb-2">
+                Teachers, Nurses, Police
+              </h3>
+              <p className="text-sm text-slate leading-relaxed font-archivo">
+                Housing for essential government staff posted to regional and
+                remote communities. Government departments commit to 10-year
+                take-or-pay leases. No capital outlay — just an operating lease.
+              </p>
+            </div>
+            <div className="bg-white p-6 border border-black/5">
+              <p className="font-ibm-mono text-[0.6rem] tracking-wider uppercase text-ember mb-2">
+                Workforce Housing
+              </p>
+              <h3 className="font-archivo font-bold text-deep-blue mb-2">
+                Employer-Backed Leases
+              </h3>
+              <p className="text-sm text-slate leading-relaxed font-archivo">
+                Housing for employer workforces in regional areas where private
+                rental supply is inadequate. Employers commit to long-term
+                take-or-pay leases, guaranteeing occupancy. No capital
+                procurement — just an operating lease.
+              </p>
             </div>
           </div>
 
@@ -394,7 +439,7 @@ export default function MarketingHome() {
               {
                 step: "03",
                 title: "Quarterly Distributions",
-                desc: "Fund income from integration fees, development profit, and rental income flows to token holders as USDC distributions every quarter, calculated pro-rata.",
+                desc: "As stabilised assets are sold, proceeds flow through the fund waterfall and are distributed quarterly as USDC to all token holders, calculated pro-rata.",
               },
             ].map((step) => (
               <div key={step.step} className="text-center">

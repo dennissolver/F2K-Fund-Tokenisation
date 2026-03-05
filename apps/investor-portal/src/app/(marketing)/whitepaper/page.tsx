@@ -18,10 +18,11 @@ export default function WhitepaperPage() {
         </h1>
         <p className="text-lg text-slate leading-relaxed mb-10 font-archivo max-w-[700px]">
           The F2K Housing Token is a regulated ERC-3643 security token
-          representing units in a Managed Investment Scheme that deploys capital
-          into leveraged Australian residential construction projects. The fund
-          earns revenue through integration fees, development profit, and rental
-          income — distributed quarterly to token holders.
+          representing units in a Managed Investment Scheme. The fund finances
+          the design and construction of government and workforce housing,
+          delivers tenanted assets under long-term leases, then sells each
+          stabilised, income-producing entity to a REIT or institutional
+          investor — recycling capital into the next project.
         </p>
 
         {/* Key sections */}
@@ -37,11 +38,11 @@ export default function WhitepaperPage() {
             },
             {
               title: "NAV & Pricing",
-              desc: "Net Asset Value calculated weekly from independently appraised real assets, SPV equity positions, and accrued fee receivables. Token price directly reflects per-unit NAV. Transparent methodology.",
+              desc: "Net Asset Value calculated weekly from independently appraised SPV equity positions, accrued integration fee receivables, and lease-backed asset valuations. Token price directly reflects per-unit NAV.",
             },
             {
               title: "Distribution Model",
-              desc: "Quarterly USDC distributions follow the fund waterfall: gross project revenue → repay senior construction debt → integration fee income (12% GDV) → fund income pool → management fee (1.5%) → preferred return (8%) → performance fee (20% above hurdle) → pro-rata distribution to token holders.",
+              desc: "Quarterly USDC distributions follow the fund waterfall: stabilised asset sale proceeds → repay senior construction debt → integration fee income (12% GDV) → fund income pool → management fee (1.5%) → preferred return (8%) → performance fee (20% above hurdle) → pro-rata distribution to token holders.",
             },
             {
               title: "Subscription & Entry",
@@ -72,7 +73,7 @@ export default function WhitepaperPage() {
             Fund Operations
           </p>
           <h2 className="font-playfair text-[2rem] font-black text-deep-blue leading-tight mb-6">
-            How the Fund Generates Returns
+            Build → Stabilise → Sell → Recycle
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
@@ -80,11 +81,13 @@ export default function WhitepaperPage() {
                 Capital Deployment
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                Fund equity (30-40%) is committed to ring-fenced Special Purpose
-                Vehicles (SPVs) — one per project. Each SPV raises senior
-                construction debt (60-70%), so every $1 of investor equity funds
-                $2.50-$3.00 of housing. SPV structure isolates project risk from
-                the wider fund.
+                The fund finances design and construction costs through
+                ring-fenced Special Purpose Vehicles (SPVs) — one per project.
+                Each SPV raises senior construction debt (60-70%), so every $1
+                of investor equity funds $2.50-$3.00 of housing. By self-funding
+                the build, F2K removes all capital cost from the procurement
+                process — governments and employers simply sign an operating
+                lease.
               </p>
             </div>
             <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
@@ -92,22 +95,25 @@ export default function WhitepaperPage() {
                 Revenue Model
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                F2K is contracted as integrator on every project and earns a 12%
-                of Gross Development Value (GDV) integration fee. Additional
-                income comes from development profit on completed projects and
-                rental income from properties held under long-term government
-                leases.
+                F2K earns a 12% of GDV integration fee during build. Once
+                housing is delivered and tenants are in place under 10-year
+                take-or-pay leases, the stabilised, income-producing entity is
+                sold to a REIT or institutional long-hold investor at a yield
+                premium over development cost. The spread between build cost and
+                sale price is the fund&apos;s primary return.
               </p>
             </div>
             <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
               <h3 className="font-archivo font-bold text-deep-blue mb-2">
-                Exit & Liquidity
+                Capital Recycling & Liquidity
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                Completed developments are either sold en-bloc or held under
-                long-term government leases. The fund is open-ended with
-                quarterly redemption windows. Tokens are transferable to other
-                allowlisted investors, providing secondary liquidity.
+                Each stabilised asset sale returns capital to the fund —
+                available for distribution or redeployment into the next
+                project. This recycling means the fund can run multiple projects
+                concurrently without raising new equity each time. Quarterly
+                redemption windows and transferable tokens provide investor
+                liquidity.
               </p>
             </div>
           </div>
