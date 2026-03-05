@@ -54,6 +54,21 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
     document_checklist: { document: string; status: string }[];
   } | null>(null);
 
+  // Revaluation
+  const [revalAiLoading, setRevalAiLoading] = useState(false);
+  const [revalAiResult, setRevalAiResult] = useState<{
+    recommended_action: "maintain" | "increase" | "decrease";
+    suggested_value: number;
+    suggested_ltv: number;
+    confidence: "high" | "medium" | "low";
+    reasoning: string;
+    market_factors: string[];
+  } | null>(null);
+  const [revalValue, setRevalValue] = useState("");
+  const [revalLtvOverride, setRevalLtvOverride] = useState("");
+  const [revalReason, setRevalReason] = useState("");
+  const [revalLoading, setRevalLoading] = useState(false);
+
   // Lien form
   const [lienReference, setLienReference] = useState("");
 
@@ -166,6 +181,72 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
     setAiLoading(false);
   }
 
+  async function handleRevalAi() {
+    setRevalAiLoading(true);
+    setError(null);
+
+    const res = await fetch(`/api/stakes/${params.id}/revalue-ai`, {
+      method: "POST",
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setRevalAiResult(data.appraisal);
+      // Pre-fill revaluation form with AI suggestions
+      setRevalValue(String(data.appraisal.suggested_value));
+      setRevalLtvOverride(String((data.appraisal.suggested_ltv * 100).toFixed(0)));
+      setRevalReason(
+        `[AI ${data.appraisal.confidence} confidence] ${data.appraisal.reasoning}`
+      );
+    } else {
+      const data = await res.json();
+      setError(data.error || "AI revaluation failed");
+    }
+    setRevalAiLoading(false);
+  }
+
+  async function handleRevalue() {
+    if (!revalReason.trim()) {
+      setError("Reason is required for revaluation");
+      return;
+    }
+    if (!revalValue || parseFloat(revalValue) <= 0) {
+      setError("New appraised value must be a positive number");
+      return;
+    }
+
+    setRevalLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    const body: Record<string, unknown> = {
+      new_appraised_value: parseFloat(revalValue),
+      reason: revalReason,
+    };
+    if (revalLtvOverride) {
+      body.ltv_override = parseFloat(revalLtvOverride) / 100;
+    }
+
+    const res = await fetch(`/api/stakes/${params.id}/revalue`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+
+    if (res.ok) {
+      setSuccess("Asset revaluation applied successfully");
+      setRevalAiResult(null);
+      setRevalValue("");
+      setRevalLtvOverride("");
+      setRevalReason("");
+      fetchStake();
+    } else {
+      const data = await res.json();
+      setError(data.error || "Revaluation failed");
+    }
+    setRevalLoading(false);
+  }
+
   if (loading) {
     return <div className="p-8 text-gray-400">Loading...</div>;
   }
@@ -260,6 +341,160 @@ export default function StakeDetailPage({ params }: { params: { id: string } }) 
               <span className="text-gray-400">Notes: </span>{stake.review_notes}
             </div>
           )}
+        </div>
+      )}
+
+      {/* Revaluation section — only for approved-like statuses */}
+      {["approved", "lien_registered", "tokens_minted"].includes(stake.status) && stake.appraised_value && (
+        <div className="bg-white rounded-xl p-5 shadow-sm border mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-sm font-medium text-gray-500">Asset Revaluation</h3>
+            <button
+              onClick={handleRevalAi}
+              disabled={revalAiLoading || revalLoading}
+              className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-sm font-medium disabled:opacity-50 flex items-center gap-2"
+            >
+              {revalAiLoading ? (
+                <>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Analysing...
+                </>
+              ) : (
+                "AI Revalue"
+              )}
+            </button>
+          </div>
+
+          {/* AI Revaluation Results */}
+          {revalAiResult && (
+            <div className="mb-4 p-4 bg-violet-50 border border-violet-200 rounded-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-sm font-semibold text-violet-800">AI Revaluation Assessment</span>
+                <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                  revalAiResult.confidence === "high" ? "bg-green-100 text-green-700" :
+                  revalAiResult.confidence === "medium" ? "bg-yellow-100 text-yellow-700" :
+                  "bg-red-100 text-red-700"
+                }`}>
+                  {revalAiResult.confidence} confidence
+                </span>
+                <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                  revalAiResult.recommended_action === "maintain" ? "bg-gray-100 text-gray-700" :
+                  revalAiResult.recommended_action === "increase" ? "bg-green-100 text-green-700" :
+                  "bg-red-100 text-red-700"
+                }`}>
+                  {revalAiResult.recommended_action}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-3 gap-3 text-sm mb-3">
+                <div>
+                  <span className="text-violet-600">Current Value</span>
+                  <div className="font-semibold">${Number(stake.appraised_value).toLocaleString()}</div>
+                </div>
+                <div>
+                  <span className="text-violet-600">Suggested Value</span>
+                  <div className="font-semibold">${Number(revalAiResult.suggested_value).toLocaleString()}</div>
+                </div>
+                <div>
+                  <span className="text-violet-600">Suggested LTV</span>
+                  <div className="font-semibold">{(revalAiResult.suggested_ltv * 100).toFixed(0)}%</div>
+                </div>
+              </div>
+
+              {revalAiResult.suggested_value !== stake.appraised_value && (
+                <div className="text-sm mb-3 p-2 bg-white rounded border border-violet-100">
+                  <span className="text-gray-500">Value change: </span>
+                  <span className={revalAiResult.suggested_value > Number(stake.appraised_value) ? "text-green-700 font-medium" : "text-red-700 font-medium"}>
+                    {revalAiResult.suggested_value > Number(stake.appraised_value) ? "+" : ""}
+                    ${(revalAiResult.suggested_value - Number(stake.appraised_value)).toLocaleString()}
+                    {" "}({((revalAiResult.suggested_value - Number(stake.appraised_value)) / Number(stake.appraised_value) * 100).toFixed(1)}%)
+                  </span>
+                </div>
+              )}
+
+              <p className="text-sm text-violet-900 mb-3">{revalAiResult.reasoning}</p>
+
+              {revalAiResult.market_factors.length > 0 && (
+                <div>
+                  <span className="text-xs font-medium text-violet-600">Market Factors</span>
+                  <ul className="mt-1 space-y-1">
+                    {revalAiResult.market_factors.map((factor, i) => (
+                      <li key={i} className="text-xs text-violet-800 flex items-start gap-1">
+                        <span className="mt-0.5 shrink-0">-</span>
+                        <span>{factor}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Revaluation Form */}
+          <div className="space-y-3">
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">New Appraised Value (USD)</label>
+                <input
+                  type="number"
+                  value={revalValue}
+                  onChange={(e) => setRevalValue(e.target.value)}
+                  placeholder={String(stake.appraised_value)}
+                  className="w-full px-3 py-2 border rounded text-sm focus:ring-2 focus:ring-violet-500 outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">LTV Override (%)</label>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={revalLtvOverride}
+                  onChange={(e) => setRevalLtvOverride(e.target.value)}
+                  placeholder={stake.ltv_ratio_applied ? `${(Number(stake.ltv_ratio_applied) * 100).toFixed(0)}` : ""}
+                  className="w-full px-3 py-2 border rounded text-sm focus:ring-2 focus:ring-violet-500 outline-none"
+                />
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Reason (required)</label>
+              <textarea
+                value={revalReason}
+                onChange={(e) => setRevalReason(e.target.value)}
+                rows={3}
+                placeholder="Explain the reason for revaluation..."
+                className="w-full px-3 py-2 border rounded text-sm focus:ring-2 focus:ring-violet-500 outline-none"
+              />
+            </div>
+
+            {/* Previous vs New comparison */}
+            {revalValue && parseFloat(revalValue) > 0 && (
+              <div className="p-3 bg-gray-50 rounded border text-sm">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-gray-500 text-xs mb-1">Current</div>
+                    <div>Appraised: <span className="font-medium">${Number(stake.appraised_value).toLocaleString()}</span></div>
+                    <div>Collateral: <span className="font-medium">{stake.collateral_value ? `$${Number(stake.collateral_value).toLocaleString()}` : "—"}</span></div>
+                  </div>
+                  <div>
+                    <div className="text-gray-500 text-xs mb-1">After Revaluation</div>
+                    <div>Appraised: <span className="font-medium">${Number(parseFloat(revalValue)).toLocaleString()}</span></div>
+                    <div>Collateral: <span className="font-medium">
+                      ${(parseFloat(revalValue) * (revalLtvOverride ? parseFloat(revalLtvOverride) / 100 : Number(stake.ltv_ratio_applied || 0))).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span></div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleRevalue}
+              disabled={revalLoading || !revalReason.trim() || !revalValue}
+              className="bg-violet-600 hover:bg-violet-700 text-white px-4 py-2 rounded text-sm font-medium disabled:opacity-50"
+            >
+              {revalLoading ? "Applying..." : "Apply Revaluation"}
+            </button>
+          </div>
         </div>
       )}
 

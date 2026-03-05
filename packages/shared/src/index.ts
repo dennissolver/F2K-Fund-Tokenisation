@@ -204,6 +204,24 @@ export interface AssetClass {
   updated_at: string;
 }
 
+// SPV management
+export type SpvEntityType = "unit_trust" | "pty_ltd" | "partnership";
+export type SpvStatus = "active" | "winding_down" | "closed";
+
+export interface Spv {
+  id: string;
+  name: string;
+  entity_type: SpvEntityType;
+  abn: string | null;
+  status: SpvStatus;
+  target_allocation: number | null;
+  current_nav: number | null;
+  description: string | null;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface AssetStake {
   id: string;
   investor_id: string;
