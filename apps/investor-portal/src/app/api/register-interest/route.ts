@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
-import { Resend } from "resend";
 import { createSupabaseService } from "@/lib/supabase-service";
 import { registerInterestSchema } from "@f2k/shared/validation";
-
-function getResend() {
-  return new Resend(process.env.RESEND_API_KEY);
-}
 
 const typeLabels: Record<string, string> = {
   lender: "Lender",
@@ -67,7 +62,9 @@ export async function POST(request: Request) {
         .join("")
     : "";
 
-  await getResend().emails.send({
+  const { Resend } = await import("resend");
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || "F2K Platform <onboarding@resend.dev>",
     to: "mcmdennis@gmail.com",
     subject: `New ROI: ${typeLabels[d.type] || d.type} — ${d.org_name}`,
