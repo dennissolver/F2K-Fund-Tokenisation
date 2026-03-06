@@ -1,6 +1,18 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 import { createSupabaseService } from "@/lib/supabase-service";
 import { registerInterestSchema } from "@f2k/shared/validation";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const typeLabels: Record<string, string> = {
+  lender: "Lender",
+  government: "Government",
+  offtaker: "Offtaker",
+  career: "Career",
+  introducer: "Introducer",
+  afsl_partner: "AFSL Partner",
+};
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -43,6 +55,38 @@ export async function POST(request: Request) {
     entity_type: "registration_of_interest",
     entity_id: null,
     details: { type: parsed.data.type, org_name: parsed.data.org_name },
+  });
+
+  // Email notification
+  const d = parsed.data;
+  const detailRows = d.details
+    ? Object.entries(d.details)
+        .map(([k, v]) => `<tr><td style="padding:4px 8px;color:#666">${k}</td><td style="padding:4px 8px">${String(v)}</td></tr>`)
+        .join("")
+    : "";
+
+  await resend.emails.send({
+    from: "F2K Platform <onboarding@resend.dev>",
+    to: "mcmdennis@gmail.com",
+    subject: `New ROI: ${typeLabels[d.type] || d.type} — ${d.org_name}`,
+    html: `
+      <h2 style="color:#1A2744">New Registration of Interest</h2>
+      <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
+        <tr><td style="padding:4px 8px;color:#666">Type</td><td style="padding:4px 8px;font-weight:bold">${typeLabels[d.type] || d.type}</td></tr>
+        <tr><td style="padding:4px 8px;color:#666">Organisation</td><td style="padding:4px 8px">${d.org_name}</td></tr>
+        <tr><td style="padding:4px 8px;color:#666">Contact</td><td style="padding:4px 8px">${d.contact_name}</td></tr>
+        <tr><td style="padding:4px 8px;color:#666">Email</td><td style="padding:4px 8px"><a href="mailto:${d.contact_email}">${d.contact_email}</a></td></tr>
+        ${d.contact_phone ? `<tr><td style="padding:4px 8px;color:#666">Phone</td><td style="padding:4px 8px">${d.contact_phone}</td></tr>` : ""}
+        ${d.region ? `<tr><td style="padding:4px 8px;color:#666">Region</td><td style="padding:4px 8px">${d.region}</td></tr>` : ""}
+        ${d.message ? `<tr><td style="padding:4px 8px;color:#666">Message</td><td style="padding:4px 8px">${d.message}</td></tr>` : ""}
+        ${detailRows}
+      </table>
+      <p style="margin-top:16px;font-size:12px;color:#999">
+        <a href="https://admin.f2k.com.au/registrations">View in Admin Console</a>
+      </p>
+    `,
+  }).catch((err) => {
+    console.error("Failed to send ROI notification email:", err);
   });
 
   return NextResponse.json({ success: true });
