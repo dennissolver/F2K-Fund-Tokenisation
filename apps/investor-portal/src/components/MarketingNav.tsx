@@ -8,6 +8,7 @@ const navLinks = [
   { label: "Government", href: "/government" },
   { label: "Offtakers", href: "/offtakers" },
   { label: "Introducers", href: "/introducers" },
+  { label: "AFSL Partners", href: "/afsl-partners" },
   { label: "Structure", href: "/structure" },
   { label: "Careers", href: "/careers" },
   { label: "Platform", href: "/platform" },
