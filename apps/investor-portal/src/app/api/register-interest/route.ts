@@ -81,9 +81,7 @@ export async function POST(request: Request) {
         ${d.message ? `<tr><td style="padding:4px 8px;color:#666">Message</td><td style="padding:4px 8px">${d.message}</td></tr>` : ""}
         ${detailRows}
       </table>
-      <p style="margin-top:16px;font-size:12px;color:#999">
-        <a href="https://admin.f2k.com.au/registrations">View in Admin Console</a>
-      </p>
+      <p style="margin-top:16px;font-size:12px;color:#999">View in Admin Console to manage this registration.</p>
     `,
   }).catch((err) => {
     console.error("Failed to send ROI notification email:", err);
