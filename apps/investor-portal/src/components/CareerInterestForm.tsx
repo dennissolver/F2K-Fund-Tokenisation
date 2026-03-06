@@ -22,6 +22,7 @@ const positions = [
   "Responsible Manager #2",
   "Compliance Officer",
   "Head of Social Housing",
+  "Head of Indigenous Housing",
   "Manufacturer Relations Manager",
   "Compliance & QA Manager",
   "Government Procurement Manager",
