@@ -22,7 +22,9 @@
         "DEPLOYER_PRIVATE_KEY",
         "WALLET_ADDRESS",
         "SUMSUB_APP_TOKEN",
-        "SUMSUB_SECRET_KEY"
+        "SUMSUB_SECRET_KEY",
+        "RESEND_API_KEY",
+        "RESEND_FROM_EMAIL"
       ]
     },
     "dev": {
