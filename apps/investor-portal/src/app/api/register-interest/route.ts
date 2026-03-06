@@ -9,6 +9,7 @@ const typeLabels: Record<string, string> = {
   career: "Career",
   introducer: "Introducer",
   afsl_partner: "AFSL Partner",
+  project: "Project",
 };
 
 export async function POST(request: Request) {

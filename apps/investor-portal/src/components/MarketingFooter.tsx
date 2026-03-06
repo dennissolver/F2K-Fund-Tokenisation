@@ -63,6 +63,12 @@ export default function MarketingFooter() {
                 AFSL Partners
               </a>
               <a
+                href="/projects"
+                className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
+              >
+                Projects
+              </a>
+              <a
                 href="/structure"
                 className="block text-sm text-off-white/50 hover:text-brass transition-colors font-archivo"
               >

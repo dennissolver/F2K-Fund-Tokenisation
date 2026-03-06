@@ -9,6 +9,7 @@ const navLinks = [
   { label: "Offtakers", href: "/offtakers" },
   { label: "Introducers", href: "/introducers" },
   { label: "AFSL Partners", href: "/afsl-partners" },
+  { label: "Projects", href: "/projects" },
   { label: "Structure", href: "/structure" },
   { label: "Careers", href: "/careers" },
   { label: "Platform", href: "/platform" },
