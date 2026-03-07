@@ -48,13 +48,33 @@ async function main() {
   const distributionAddress = await distribution.getAddress();
   console.log("F2KDistribution deployed to:", distributionAddress);
 
+  // Deploy F2KRedemption
+  const tokenAddress = process.env.TOKEN_ADDRESS ?? "0x0000000000000000000000000000000000000000";
+  console.log("Deploying F2KRedemption...");
+  const RedemptionFactory = await ethers.getContractFactory("F2KRedemption");
+  const redemption = await RedemptionFactory.deploy(usdcAddress, tokenAddress, deployer.address, deployer.address);
+  await redemption.waitForDeployment();
+  const redemptionAddress = await redemption.getAddress();
+  console.log("F2KRedemption deployed to:", redemptionAddress);
+
+  // Deploy F2KMarketplace
+  const feeBps = 50; // 0.50%
+  console.log("Deploying F2KMarketplace...");
+  const MarketplaceFactory = await ethers.getContractFactory("F2KMarketplace");
+  const marketplace = await MarketplaceFactory.deploy(usdcAddress, tokenAddress, feeBps, deployer.address, deployer.address);
+  await marketplace.waitForDeployment();
+  const marketplaceAddress = await marketplace.getAddress();
+  console.log("F2KMarketplace deployed to:", marketplaceAddress);
+
   // Save deployment addresses
   const deployments = {
     sepolia: {
-      token: "0x0000000000000000000000000000000000000000", // T-REX token deployed separately
+      token: tokenAddress,
       navAttestation: navAddress,
       distribution: distributionAddress,
       subscription: subscriptionAddress,
+      redemption: redemptionAddress,
+      marketplace: marketplaceAddress,
       usdc: usdcAddress,
       identityRegistry: "0x0000000000000000000000000000000000000000",
     },
@@ -69,11 +89,15 @@ async function main() {
   console.log(`Subscription:    ${subscriptionAddress}`);
   console.log(`NAV Attestation: ${navAddress}`);
   console.log(`Distribution:    ${distributionAddress}`);
+  console.log(`Redemption:      ${redemptionAddress}`);
+  console.log(`Marketplace:     ${marketplaceAddress}`);
   console.log("\nAdd these to your .env.local:");
   console.log(`NEXT_PUBLIC_USDC_ADDRESS=${usdcAddress}`);
   console.log(`NEXT_PUBLIC_SUBSCRIPTION_ADDRESS=${subscriptionAddress}`);
   console.log(`NEXT_PUBLIC_NAV_ADDRESS=${navAddress}`);
   console.log(`NEXT_PUBLIC_DISTRIBUTION_ADDRESS=${distributionAddress}`);
+  console.log(`NEXT_PUBLIC_REDEMPTION_ADDRESS=${redemptionAddress}`);
+  console.log(`NEXT_PUBLIC_MARKETPLACE_ADDRESS=${marketplaceAddress}`);
 }
 
 main().catch((error) => {

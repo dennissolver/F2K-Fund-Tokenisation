@@ -1,4 +1,5 @@
 import { createSupabaseServer } from "@/lib/supabase-server";
+import { createSupabaseService } from "@/lib/supabase-service";
 import { TOKEN_SYMBOL } from "@f2k/shared";
 import { DashboardOnChain } from "./DashboardOnChain";
 
@@ -59,6 +60,24 @@ export default async function DashboardPage() {
     .eq("investor_id", investor?.id)
     .order("created_at", { ascending: false });
 
+  // Fetch redemptions
+  const serviceClient = createSupabaseService();
+  const { data: redemptions } = investor
+    ? await (serviceClient.from("redemptions") as any)
+        .select("*")
+        .eq("investor_id", investor.id)
+        .order("created_at", { ascending: false })
+        .limit(5)
+    : { data: null };
+
+  // Fetch marketplace listings
+  const { data: myListings } = investor
+    ? await (serviceClient.from("marketplace_listings") as any)
+        .select("*")
+        .eq("seller_id", investor.id)
+        .eq("status", "active")
+    : { data: null };
+
   // Calculate holdings
   const mintedSubs = subscriptions?.filter((s) => s.status === "minted") || [];
   const tokenBalance = mintedSubs.reduce(
@@ -76,6 +95,17 @@ export default async function DashboardPage() {
     (sum, p) => sum + Number(p.amount_usdc),
     0
   );
+
+  const tokensInRedemption = (redemptions || [])
+    .filter((r: Record<string, unknown>) => ["pending", "approved", "processing"].includes(r.status as string))
+    .reduce((sum: number, r: Record<string, unknown>) => sum + Number(r.token_amount), 0);
+
+  const tokensInListings = (myListings || []).reduce(
+    (sum: number, l: Record<string, unknown>) => sum + Number(l.token_amount),
+    0
+  );
+
+  const availableTokens = tokenBalance - tokensInRedemption - tokensInListings;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -117,6 +147,40 @@ export default async function DashboardPage() {
                 })}
               </span>
             </div>
+            {(tokensInRedemption > 0 || tokensInListings > 0) && (
+              <div className="border-t pt-2 mt-2 space-y-1">
+                <div className="flex justify-between text-xs">
+                  <span className="text-gray-500">Available</span>
+                  <span className="text-gray-600">{availableTokens.toLocaleString()} {TOKEN_SYMBOL}</span>
+                </div>
+                {tokensInRedemption > 0 && (
+                  <div className="flex justify-between text-xs">
+                    <span className="text-amber-600">In Redemption</span>
+                    <span className="text-amber-600">{tokensInRedemption.toLocaleString()} {TOKEN_SYMBOL}</span>
+                  </div>
+                )}
+                {tokensInListings > 0 && (
+                  <div className="flex justify-between text-xs">
+                    <span className="text-blue-600">Listed for Sale</span>
+                    <span className="text-blue-600">{tokensInListings.toLocaleString()} {TOKEN_SYMBOL}</span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="flex gap-2 mt-4">
+            <a
+              href="/redeem"
+              className="flex-1 text-center text-xs bg-red-50 hover:bg-red-100 text-red-700 py-2 rounded-lg transition-colors"
+            >
+              Redeem
+            </a>
+            <a
+              href="/marketplace"
+              className="flex-1 text-center text-xs bg-blue-50 hover:bg-blue-100 text-blue-700 py-2 rounded-lg transition-colors"
+            >
+              Marketplace
+            </a>
           </div>
         </div>
 
@@ -288,6 +352,61 @@ export default async function DashboardPage() {
           </p>
         )}
       </div>
+
+      {/* Active Redemptions */}
+      {redemptions && redemptions.length > 0 && (
+        <div className="bg-white rounded-xl p-6 shadow-sm border mb-6">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-sm font-medium text-gray-500">Recent Redemptions</h3>
+            <a
+              href="/redeem"
+              className="text-sm text-f2k-blue hover:underline"
+            >
+              View All
+            </a>
+          </div>
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-left text-gray-500 border-b">
+                <th className="pb-2">Date</th>
+                <th className="pb-2">Tokens</th>
+                <th className="pb-2">Est. Value</th>
+                <th className="pb-2">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {redemptions.map((r: Record<string, unknown>) => (
+                <tr key={r.id as string} className="border-b last:border-0">
+                  <td className="py-2">
+                    {new Date(r.created_at as string).toLocaleDateString()}
+                  </td>
+                  <td className="py-2">
+                    {Number(r.token_amount).toLocaleString()} {TOKEN_SYMBOL}
+                  </td>
+                  <td className="py-2">
+                    ${Number(r.redemption_value_usdc).toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                    })}
+                  </td>
+                  <td className="py-2">
+                    <span
+                      className={`px-2 py-0.5 rounded text-xs ${
+                        r.status === "completed"
+                          ? "bg-green-100 text-green-700"
+                          : r.status === "rejected"
+                          ? "bg-red-100 text-red-700"
+                          : "bg-yellow-100 text-yellow-700"
+                      }`}
+                    >
+                      {r.status as string}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {/* Subscriptions */}
       <div className="bg-white rounded-xl p-6 shadow-sm border">

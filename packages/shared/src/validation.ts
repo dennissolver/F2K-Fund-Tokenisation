@@ -99,6 +99,39 @@ export const roiStatusUpdateSchema = z.object({
 });
 export type RoiStatusUpdateInput = z.infer<typeof roiStatusUpdateSchema>;
 
+// Redemption: investor requests token redemption
+export const redeemRequestSchema = z.object({
+  token_amount: z.number().positive("Token amount must be positive"),
+  tx_hash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+});
+
+// Admin: redemption review
+export const redeemReviewSchema = z.object({
+  action: z.enum(["approve", "reject"]),
+  rejection_reason: z.string().optional(),
+  payout_tx_hash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+  burn_tx_hash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+});
+
+// Marketplace: investor creates listing
+export const marketplaceListSchema = z.object({
+  token_amount: z.number().positive("Token amount must be positive"),
+  price_per_token: z.number().positive("Price must be positive"),
+  tx_hash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+  expires_in_days: z.number().min(1).max(90).optional(),
+});
+
+// Marketplace: investor buys a listing
+export const marketplaceBuySchema = z.object({
+  listing_id: z.string().uuid(),
+  tx_hash: z.string().regex(/^0x[a-fA-F0-9]{64}$/).optional(),
+});
+
+export type RedeemRequestInput = z.infer<typeof redeemRequestSchema>;
+export type RedeemReviewInput = z.infer<typeof redeemReviewSchema>;
+export type MarketplaceListInput = z.infer<typeof marketplaceListSchema>;
+export type MarketplaceBuyInput = z.infer<typeof marketplaceBuySchema>;
+
 export type SubscribeInput = z.infer<typeof subscribeSchema>;
 export type WalletVerifyInput = z.infer<typeof walletVerifySchema>;
 export type AllowlistActionInput = z.infer<typeof allowlistActionSchema>;

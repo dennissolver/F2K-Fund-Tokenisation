@@ -32,6 +32,18 @@ export default function PortalLayout({
               Stake
             </a>
             <a
+              href="/redeem"
+              className="hover:text-gold transition-colors"
+            >
+              Redeem
+            </a>
+            <a
+              href="/marketplace"
+              className="hover:text-gold transition-colors"
+            >
+              Marketplace
+            </a>
+            <a
               href="/statements"
               className="hover:text-gold transition-colors"
             >

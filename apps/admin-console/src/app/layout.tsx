@@ -29,6 +29,7 @@ export default function RootLayout({
                 { href: "/investors", label: "Investors" },
                 { href: "/allowlist", label: "Allowlist" },
                 { href: "/subscriptions", label: "Subscriptions" },
+                { href: "/redemptions", label: "Redemptions" },
                 { href: "/stakes", label: "Asset Stakes" },
                 { href: "/token-balances", label: "Token Balances" },
                 { href: "/spvs", label: "SPVs" },

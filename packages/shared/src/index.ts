@@ -150,6 +150,54 @@ export interface AdminUser {
   created_at: string;
 }
 
+// Redemption
+export type RedemptionStatus =
+  | "pending"
+  | "approved"
+  | "rejected"
+  | "processing"
+  | "completed"
+  | "cancelled";
+
+export interface Redemption {
+  id: string;
+  investor_id: string;
+  token_amount: number;
+  nav_at_request: number | null;
+  redemption_value_usdc: number | null;
+  status: RedemptionStatus;
+  notice_period_ends: string | null;
+  approved_by: string | null;
+  approved_at: string | null;
+  burn_tx_hash: string | null;
+  payout_tx_hash: string | null;
+  rejection_reason: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// Marketplace
+export type MarketplaceListingStatus = "active" | "filled" | "cancelled" | "expired";
+
+export interface MarketplaceListing {
+  id: string;
+  seller_id: string;
+  token_amount: number;
+  price_per_token: number;
+  total_price_usdc: number;
+  status: MarketplaceListingStatus;
+  buyer_id: string | null;
+  filled_at: string | null;
+  transfer_tx_hash: string | null;
+  settlement_tx_hash: string | null;
+  expires_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export const REDEMPTION_NOTICE_DAYS = 30;
+export const MARKETPLACE_FEE_BPS = 50; // 0.5% platform fee
+
 // Concentration limits (Whitepaper Section 8)
 export const CONCENTRATION_LIMITS = {
   maxAssetClassPct: 0.40, // No single asset class >40% of total fund NAV
