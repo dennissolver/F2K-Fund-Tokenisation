@@ -12,6 +12,8 @@ const navItems: NavItem[] = [
     children: [
       { label: "Apply to Invest", href: "/invest" },
       { label: "Portfolio", href: "/portfolio" },
+      { label: "Redeem Tokens", href: "/redeem" },
+      { label: "Marketplace", href: "/marketplace" },
       { label: "Documents", href: "/documents" },
       { label: "Platform", href: "/platform" },
     ],

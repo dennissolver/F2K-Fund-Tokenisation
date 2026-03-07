@@ -71,6 +71,11 @@ export default function ProjectSubmitForm() {
   const [fundingStatus, setFundingStatus] = useState("");
   const [siteAddress, setSiteAddress] = useState("");
   const [timeline, setTimeline] = useState("");
+  const [totalProjectCost, setTotalProjectCost] = useState("");
+  const [estimatedGrv, setEstimatedGrv] = useState("");
+  const [expectedAnnualRent, setExpectedAnnualRent] = useState("");
+  const [landValue, setLandValue] = useState("");
+  const [costPerDwelling, setCostPerDwelling] = useState("");
   const [message, setMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
 
@@ -100,6 +105,11 @@ export default function ProjectSubmitForm() {
             funding_status: fundingStatus,
             site_address: siteAddress || undefined,
             target_timeline: timeline || undefined,
+            total_project_cost: totalProjectCost ? parseFloat(totalProjectCost) : undefined,
+            estimated_grv: estimatedGrv ? parseFloat(estimatedGrv) : undefined,
+            expected_annual_rent: expectedAnnualRent ? parseFloat(expectedAnnualRent) : undefined,
+            land_value: landValue ? parseFloat(landValue) : undefined,
+            cost_per_dwelling: costPerDwelling ? parseFloat(costPerDwelling) : undefined,
           },
         }),
       });
@@ -319,6 +329,73 @@ export default function ProjectSubmitForm() {
             placeholder="e.g. Q3 2026, Within 12 months, DA dependent"
           />
         </div>
+        {/* Financial details */}
+        <div className="border-t border-black/5 pt-5 space-y-5">
+          <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-ember">
+            Financial Details (Optional)
+          </p>
+          <p className="text-xs text-slate font-archivo">
+            Providing financial data enables a faster, more accurate assessment of your project.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div>
+              <label className={labelClass}>Total Project Cost (AUD)</label>
+              <input
+                type="number"
+                step="any"
+                className={inputClass}
+                value={totalProjectCost}
+                onChange={(e) => setTotalProjectCost(e.target.value)}
+                placeholder="e.g. 25000000"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Estimated GRV / End Value (AUD)</label>
+              <input
+                type="number"
+                step="any"
+                className={inputClass}
+                value={estimatedGrv}
+                onChange={(e) => setEstimatedGrv(e.target.value)}
+                placeholder="Gross Realisation Value"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Expected Annual Rental Income (AUD)</label>
+              <input
+                type="number"
+                step="any"
+                className={inputClass}
+                value={expectedAnnualRent}
+                onChange={(e) => setExpectedAnnualRent(e.target.value)}
+                placeholder="If hold-to-rent strategy"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Land Value (AUD)</label>
+              <input
+                type="number"
+                step="any"
+                className={inputClass}
+                value={landValue}
+                onChange={(e) => setLandValue(e.target.value)}
+                placeholder="Current market value of land"
+              />
+            </div>
+            <div>
+              <label className={labelClass}>Construction Cost per Dwelling (AUD)</label>
+              <input
+                type="number"
+                step="any"
+                className={inputClass}
+                value={costPerDwelling}
+                onChange={(e) => setCostPerDwelling(e.target.value)}
+                placeholder="e.g. 250000"
+              />
+            </div>
+          </div>
+        </div>
+
         <div>
           <label className={labelClass}>Project Summary</label>
           <textarea
