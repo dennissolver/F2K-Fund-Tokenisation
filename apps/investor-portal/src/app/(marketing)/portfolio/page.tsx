@@ -8,16 +8,30 @@ const statusColors: Record<string, string> = {
 
 const projects = [
   {
-    name: "Placeholder — First Project Announcement Coming Soon",
-    location: "TBA",
-    state: "National",
-    type: "Social Housing",
-    dwellings: null,
-    status: "Pipeline",
+    name: "Branscombe Estate",
+    location: "122–124 Branscombe Road, Claremont TAS 7011",
+    state: "TAS",
+    type: "Residential — Modular Homes",
+    dwellings: "37",
+    status: "In Development",
     value: null,
-    construction: null,
+    construction: "Modular — Unison Modular",
     partner: null,
-    desc: "F2K is currently in advanced discussions on several projects across multiple states. The first project announcement will be made once contracts are executed. Register a project or subscribe for updates.",
+    desc: "37 architecturally designed, single-storey 3-bedroom modular homes on an approved subdivision 8km from Hobart CBD. Five house types (104–114m²) with full planning approval (PLN-21-408.02).",
+    href: "/projects/branscombe-estate",
+  },
+  {
+    name: "Seafields Estate",
+    location: "Pepper Gate, Waggrakine WA 6530",
+    state: "WA",
+    type: "Residential Subdivision",
+    dwellings: "141 lots",
+    status: "In Development",
+    value: "~$21M GRV",
+    construction: "Modular H&L + Bare Land",
+    partner: "Humfrey Land Developments",
+    desc: "141-lot residential subdivision 8km north of Geraldton CBD. Available as bare serviced land ($130K–$160K) or house & land packages (~$600K) with F2K modular build. Anchored by $188M Geraldton Health Campus redevelopment driving WACHS staff accommodation demand.",
+    href: "/projects/seafields-estate",
   },
 ];
 
@@ -136,7 +150,7 @@ export default function PortfolioPage() {
                     </h3>
                     {p.location !== "TBA" && (
                       <p className="text-sm text-slate/60 font-archivo">
-                        {p.location}, {p.state}
+                        {p.location}
                       </p>
                     )}
                   </div>
@@ -154,7 +168,7 @@ export default function PortfolioPage() {
                 </p>
 
                 {(p.dwellings || p.type || p.construction || p.value) && (
-                  <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-ibm-mono uppercase tracking-wider">
+                  <div className="flex flex-wrap gap-x-6 gap-y-2 text-xs font-ibm-mono uppercase tracking-wider mb-4">
                     {p.type && (
                       <span>
                         <span className="text-slate/40">Type </span>
@@ -186,6 +200,15 @@ export default function PortfolioPage() {
                       </span>
                     )}
                   </div>
+                )}
+
+                {p.href && (
+                  <a
+                    href={p.href}
+                    className="inline-block bg-[#00B5AD] hover:bg-[#009E97] text-white px-5 py-2 font-archivo font-semibold text-sm transition-colors"
+                  >
+                    View Project &amp; Register Interest &rarr;
+                  </a>
                 )}
               </div>
             ))}

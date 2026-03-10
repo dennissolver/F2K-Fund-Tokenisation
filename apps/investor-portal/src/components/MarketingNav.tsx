@@ -31,8 +31,10 @@ const navItems: NavItem[] = [
   {
     label: "Projects",
     children: [
-      { label: "Submit a Project", href: "/projects" },
       { label: "Portfolio", href: "/portfolio" },
+      { label: "Branscombe Estate", href: "/projects/branscombe-estate" },
+      { label: "Seafields Estate", href: "/projects/seafields-estate" },
+      { label: "Submit a Project", href: "/projects" },
     ],
   },
   {
