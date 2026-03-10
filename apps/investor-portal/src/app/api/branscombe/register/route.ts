@@ -122,7 +122,7 @@ export async function POST(request: Request) {
       from:
         process.env.RESEND_FROM_EMAIL ||
         "Branscombe Estate <onboarding@resend.dev>",
-      to: "mcmdennis@gmail.com",
+      to: ["dennis@factory2key.com.au", "uwe@factory2key.com.au"],
       subject: `Branscombe ROI: ${d.first_name} ${d.last_name} — ${unitList}`,
       html: `
         <h2 style="color:#1A2744;font-family:sans-serif">New Branscombe Estate Registration</h2>

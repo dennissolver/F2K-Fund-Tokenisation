@@ -67,7 +67,7 @@ export async function POST(request: Request) {
   const resend = new Resend(process.env.RESEND_API_KEY);
   await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL || "F2K Platform <onboarding@resend.dev>",
-    to: "mcmdennis@gmail.com",
+    to: ["dennis@factory2key.com.au", "uwe@factory2key.com.au"],
     subject: `New ROI: ${typeLabels[d.type] || d.type} — ${d.org_name}`,
     html: `
       <h2 style="color:#1A2744">New Registration of Interest</h2>
