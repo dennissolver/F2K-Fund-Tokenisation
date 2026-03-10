@@ -1,8 +1,36 @@
 "use client";
 
 import { useState } from "react";
-import { UNITS, HOUSE_TYPE_INFO } from "@/lib/branscombe-units";
+import Image from "next/image";
+import { UNITS, HOUSE_TYPE_INFO, type HouseType } from "@/lib/branscombe-units";
 import SiteMap from "./SiteMap";
+
+const PRICE_RANGES = [
+  "Under $350,000",
+  "$350,000 – $400,000",
+  "$400,000 – $450,000",
+  "$450,000 – $500,000",
+  "$500,000 – $550,000",
+  "$550,000 – $600,000",
+  "$600,000+",
+] as const;
+
+const REFERRER_TYPES = [
+  "Real Estate Agent",
+  "Mortgage Broker",
+  "Financial Adviser",
+  "Friend or Family",
+  "Other",
+] as const;
+
+/** Floor plan image per house type group */
+const FLOORPLAN_IMAGE: Record<HouseType, string> = {
+  "1A": "/branscombe/floorplan-type1.png",
+  "1B": "/branscombe/floorplan-type1.png",
+  "2A": "/branscombe/floorplan-type2.png",
+  "2B": "/branscombe/floorplan-type2.png",
+  "2C": "/branscombe/floorplan-type2.png",
+};
 
 export default function RegistrationForm() {
   const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
@@ -17,12 +45,38 @@ export default function RegistrationForm() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Price preferences per unit
+  const [pricePrefs, setPricePrefs] = useState<Record<string, string>>({});
+
+  // Referrer / agent fields
+  const [referrerType, setReferrerType] = useState("");
+  const [referrerName, setReferrerName] = useState("");
+  const [referrerCompany, setReferrerCompany] = useState("");
+  const [referrerContact, setReferrerContact] = useState("");
+
+  // Expanded unit detail panel
+  const [expandedUnit, setExpandedUnit] = useState<string | null>(null);
+
   const toggleUnit = (unitId: string) => {
-    setSelectedUnits((prev) =>
-      prev.includes(unitId)
-        ? prev.filter((id) => id !== unitId)
-        : [...prev, unitId]
-    );
+    setSelectedUnits((prev) => {
+      if (prev.includes(unitId)) {
+        // Remove unit and its price pref
+        setPricePrefs((p) => {
+          const next = { ...p };
+          delete next[unitId];
+          return next;
+        });
+        if (expandedUnit === unitId) setExpandedUnit(null);
+        return prev.filter((id) => id !== unitId);
+      }
+      // Add unit and auto-expand its detail panel
+      setExpandedUnit(unitId);
+      return [...prev, unitId];
+    });
+  };
+
+  const setPricePref = (unitId: string, range: string) => {
+    setPricePrefs((prev) => ({ ...prev, [unitId]: range }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -57,6 +111,11 @@ export default function RegistrationForm() {
           email: email.trim(),
           phone: phone.trim() || null,
           units_selected: selectedUnits,
+          price_preferences: pricePrefs,
+          referrer_type: referrerType || null,
+          referrer_name: referrerName.trim() || null,
+          referrer_company: referrerCompany.trim() || null,
+          referrer_contact: referrerContact.trim() || null,
           notes: notes.trim() || null,
           consent,
         }),
@@ -116,6 +175,9 @@ export default function RegistrationForm() {
     "w-full border border-black/10 px-4 py-2.5 font-archivo text-sm text-deep-blue focus:outline-none focus:border-[#00B5AD] transition-colors bg-white";
   const labelClass =
     "block text-deep-blue font-semibold font-archivo text-sm mb-1";
+  const sortedUnits = [...selectedUnits].sort(
+    (a, b) => parseInt(a.replace("U", "")) - parseInt(b.replace("U", ""))
+  );
 
   return (
     <div>
@@ -128,46 +190,225 @@ export default function RegistrationForm() {
           Select Your Preferred Home(s)
         </h2>
         <p className="text-slate font-archivo leading-relaxed mb-8">
-          Click a unit to add it to your registration. You can select more than
-          one. Colours indicate current interest level.
+          Click a unit on the site plan to select it. Review the floor plan and
+          nominate your price range for each home. You can select more than one.
         </p>
 
         <SiteMap selectedUnits={selectedUnits} onToggleUnit={toggleUnit} />
 
-        {/* Selected units summary */}
+        {/* Selected units summary bar */}
         {selectedUnits.length > 0 && (
           <div className="mt-6 bg-[#1A2744] text-white p-4 flex flex-wrap items-center gap-3">
             <span className="font-ibm-mono text-[0.65rem] tracking-[0.3em] uppercase opacity-60">
               Selected:
             </span>
-            {selectedUnits
-              .sort((a, b) => {
-                const numA = parseInt(a.replace("U", ""));
-                const numB = parseInt(b.replace("U", ""));
-                return numA - numB;
-              })
-              .map((unitId) => {
-                const unit = UNITS.find((u) => u.id === unitId);
-                return (
-                  <button
-                    key={unitId}
-                    type="button"
-                    onClick={() => toggleUnit(unitId)}
-                    className="bg-white/10 hover:bg-white/20 px-3 py-1 text-sm font-archivo transition-colors flex items-center gap-2"
-                  >
-                    {unitId}
-                    {unit && (
-                      <span className="opacity-50 text-xs">
-                        Type {unit.type}
-                      </span>
-                    )}
-                    <span className="opacity-40">&times;</span>
-                  </button>
-                );
-              })}
+            {sortedUnits.map((unitId) => {
+              const unit = UNITS.find((u) => u.id === unitId);
+              return (
+                <button
+                  key={unitId}
+                  type="button"
+                  onClick={() => toggleUnit(unitId)}
+                  className="bg-white/10 hover:bg-white/20 px-3 py-1 text-sm font-archivo transition-colors flex items-center gap-2"
+                >
+                  {unitId}
+                  {unit && (
+                    <span className="opacity-50 text-xs">
+                      Type {unit.type}
+                    </span>
+                  )}
+                  <span className="opacity-40">&times;</span>
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
+
+      {/* ===== UNIT DETAIL PANELS WITH PRICE RANGE ===== */}
+      {selectedUnits.length > 0 && (
+        <div className="mb-12">
+          <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-[#00B5AD] mb-4">
+            Your Selected Homes
+          </p>
+          <h2 className="font-playfair text-[2rem] font-black text-deep-blue leading-tight mb-3">
+            Review &amp; Set Your Price Range
+          </h2>
+          <p className="text-slate font-archivo leading-relaxed mb-6">
+            For each selected home, review the floor plan and location, then tell
+            us what price range you&apos;d consider. This helps us understand true
+            market demand — it&apos;s not a commitment.
+          </p>
+
+          <div className="space-y-4">
+            {sortedUnits.map((unitId) => {
+              const unit = UNITS.find((u) => u.id === unitId);
+              if (!unit) return null;
+              const info = HOUSE_TYPE_INFO[unit.type];
+              const isExpanded = expandedUnit === unitId;
+              const selectedPrice = pricePrefs[unitId] || "";
+
+              return (
+                <div
+                  key={unitId}
+                  className="bg-white border border-black/5 overflow-hidden"
+                >
+                  {/* Unit header — always visible */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExpandedUnit(isExpanded ? null : unitId)
+                    }
+                    className="w-full px-5 py-4 flex items-center justify-between hover:bg-off-white/50 transition-colors text-left"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="h-10 w-10 bg-[#00B5AD] flex items-center justify-center text-white font-archivo font-bold text-sm">
+                        {unitId}
+                      </div>
+                      <div>
+                        <div className="font-archivo font-bold text-deep-blue text-sm">
+                          Type {unit.type} — {info.size} + {info.deck}
+                        </div>
+                        <div className="font-archivo text-xs text-slate/60">
+                          {unit.zone} &middot; {info.beds} bedrooms
+                          {selectedPrice && (
+                            <span className="ml-2 text-[#00B5AD] font-semibold">
+                              &middot; {selectedPrice}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    <svg
+                      className={`w-5 h-5 text-slate/40 transition-transform ${
+                        isExpanded ? "rotate-180" : ""
+                      }`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  </button>
+
+                  {/* Expanded detail panel */}
+                  {isExpanded && (
+                    <div className="border-t border-black/5 px-5 py-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Floor plan */}
+                        <div>
+                          <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-2">
+                            Floor Plan — Type {unit.type}
+                          </p>
+                          <div className="bg-off-white p-2 border border-black/5">
+                            <Image
+                              src={FLOORPLAN_IMAGE[unit.type]}
+                              alt={`Floor plan Type ${unit.type}`}
+                              width={500}
+                              height={350}
+                              className="w-full h-auto"
+                            />
+                          </div>
+                          <div className="mt-2 grid grid-cols-3 gap-2 text-center">
+                            <div className="bg-off-white py-2">
+                              <div className="font-archivo font-bold text-deep-blue text-sm">
+                                {info.size}
+                              </div>
+                              <div className="font-ibm-mono text-[0.55rem] text-slate/50 uppercase">
+                                Living
+                              </div>
+                            </div>
+                            <div className="bg-off-white py-2">
+                              <div className="font-archivo font-bold text-deep-blue text-sm">
+                                {info.deck}
+                              </div>
+                              <div className="font-ibm-mono text-[0.55rem] text-slate/50 uppercase">
+                                Deck
+                              </div>
+                            </div>
+                            <div className="bg-off-white py-2">
+                              <div className="font-archivo font-bold text-deep-blue text-sm">
+                                {info.beds} Bed
+                              </div>
+                              <div className="font-ibm-mono text-[0.55rem] text-slate/50 uppercase">
+                                Rooms
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Home renders + price selector */}
+                        <div>
+                          <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-2">
+                            Home Exterior
+                          </p>
+                          <div className="grid grid-cols-3 gap-1 mb-4">
+                            <Image
+                              src="/branscombe/home-exterior-1.png"
+                              alt="Home exterior front"
+                              width={200}
+                              height={140}
+                              className="w-full h-auto object-cover"
+                            />
+                            <Image
+                              src="/branscombe/home-exterior-2.png"
+                              alt="Home exterior side"
+                              width={200}
+                              height={140}
+                              className="w-full h-auto object-cover"
+                            />
+                            <Image
+                              src="/branscombe/home-exterior-3.png"
+                              alt="Home exterior rear"
+                              width={200}
+                              height={140}
+                              className="w-full h-auto object-cover"
+                            />
+                          </div>
+
+                          {/* Price range selector */}
+                          <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-2">
+                            What would you pay for this home?
+                          </p>
+                          <p className="text-xs text-slate/60 font-archivo mb-3">
+                            Select the price range you&apos;d consider for{" "}
+                            {unitId} (Type {unit.type}, {info.size}). This is not
+                            binding — it helps us gauge market expectations.
+                          </p>
+                          <div className="grid grid-cols-1 gap-1.5">
+                            {PRICE_RANGES.map((range) => (
+                              <button
+                                key={range}
+                                type="button"
+                                onClick={() => setPricePref(unitId, range)}
+                                className={`px-4 py-2 text-sm font-archivo text-left border transition-all ${
+                                  selectedPrice === range
+                                    ? "bg-[#00B5AD] text-white border-[#00B5AD] font-semibold"
+                                    : "bg-white text-deep-blue border-black/10 hover:border-[#00B5AD]/50 hover:bg-[#00B5AD]/5"
+                                }`}
+                              >
+                                {range}
+                                {selectedPrice === range && (
+                                  <span className="float-right">&#10003;</span>
+                                )}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {/* ===== REGISTRATION FORM ===== */}
       <div id="register">
@@ -255,22 +496,125 @@ export default function RegistrationForm() {
             </div>
           </div>
 
-          {/* Selected units display */}
+          {/* Selected units + price summary */}
           <div>
-            <label className={labelClass}>
-              Selected Unit(s) *
-            </label>
-            <div className="border border-black/10 px-4 py-2.5 bg-white min-h-[42px] font-archivo text-sm">
+            <label className={labelClass}>Selected Unit(s) *</label>
+            <div className="border border-black/10 bg-white font-archivo text-sm">
               {selectedUnits.length > 0 ? (
-                <span className="text-deep-blue">
-                  {selectedUnits
-                    .sort((a, b) => parseInt(a.replace("U", "")) - parseInt(b.replace("U", "")))
-                    .join(", ")}
-                </span>
+                <div className="divide-y divide-black/5">
+                  {sortedUnits.map((uid) => {
+                    const unit = UNITS.find((u) => u.id === uid);
+                    return (
+                      <div
+                        key={uid}
+                        className="px-4 py-2 flex items-center justify-between"
+                      >
+                        <span className="text-deep-blue">
+                          <strong>{uid}</strong>
+                          {unit && (
+                            <span className="text-slate/60 ml-2">
+                              Type {unit.type}
+                            </span>
+                          )}
+                        </span>
+                        {pricePrefs[uid] ? (
+                          <span className="text-[#00B5AD] font-semibold text-xs">
+                            {pricePrefs[uid]}
+                          </span>
+                        ) : (
+                          <span className="text-slate/30 text-xs">
+                            No price set
+                          </span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               ) : (
-                <span className="text-slate/40">
+                <div className="px-4 py-2.5 text-slate/40">
                   Select units on the map above
-                </span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* ===== REFERRAL / AGENT SECTION ===== */}
+          <div className="border border-black/5 bg-white p-5">
+            <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-1">
+              Optional
+            </p>
+            <p className="font-archivo font-semibold text-deep-blue text-sm mb-4">
+              Were you referred by a real estate agent or other party?
+            </p>
+            <p className="text-xs text-slate/60 font-archivo mb-4">
+              If someone referred you to this project, provide their details
+              below so we can log them for any applicable referral arrangements.
+            </p>
+
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="referrerType" className={labelClass}>
+                  Referrer Type
+                </label>
+                <select
+                  id="referrerType"
+                  value={referrerType}
+                  onChange={(e) => setReferrerType(e.target.value)}
+                  className={inputClass}
+                >
+                  <option value="">— None / Not applicable —</option>
+                  {REFERRER_TYPES.map((t) => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {referrerType && (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label htmlFor="referrerName" className={labelClass}>
+                        Referrer Name
+                      </label>
+                      <input
+                        id="referrerName"
+                        type="text"
+                        value={referrerName}
+                        onChange={(e) => setReferrerName(e.target.value)}
+                        className={inputClass}
+                        placeholder="John Doe"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="referrerCompany" className={labelClass}>
+                        Agency / Company
+                      </label>
+                      <input
+                        id="referrerCompany"
+                        type="text"
+                        value={referrerCompany}
+                        onChange={(e) => setReferrerCompany(e.target.value)}
+                        className={inputClass}
+                        placeholder="ABC Real Estate"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="referrerContact" className={labelClass}>
+                      Referrer Email or Phone
+                    </label>
+                    <input
+                      id="referrerContact"
+                      type="text"
+                      value={referrerContact}
+                      onChange={(e) => setReferrerContact(e.target.value)}
+                      className={inputClass}
+                      placeholder="john@abcrealestate.com.au or 0400 000 000"
+                    />
+                  </div>
+                </>
               )}
             </div>
           </div>

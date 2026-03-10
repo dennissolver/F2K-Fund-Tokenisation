@@ -10,6 +10,11 @@ const schema = z.object({
   units_selected: z
     .array(z.string().regex(/^U\d{1,2}$/))
     .min(1, "Please select at least one unit"),
+  price_preferences: z.record(z.string(), z.string()).optional(),
+  referrer_type: z.string().max(50).nullable().optional(),
+  referrer_name: z.string().max(200).nullable().optional(),
+  referrer_company: z.string().max(200).nullable().optional(),
+  referrer_contact: z.string().max(200).nullable().optional(),
   notes: z.string().max(2000).nullable().optional(),
   consent: z.literal(true, {
     errorMap: () => ({
@@ -38,6 +43,11 @@ export async function POST(request: Request) {
     email: d.email,
     phone: d.phone ?? null,
     units_selected: d.units_selected,
+    price_preferences: d.price_preferences ?? {},
+    referrer_type: d.referrer_type ?? null,
+    referrer_name: d.referrer_name ?? null,
+    referrer_company: d.referrer_company ?? null,
+    referrer_contact: d.referrer_contact ?? null,
     notes: d.notes ?? null,
     consent: true,
     source: "web-roi",
@@ -61,6 +71,8 @@ export async function POST(request: Request) {
     details: {
       name: `${d.first_name} ${d.last_name}`,
       units: d.units_selected,
+      price_preferences: d.price_preferences,
+      referrer: d.referrer_name ? `${d.referrer_name} (${d.referrer_type})` : null,
     },
   });
 
@@ -70,6 +82,18 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const unitList = d.units_selected.join(", ");
+    const priceRows = d.price_preferences
+      ? Object.entries(d.price_preferences)
+          .map(
+            ([uid, range]) =>
+              `<tr><td style="padding:2px 12px;color:#666">${uid}</td><td style="padding:2px 12px">${range}</td></tr>`
+          )
+          .join("")
+      : "";
+    const referrerRow =
+      d.referrer_name
+        ? `<tr><td style="padding:4px 12px;color:#666">Referrer</td><td style="padding:4px 12px">${d.referrer_name}${d.referrer_company ? ` — ${d.referrer_company}` : ""}${d.referrer_contact ? ` (${d.referrer_contact})` : ""} [${d.referrer_type}]</td></tr>`
+        : "";
 
     // Admin notification
     await resend.emails.send({
@@ -85,8 +109,18 @@ export async function POST(request: Request) {
           <tr><td style="padding:4px 12px;color:#666">Email</td><td style="padding:4px 12px"><a href="mailto:${d.email}">${d.email}</a></td></tr>
           ${d.phone ? `<tr><td style="padding:4px 12px;color:#666">Phone</td><td style="padding:4px 12px">${d.phone}</td></tr>` : ""}
           <tr><td style="padding:4px 12px;color:#666">Units</td><td style="padding:4px 12px;font-weight:bold">${unitList}</td></tr>
+          ${referrerRow}
           ${d.notes ? `<tr><td style="padding:4px 12px;color:#666">Notes</td><td style="padding:4px 12px">${d.notes}</td></tr>` : ""}
         </table>
+        ${
+          priceRows
+            ? `<h3 style="color:#1A2744;font-family:sans-serif;margin-top:16px">Price Preferences</h3>
+               <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
+                 <tr style="background:#f5f5f5"><th style="padding:4px 12px;text-align:left">Unit</th><th style="padding:4px 12px;text-align:left">Price Range</th></tr>
+                 ${priceRows}
+               </table>`
+            : ""
+        }
         <p style="margin-top:16px;font-size:12px;color:#999">Branscombe Estate ROI — F2K Fund Tokenisation Project</p>
       `,
     });

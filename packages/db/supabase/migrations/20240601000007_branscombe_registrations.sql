@@ -7,11 +7,16 @@ CREATE TABLE IF NOT EXISTS branscombe_registrations (
   last_name     TEXT NOT NULL,
   email         TEXT NOT NULL,
   phone         TEXT,
-  units_selected TEXT[] NOT NULL DEFAULT '{}',
-  notes         TEXT,
-  consent       BOOLEAN NOT NULL DEFAULT FALSE,
-  source        TEXT NOT NULL DEFAULT 'web-roi',
-  created_at    TIMESTAMPTZ NOT NULL DEFAULT now()
+  units_selected    TEXT[] NOT NULL DEFAULT '{}',
+  price_preferences JSONB NOT NULL DEFAULT '{}',
+  referrer_type     TEXT,
+  referrer_name     TEXT,
+  referrer_company  TEXT,
+  referrer_contact  TEXT,
+  notes             TEXT,
+  consent           BOOLEAN NOT NULL DEFAULT FALSE,
+  source            TEXT NOT NULL DEFAULT 'web-roi',
+  created_at        TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 -- Index for fast unit count aggregation
