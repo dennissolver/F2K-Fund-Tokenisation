@@ -173,7 +173,7 @@ export default function BranscombeEstatePage() {
               className="w-full h-auto"
             >
               <source
-                src={process.env.NEXT_PUBLIC_BRANSCOMBE_VIDEO_URL || "/branscombe/flyover.mp4"}
+                src="https://eifcgqxpayrpbastpwjo.supabase.co/storage/v1/object/sign/video_storage/122-124%20Branscombe%20Road%20with%20logo2.mp4?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV9mNTljNmQ5ZC03NWZiLTQzODQtYjJkZC1kODVjZDM3YTk3MjYiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJ2aWRlb19zdG9yYWdlLzEyMi0xMjQgQnJhbnNjb21iZSBSb2FkIHdpdGggbG9nbzIubXA0IiwiaWF0IjoxNzczMTMwNTU3LCJleHAiOjE4MzUzMzg1NTd9.w9AxB8_EzpCPz8Dv69sLvJ3R4ZZoXryuW_QL5gPMZwg"
                 type="video/mp4"
               />
               Your browser does not support the video tag.
