@@ -23,6 +23,59 @@ const REFERRER_TYPES = [
   "Other",
 ] as const;
 
+const BUYER_TYPES = [
+  "First Home Buyer",
+  "Next Home Buyer",
+  "Downsizer",
+  "Investor",
+] as const;
+
+const BUYER_PROFILES = [
+  "Young Family",
+  "Couple",
+  "Single",
+  "Empty Nester",
+  "Retiree / Semi-Retired",
+  "Investor — Owner Occupier",
+  "Investor — Rental",
+  "Other",
+] as const;
+
+const CURRENT_HOUSING = [
+  "Renting",
+  "Own Home (with mortgage)",
+  "Own Home (outright)",
+  "Living with Family",
+  "Other",
+] as const;
+
+const PURCHASE_TIMELINES = [
+  "As soon as possible",
+  "Within 3–6 months",
+  "6–12 months",
+  "12+ months",
+  "Just exploring — no timeframe",
+] as const;
+
+const FINANCE_STATUSES = [
+  "Pre-approved by lender",
+  "Currently exploring finance",
+  "Cash buyer — no finance needed",
+  "Not yet started",
+  "Prefer not to say",
+] as const;
+
+const HOW_HEARD = [
+  "Online search",
+  "Social media",
+  "Real estate agent",
+  "Word of mouth",
+  "Drive-by / local signage",
+  "News article",
+  "Factory2Key website",
+  "Other",
+] as const;
+
 /** Floor plan image per house type group */
 const FLOORPLAN_IMAGE: Record<HouseType, string> = {
   "1A": "/branscombe/floorplan-type1.png",
@@ -48,6 +101,16 @@ export default function RegistrationForm() {
   // Price preferences per unit
   const [pricePrefs, setPricePrefs] = useState<Record<string, string>>({});
 
+  // Buyer profile fields
+  const [suburb, setSuburb] = useState("");
+  const [postcode, setPostcode] = useState("");
+  const [buyerType, setBuyerType] = useState("");
+  const [buyerProfile, setBuyerProfile] = useState("");
+  const [currentHousing, setCurrentHousing] = useState("");
+  const [purchaseTimeline, setPurchaseTimeline] = useState("");
+  const [financeStatus, setFinanceStatus] = useState("");
+  const [howHeard, setHowHeard] = useState("");
+
   // Referrer / agent fields
   const [referrerType, setReferrerType] = useState("");
   const [referrerName, setReferrerName] = useState("");
@@ -60,7 +123,6 @@ export default function RegistrationForm() {
   const toggleUnit = (unitId: string) => {
     setSelectedUnits((prev) => {
       if (prev.includes(unitId)) {
-        // Remove unit and its price pref
         setPricePrefs((p) => {
           const next = { ...p };
           delete next[unitId];
@@ -69,7 +131,6 @@ export default function RegistrationForm() {
         if (expandedUnit === unitId) setExpandedUnit(null);
         return prev.filter((id) => id !== unitId);
       }
-      // Add unit and auto-expand its detail panel
       setExpandedUnit(unitId);
       return [...prev, unitId];
     });
@@ -89,7 +150,7 @@ export default function RegistrationForm() {
     }
 
     if (selectedUnits.length === 0) {
-      setError("Please select at least one unit on the site map above.");
+      setError("Please select at least one home on the site map above.");
       return;
     }
 
@@ -112,6 +173,14 @@ export default function RegistrationForm() {
           phone: phone.trim() || null,
           units_selected: selectedUnits,
           price_preferences: pricePrefs,
+          suburb: suburb.trim() || null,
+          postcode: postcode.trim() || null,
+          buyer_type: buyerType || null,
+          buyer_profile: buyerProfile || null,
+          current_housing: currentHousing || null,
+          purchase_timeline: purchaseTimeline || null,
+          finance_status: financeStatus || null,
+          how_heard: howHeard || null,
           referrer_type: referrerType || null,
           referrer_name: referrerName.trim() || null,
           referrer_company: referrerCompany.trim() || null,
@@ -159,7 +228,7 @@ export default function RegistrationForm() {
           Thank you for your interest in Branscombe Estate. We&apos;ve recorded
           your interest in{" "}
           <strong>
-            {selectedUnits.length} unit{selectedUnits.length > 1 ? "s" : ""}
+            {selectedUnits.length} home{selectedUnits.length > 1 ? "s" : ""}
           </strong>{" "}
           ({selectedUnits.join(", ")}).
         </p>
@@ -175,6 +244,7 @@ export default function RegistrationForm() {
     "w-full border border-black/10 px-4 py-2.5 font-archivo text-sm text-deep-blue focus:outline-none focus:border-[#00B5AD] transition-colors bg-white";
   const labelClass =
     "block text-deep-blue font-semibold font-archivo text-sm mb-1";
+  const selectClass = inputClass;
   const sortedUnits = [...selectedUnits].sort(
     (a, b) => parseInt(a.replace("U", "")) - parseInt(b.replace("U", ""))
   );
@@ -190,8 +260,9 @@ export default function RegistrationForm() {
           Select Your Preferred Home(s)
         </h2>
         <p className="text-slate font-archivo leading-relaxed mb-8">
-          Click a unit on the site plan to select it. Review the floor plan and
-          nominate your price range for each home. You can select more than one.
+          Click a home on the site plan to select it. Review the floor plan and
+          nominate your price range for each house &amp; land package. You can
+          select more than one.
         </p>
 
         <SiteMap selectedUnits={selectedUnits} onToggleUnit={toggleUnit} />
@@ -236,8 +307,9 @@ export default function RegistrationForm() {
           </h2>
           <p className="text-slate font-archivo leading-relaxed mb-6">
             For each selected home, review the floor plan and location, then tell
-            us what price range you&apos;d consider. This helps us understand true
-            market demand — it&apos;s not a commitment.
+            us what you&apos;d expect to pay for the complete{" "}
+            <strong>house and land package</strong>. This is not a commitment —
+            it helps us understand market expectations.
           </p>
 
           <div className="space-y-4">
@@ -253,7 +325,7 @@ export default function RegistrationForm() {
                   key={unitId}
                   className="bg-white border border-black/5 overflow-hidden"
                 >
-                  {/* Unit header — always visible */}
+                  {/* Unit header */}
                   <button
                     type="button"
                     onClick={() =>
@@ -267,10 +339,11 @@ export default function RegistrationForm() {
                       </div>
                       <div>
                         <div className="font-archivo font-bold text-deep-blue text-sm">
-                          Type {unit.type} — {info.size} + {info.deck}
+                          Type {unit.type} — {info.size} home + {info.deck}
                         </div>
                         <div className="font-archivo text-xs text-slate/60">
-                          {unit.zone} &middot; {info.beds} bedrooms
+                          {unit.zone} &middot; {info.beds} bedrooms &middot;
+                          House &amp; land package
                           {selectedPrice && (
                             <span className="ml-2 text-[#00B5AD] font-semibold">
                               &middot; {selectedPrice}
@@ -320,7 +393,7 @@ export default function RegistrationForm() {
                                 {info.size}
                               </div>
                               <div className="font-ibm-mono text-[0.55rem] text-slate/50 uppercase">
-                                Living
+                                Home
                               </div>
                             </div>
                             <div className="bg-off-white py-2">
@@ -336,16 +409,20 @@ export default function RegistrationForm() {
                                 {info.beds} Bed
                               </div>
                               <div className="font-ibm-mono text-[0.55rem] text-slate/50 uppercase">
-                                Rooms
+                                Bedrooms
                               </div>
                             </div>
                           </div>
+                          <p className="text-[0.65rem] text-slate/40 font-archivo mt-2 italic">
+                            Each lot includes the home, deck, landscaping,
+                            driveway, and all site works as a turnkey package.
+                          </p>
                         </div>
 
                         {/* Home renders + price selector */}
                         <div>
                           <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-2">
-                            Home Exterior
+                            Home Exterior — Indicative Renders
                           </p>
                           <div className="grid grid-cols-3 gap-1 mb-4">
                             <Image
@@ -373,12 +450,14 @@ export default function RegistrationForm() {
 
                           {/* Price range selector */}
                           <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-2">
-                            What would you pay for this home?
+                            House &amp; Land Package — Your Price Expectation
                           </p>
                           <p className="text-xs text-slate/60 font-archivo mb-3">
-                            Select the price range you&apos;d consider for{" "}
-                            {unitId} (Type {unit.type}, {info.size}). This is not
-                            binding — it helps us gauge market expectations.
+                            What would you expect to pay for {unitId} as a
+                            complete <strong>house and land package</strong>
+                            {" "}(Type {unit.type}, {info.size} home + {info.deck} +
+                            land + site works)? This is not binding — it helps us
+                            gauge market expectations.
                           </p>
                           <div className="grid grid-cols-1 gap-1.5">
                             {PRICE_RANGES.map((range) => (
@@ -420,10 +499,11 @@ export default function RegistrationForm() {
         </h2>
         <p className="text-slate font-archivo leading-relaxed mb-8">
           Complete the form below to register your interest. No deposit or
-          commitment is required.
+          commitment is required. The more you tell us, the better we can keep
+          you informed with relevant updates.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* Honeypot */}
           <input
             tabIndex={-1}
@@ -435,70 +515,239 @@ export default function RegistrationForm() {
             style={{ position: "absolute", left: "-9999px" }}
           />
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label htmlFor="firstName" className={labelClass}>
-                First Name *
-              </label>
-              <input
-                id="firstName"
-                type="text"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                className={inputClass}
-                placeholder="Jane"
-              />
-            </div>
-            <div>
-              <label htmlFor="lastName" className={labelClass}>
-                Last Name *
-              </label>
-              <input
-                id="lastName"
-                type="text"
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                className={inputClass}
-                placeholder="Smith"
-              />
+          {/* ---- SECTION: Contact Details ---- */}
+          <div className="border border-black/5 bg-white p-5">
+            <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-[#00B5AD] mb-4">
+              Contact Details
+            </p>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="firstName" className={labelClass}>
+                    First Name *
+                  </label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    required
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    className={inputClass}
+                    placeholder="Jane"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="lastName" className={labelClass}>
+                    Last Name *
+                  </label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    required
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    className={inputClass}
+                    placeholder="Smith"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="email" className={labelClass}>
+                    Email Address *
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className={inputClass}
+                    placeholder="jane@example.com"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className={labelClass}>
+                    Phone Number
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className={inputClass}
+                    placeholder="0400 000 000"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="suburb" className={labelClass}>
+                    Current Suburb / Town
+                  </label>
+                  <input
+                    id="suburb"
+                    type="text"
+                    value={suburb}
+                    onChange={(e) => setSuburb(e.target.value)}
+                    className={inputClass}
+                    placeholder="e.g. Claremont, Sandy Bay, Moonah"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="postcode" className={labelClass}>
+                    Postcode
+                  </label>
+                  <input
+                    id="postcode"
+                    type="text"
+                    value={postcode}
+                    onChange={(e) => setPostcode(e.target.value)}
+                    className={inputClass}
+                    placeholder="e.g. 7011"
+                    maxLength={4}
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label htmlFor="email" className={labelClass}>
-                Email Address *
-              </label>
-              <input
-                id="email"
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={inputClass}
-                placeholder="jane@example.com"
-              />
-            </div>
-            <div>
-              <label htmlFor="phone" className={labelClass}>
-                Phone Number
-              </label>
-              <input
-                id="phone"
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className={inputClass}
-                placeholder="0400 000 000"
-              />
+          {/* ---- SECTION: About You ---- */}
+          <div className="border border-black/5 bg-white p-5">
+            <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-[#00B5AD] mb-1">
+              About You
+            </p>
+            <p className="text-xs text-slate/50 font-archivo mb-4">
+              Help us understand who is interested in Branscombe Estate. All
+              fields in this section are optional.
+            </p>
+
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="buyerType" className={labelClass}>
+                    I am a...
+                  </label>
+                  <select
+                    id="buyerType"
+                    value={buyerType}
+                    onChange={(e) => setBuyerType(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">— Select —</option>
+                    {BUYER_TYPES.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="buyerProfile" className={labelClass}>
+                    Best describes my situation
+                  </label>
+                  <select
+                    id="buyerProfile"
+                    value={buyerProfile}
+                    onChange={(e) => setBuyerProfile(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">— Select —</option>
+                    {BUYER_PROFILES.map((p) => (
+                      <option key={p} value={p}>
+                        {p}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="currentHousing" className={labelClass}>
+                    Current living situation
+                  </label>
+                  <select
+                    id="currentHousing"
+                    value={currentHousing}
+                    onChange={(e) => setCurrentHousing(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">— Select —</option>
+                    {CURRENT_HOUSING.map((h) => (
+                      <option key={h} value={h}>
+                        {h}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="purchaseTimeline" className={labelClass}>
+                    When are you looking to buy?
+                  </label>
+                  <select
+                    id="purchaseTimeline"
+                    value={purchaseTimeline}
+                    onChange={(e) => setPurchaseTimeline(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">— Select —</option>
+                    {PURCHASE_TIMELINES.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label htmlFor="financeStatus" className={labelClass}>
+                    Finance status
+                  </label>
+                  <select
+                    id="financeStatus"
+                    value={financeStatus}
+                    onChange={(e) => setFinanceStatus(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">— Select —</option>
+                    {FINANCE_STATUSES.map((f) => (
+                      <option key={f} value={f}>
+                        {f}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="howHeard" className={labelClass}>
+                    How did you hear about us?
+                  </label>
+                  <select
+                    id="howHeard"
+                    value={howHeard}
+                    onChange={(e) => setHowHeard(e.target.value)}
+                    className={selectClass}
+                  >
+                    <option value="">— Select —</option>
+                    {HOW_HEARD.map((h) => (
+                      <option key={h} value={h}>
+                        {h}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Selected units + price summary */}
+          {/* ---- SECTION: Selected Units + Price Summary ---- */}
           <div>
-            <label className={labelClass}>Selected Unit(s) *</label>
+            <label className={labelClass}>Selected Home(s) *</label>
             <div className="border border-black/10 bg-white font-archivo text-sm">
               {selectedUnits.length > 0 ? (
                 <div className="divide-y divide-black/5">
@@ -513,7 +762,7 @@ export default function RegistrationForm() {
                           <strong>{uid}</strong>
                           {unit && (
                             <span className="text-slate/60 ml-2">
-                              Type {unit.type}
+                              Type {unit.type} — House &amp; land
                             </span>
                           )}
                         </span>
@@ -532,13 +781,13 @@ export default function RegistrationForm() {
                 </div>
               ) : (
                 <div className="px-4 py-2.5 text-slate/40">
-                  Select units on the map above
+                  Select homes on the site plan above
                 </div>
               )}
             </div>
           </div>
 
-          {/* ===== REFERRAL / AGENT SECTION ===== */}
+          {/* ---- SECTION: Referral / Agent ---- */}
           <div className="border border-black/5 bg-white p-5">
             <p className="font-ibm-mono text-[0.6rem] tracking-[0.3em] uppercase text-slate/50 mb-1">
               Optional
@@ -560,7 +809,7 @@ export default function RegistrationForm() {
                   id="referrerType"
                   value={referrerType}
                   onChange={(e) => setReferrerType(e.target.value)}
-                  className={inputClass}
+                  className={selectClass}
                 >
                   <option value="">— None / Not applicable —</option>
                   {REFERRER_TYPES.map((t) => (
@@ -619,6 +868,7 @@ export default function RegistrationForm() {
             </div>
           </div>
 
+          {/* ---- Notes ---- */}
           <div>
             <label htmlFor="notes" className={labelClass}>
               Notes / Questions
@@ -629,7 +879,7 @@ export default function RegistrationForm() {
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
               className={inputClass}
-              placeholder="Any questions or preferences..."
+              placeholder="Any questions, preferences, or things you'd like us to know..."
             />
           </div>
 
@@ -643,7 +893,8 @@ export default function RegistrationForm() {
             />
             <span className="text-sm text-slate font-archivo leading-relaxed">
               I understand this is a Registration of Interest only — no deposit or
-              commitment is required or implied.
+              commitment is required or implied. Pricing shown is indicative and
+              relates to a complete house and land package.
             </span>
           </label>
 

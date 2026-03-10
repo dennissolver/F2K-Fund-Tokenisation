@@ -9,8 +9,19 @@ const schema = z.object({
   phone: z.string().max(30).nullable().optional(),
   units_selected: z
     .array(z.string().regex(/^U\d{1,2}$/))
-    .min(1, "Please select at least one unit"),
+    .min(1, "Please select at least one home"),
   price_preferences: z.record(z.string(), z.string()).optional(),
+  // Location
+  suburb: z.string().max(100).nullable().optional(),
+  postcode: z.string().max(4).nullable().optional(),
+  // Buyer profile
+  buyer_type: z.string().max(50).nullable().optional(),
+  buyer_profile: z.string().max(50).nullable().optional(),
+  current_housing: z.string().max(50).nullable().optional(),
+  purchase_timeline: z.string().max(50).nullable().optional(),
+  finance_status: z.string().max(50).nullable().optional(),
+  how_heard: z.string().max(50).nullable().optional(),
+  // Referrer
   referrer_type: z.string().max(50).nullable().optional(),
   referrer_name: z.string().max(200).nullable().optional(),
   referrer_company: z.string().max(200).nullable().optional(),
@@ -44,6 +55,14 @@ export async function POST(request: Request) {
     phone: d.phone ?? null,
     units_selected: d.units_selected,
     price_preferences: d.price_preferences ?? {},
+    suburb: d.suburb ?? null,
+    postcode: d.postcode ?? null,
+    buyer_type: d.buyer_type ?? null,
+    buyer_profile: d.buyer_profile ?? null,
+    current_housing: d.current_housing ?? null,
+    purchase_timeline: d.purchase_timeline ?? null,
+    finance_status: d.finance_status ?? null,
+    how_heard: d.how_heard ?? null,
     referrer_type: d.referrer_type ?? null,
     referrer_name: d.referrer_name ?? null,
     referrer_company: d.referrer_company ?? null,
@@ -72,6 +91,9 @@ export async function POST(request: Request) {
       name: `${d.first_name} ${d.last_name}`,
       units: d.units_selected,
       price_preferences: d.price_preferences,
+      location: d.suburb ? `${d.suburb} ${d.postcode || ""}`.trim() : null,
+      buyer_type: d.buyer_type,
+      buyer_profile: d.buyer_profile,
       referrer: d.referrer_name ? `${d.referrer_name} (${d.referrer_type})` : null,
     },
   });
@@ -108,6 +130,13 @@ export async function POST(request: Request) {
           <tr><td style="padding:4px 12px;color:#666">Name</td><td style="padding:4px 12px;font-weight:bold">${d.first_name} ${d.last_name}</td></tr>
           <tr><td style="padding:4px 12px;color:#666">Email</td><td style="padding:4px 12px"><a href="mailto:${d.email}">${d.email}</a></td></tr>
           ${d.phone ? `<tr><td style="padding:4px 12px;color:#666">Phone</td><td style="padding:4px 12px">${d.phone}</td></tr>` : ""}
+          ${d.suburb ? `<tr><td style="padding:4px 12px;color:#666">Location</td><td style="padding:4px 12px">${d.suburb}${d.postcode ? ` ${d.postcode}` : ""}</td></tr>` : ""}
+          ${d.buyer_type ? `<tr><td style="padding:4px 12px;color:#666">Buyer Type</td><td style="padding:4px 12px">${d.buyer_type}</td></tr>` : ""}
+          ${d.buyer_profile ? `<tr><td style="padding:4px 12px;color:#666">Profile</td><td style="padding:4px 12px">${d.buyer_profile}</td></tr>` : ""}
+          ${d.current_housing ? `<tr><td style="padding:4px 12px;color:#666">Current Housing</td><td style="padding:4px 12px">${d.current_housing}</td></tr>` : ""}
+          ${d.purchase_timeline ? `<tr><td style="padding:4px 12px;color:#666">Timeline</td><td style="padding:4px 12px">${d.purchase_timeline}</td></tr>` : ""}
+          ${d.finance_status ? `<tr><td style="padding:4px 12px;color:#666">Finance</td><td style="padding:4px 12px">${d.finance_status}</td></tr>` : ""}
+          ${d.how_heard ? `<tr><td style="padding:4px 12px;color:#666">How Heard</td><td style="padding:4px 12px">${d.how_heard}</td></tr>` : ""}
           <tr><td style="padding:4px 12px;color:#666">Units</td><td style="padding:4px 12px;font-weight:bold">${unitList}</td></tr>
           ${referrerRow}
           ${d.notes ? `<tr><td style="padding:4px 12px;color:#666">Notes</td><td style="padding:4px 12px">${d.notes}</td></tr>` : ""}
