@@ -68,10 +68,10 @@ export const UNITS: UnitData[] = [
   { id: "U37", type: "1A", zone: "East",         col: 3, row: 5 },
 ];
 
-export const HOUSE_TYPE_INFO: Record<HouseType, { size: string; beds: number; deck: string }> = {
-  "1A": { size: "104m²", beds: 3, deck: "24m² deck" },
-  "1B": { size: "104m²", beds: 3, deck: "24m² deck" },
-  "2A": { size: "114m²", beds: 3, deck: "24m² deck" },
-  "2B": { size: "114m²", beds: 3, deck: "24m² deck" },
-  "2C": { size: "114m²", beds: 3, deck: "24m² deck" },
+export const HOUSE_TYPE_INFO: Record<HouseType, { size: string; beds: number; baths: number; deck: string }> = {
+  "1A": { size: "104m²", beds: 3, baths: 2, deck: "24m² deck" },
+  "1B": { size: "104m²", beds: 3, baths: 2, deck: "24m² deck" },
+  "2A": { size: "114m²", beds: 3, baths: 2, deck: "24m² deck" },
+  "2B": { size: "114m²", beds: 3, baths: 2, deck: "24m² deck" },
+  "2C": { size: "114m²", beds: 3, baths: 2, deck: "24m² deck" },
 };

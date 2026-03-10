@@ -6,13 +6,11 @@ import { UNITS, HOUSE_TYPE_INFO, type HouseType } from "@/lib/branscombe-units";
 import SiteMap from "./SiteMap";
 
 const PRICE_RANGES = [
-  "Under $350,000",
-  "$350,000 – $400,000",
-  "$400,000 – $450,000",
-  "$450,000 – $500,000",
-  "$500,000 – $550,000",
-  "$550,000 – $600,000",
-  "$600,000+",
+  "$600,000 – $650,000",
+  "$650,000 – $700,000",
+  "$700,000 – $750,000",
+  "$750,000 – $800,000",
+  "$800,000+",
 ] as const;
 
 const REFERRER_TYPES = [
@@ -259,11 +257,57 @@ export default function RegistrationForm() {
         <h2 className="font-playfair text-[2rem] font-black text-deep-blue leading-tight mb-3">
           Select Your Preferred Home(s)
         </h2>
-        <p className="text-slate font-archivo leading-relaxed mb-8">
-          Click a home on the site plan to select it. Review the floor plan and
-          nominate your price range for each house &amp; land package. You can
-          select more than one.
-        </p>
+
+        {/* Prominent instruction callout */}
+        <div className="bg-[#00B5AD]/10 border border-[#00B5AD]/20 px-5 py-4 mb-6 flex items-start gap-3">
+          <svg className="w-6 h-6 text-[#00B5AD] shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+          </svg>
+          <div>
+            <p className="text-deep-blue font-archivo font-semibold text-sm">
+              Click directly on a numbered home in the map below to select it.
+            </p>
+            <p className="text-slate/70 font-archivo text-sm mt-1">
+              You can select multiple homes. Each home will appear in your
+              registration form where you can review its floor plan and set
+              your price expectation. Use the reference table below to see
+              which home type is assigned to each unit number.
+            </p>
+          </div>
+        </div>
+
+        {/* Unit-to-Type quick reference — prominent with coloured headers */}
+        <div className="bg-white border-2 border-[#00B5AD]/30 p-5 mb-6">
+          <p className="font-ibm-mono text-[0.65rem] tracking-[0.3em] uppercase text-[#00B5AD] mb-1">
+            Which home is which type?
+          </p>
+          <p className="text-xs text-slate/50 font-archivo mb-4">
+            Find your preferred unit number below to see its home type, then
+            click it on the map.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
+            {([
+              { type: "1A", size: "104m²", units: "U1, U3, U9, U11, U14, U19, U22, U27, U32, U37" },
+              { type: "1B", size: "104m²", units: "U2, U7, U12, U17, U23, U28, U33" },
+              { type: "2A", size: "114m²", units: "U4, U8, U13, U18, U24, U29, U34" },
+              { type: "2B", size: "114m²", units: "U5, U10, U15, U20, U25, U30, U35" },
+              { type: "2C", size: "114m²", units: "U6, U16, U21, U26, U31, U36" },
+            ]).map((h) => (
+              <div key={h.type} className="bg-off-white p-3 border border-black/5">
+                <div className="bg-[#1A2744] text-white text-center py-1.5 -mx-3 -mt-3 mb-2">
+                  <span className="font-playfair font-black text-base">Type {h.type}</span>
+                  <span className="font-ibm-mono text-[0.55rem] tracking-wider text-white/60 ml-2">{h.size}</span>
+                </div>
+                <div className="text-xs font-archivo text-deep-blue leading-relaxed">
+                  {h.units}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="text-[0.65rem] text-slate/40 font-archivo mt-3">
+            All homes: 3 bed &middot; 2 bath &middot; 24m² deck &middot; 7 Star Energy rated
+          </p>
+        </div>
 
         <SiteMap selectedUnits={selectedUnits} onToggleUnit={toggleUnit} />
 
@@ -342,7 +386,7 @@ export default function RegistrationForm() {
                           Type {unit.type} — {info.size} home + {info.deck}
                         </div>
                         <div className="font-archivo text-xs text-slate/60">
-                          {unit.zone} &middot; {info.beds} bedrooms &middot;
+                          {unit.zone} &middot; {info.beds} bed / 2 bath &middot;
                           House &amp; land package
                           {selectedPrice && (
                             <span className="ml-2 text-[#00B5AD] font-semibold">
@@ -406,16 +450,17 @@ export default function RegistrationForm() {
                             </div>
                             <div className="bg-off-white py-2">
                               <div className="font-archivo font-bold text-deep-blue text-sm">
-                                {info.beds} Bed
+                                {info.beds} Bed / 2 Bath
                               </div>
                               <div className="font-ibm-mono text-[0.55rem] text-slate/50 uppercase">
-                                Bedrooms
+                                Layout
                               </div>
                             </div>
                           </div>
                           <p className="text-[0.65rem] text-slate/40 font-archivo mt-2 italic">
                             Each lot includes the home, deck, landscaping,
                             driveway, and all site works as a turnkey package.
+                            7 Star Energy rated.
                           </p>
                         </div>
 
@@ -780,8 +825,12 @@ export default function RegistrationForm() {
                   })}
                 </div>
               ) : (
-                <div className="px-4 py-2.5 text-slate/40">
-                  Select homes on the site plan above
+                <div className="px-4 py-3 text-slate/60 bg-amber-50 border border-amber-200">
+                  <strong className="text-amber-800">No homes selected yet.</strong>{" "}
+                  <a href="#site-map" className="text-[#00B5AD] underline hover:text-[#009E97]">
+                    Scroll up to the interactive site map
+                  </a>{" "}
+                  and click directly on any numbered home to select it. Your selections will appear here.
                 </div>
               )}
             </div>

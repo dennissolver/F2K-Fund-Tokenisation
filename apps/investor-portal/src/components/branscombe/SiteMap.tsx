@@ -229,7 +229,7 @@ export default function SiteMap({ selectedUnits, onToggleUnit }: SiteMapProps) {
           <strong className="text-deep-blue">{hoveredData.id}</strong>
           {" — "}
           Type {hoveredData.type} | {HOUSE_TYPE_INFO[hoveredData.type].size} +{" "}
-          {HOUSE_TYPE_INFO[hoveredData.type].deck} | {hoveredData.zone} |{" "}
+          {HOUSE_TYPE_INFO[hoveredData.type].deck} | 3 bed / 2 bath | {hoveredData.zone} |{" "}
           <span className="font-semibold">
             {counts[hoveredData.id] || 0} registration
             {(counts[hoveredData.id] || 0) !== 1 ? "s" : ""}
