@@ -155,6 +155,33 @@ export default function BranscombeEstatePage() {
         </div>
       </section>
 
+      {/* ===== VIDEO FLYOVER ===== */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-[1100px] mx-auto">
+          <p className="font-ibm-mono text-[0.65rem] tracking-[0.4em] uppercase text-[#00B5AD] mb-4">
+            Site Flyover
+          </p>
+          <h2 className="font-playfair text-[2rem] font-black text-deep-blue leading-tight mb-6">
+            See the Site
+          </h2>
+          <div className="bg-[#1A2744] p-1">
+            <video
+              controls
+              playsInline
+              preload="metadata"
+              poster="/branscombe/home-exterior-1.png"
+              className="w-full h-auto"
+            >
+              <source src="/branscombe/flyover.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p className="text-xs text-slate/50 font-archivo mt-2 text-center">
+            Aerial flyover of 122–124 Branscombe Road, Claremont TAS 7011
+          </p>
+        </div>
+      </section>
+
       {/* ===== HOUSE TYPES ===== */}
       <section className="py-16 px-4 bg-warm-grey">
         <div className="max-w-[900px] mx-auto">
@@ -217,7 +244,7 @@ export default function BranscombeEstatePage() {
 
       {/* ===== INTERACTIVE MAP + REGISTRATION FORM ===== */}
       <section className="py-20 px-4 bg-off-white">
-        <div className="max-w-[900px] mx-auto">
+        <div className="max-w-[1100px] mx-auto">
           <RegistrationForm />
         </div>
       </section>
