@@ -172,7 +172,10 @@ export default function BranscombeEstatePage() {
               poster="/branscombe/home-exterior-1.png"
               className="w-full h-auto"
             >
-              <source src="/branscombe/flyover.mp4" type="video/mp4" />
+              <source
+                src={process.env.NEXT_PUBLIC_BRANSCOMBE_VIDEO_URL || "/branscombe/flyover.mp4"}
+                type="video/mp4"
+              />
               Your browser does not support the video tag.
             </video>
           </div>
