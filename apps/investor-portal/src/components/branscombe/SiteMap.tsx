@@ -13,78 +13,91 @@ interface SiteMapProps {
 }
 
 /**
- * Percentage-based (x%, y%) positions for each unit hotspot
- * overlaid on the actual site plan image (site-plan.jpg).
- * Coordinates represent the centre of each unit on the full image.
+ * SVG-based positions for each unit on the schematic site map.
+ * Coordinates are in SVG viewBox units (0-1000 x, 0-900 y).
+ * Mapped from the Unison architectural site plan drawing.
+ * North is top-right, Branscombe Road is at the bottom-left.
  */
 const UNIT_POSITIONS: Record<string, { x: number; y: number }> = {
-  // North cluster
-  U14: { x: 63, y: 10 },
-  U13: { x: 55, y: 17 },
-  U12: { x: 42, y: 19 },
-  U16: { x: 74, y: 14 },
-  U15: { x: 64, y: 22 },
+  // North cluster (top of site)
+  U14: { x: 380, y: 80 },
+  U16: { x: 530, y: 60 },
+  U13: { x: 340, y: 170 },
+  U12: { x: 210, y: 180 },
+  U15: { x: 490, y: 160 },
+  U18: { x: 630, y: 120 },
 
-  // Upper-mid / west
-  U11: { x: 36, y: 30 },
-  U10: { x: 50, y: 27 },
-  U17: { x: 63, y: 26 },
-  U18: { x: 76, y: 21 },
-  U19: { x: 67, y: 30 },
-  U20: { x: 83, y: 25 },
+  // Upper-mid
+  U10: { x: 300, y: 260 },
+  U11: { x: 170, y: 290 },
+  U17: { x: 490, y: 250 },
+  U19: { x: 580, y: 240 },
+  U20: { x: 710, y: 190 },
 
   // Mid zone
-  U9:  { x: 55, y: 36 },
-  U3:  { x: 42, y: 38 },
-  U8:  { x: 60, y: 42 },
-  U21: { x: 72, y: 33 },
-  U22: { x: 81, y: 34 },
+  U9:  { x: 360, y: 345 },
+  U3:  { x: 220, y: 380 },
+  U8:  { x: 430, y: 400 },
+  U21: { x: 620, y: 320 },
+  U22: { x: 720, y: 310 },
+  U37: { x: 810, y: 340 },
 
-  // Right edge
-  U37: { x: 86, y: 38 },
-  U36: { x: 90, y: 43 },
-  U35: { x: 90, y: 49 },
-  U34: { x: 89, y: 56 },
+  // Mid-east
+  U23: { x: 680, y: 410 },
+  U24: { x: 730, y: 470 },
+  U36: { x: 850, y: 400 },
+  U35: { x: 880, y: 470 },
 
   // Mid-lower
-  U2:  { x: 38, y: 46 },
-  U4:  { x: 43, y: 50 },
-  U7:  { x: 57, y: 48 },
-  U23: { x: 75, y: 41 },
-  U24: { x: 78, y: 47 },
-  U25: { x: 67, y: 54 },
-  U26: { x: 75, y: 52 },
-  U33: { x: 83, y: 53 },
+  U2:  { x: 160, y: 470 },
+  U4:  { x: 250, y: 520 },
+  U7:  { x: 370, y: 470 },
+  U25: { x: 610, y: 490 },
+  U26: { x: 680, y: 510 },
+  U33: { x: 790, y: 530 },
+  U34: { x: 860, y: 545 },
 
   // Lower
-  U5:  { x: 50, y: 56 },
-  U1:  { x: 39, y: 58 },
-  U6:  { x: 47, y: 65 },
-  U27: { x: 69, y: 62 },
-  U28: { x: 78, y: 60 },
+  U1:  { x: 190, y: 580 },
+  U5:  { x: 300, y: 610 },
+  U27: { x: 590, y: 590 },
+  U28: { x: 710, y: 590 },
 
   // Bottom
-  U30: { x: 55, y: 73 },
-  U29: { x: 63, y: 70 },
-  U31: { x: 83, y: 74 },
-  U32: { x: 88, y: 67 },
+  U6:  { x: 250, y: 690 },
+  U30: { x: 410, y: 720 },
+  U29: { x: 530, y: 690 },
+  U31: { x: 790, y: 720 },
+  U32: { x: 850, y: 650 },
 };
 
-function getStatusColor(count: number, isSelected: boolean): string {
-  if (isSelected) return "rgba(26, 39, 68, 0.92)";   // deep-blue
-  if (count >= 3) return "rgba(232, 93, 74, 0.88)";   // coral
-  if (count >= 2) return "rgba(200, 169, 81, 0.88)";  // gold
-  if (count === 1) return "rgba(232, 165, 55, 0.88)";  // amber
-  return "rgba(0, 181, 173, 0.85)";                    // teal
+/** Colour by house type for schematic */
+const TYPE_FILL: Record<string, string> = {
+  "1A": "#00B5AD",
+  "1B": "#0097A7",
+  "2A": "#7B1FA2",
+  "2B": "#512DA8",
+  "2C": "#303F9F",
+};
+
+function getStatusColor(count: number, isSelected: boolean, type: string): string {
+  if (isSelected) return "#1A2744";
+  if (count >= 3) return "#E85D4A";
+  if (count >= 2) return "#C8A951";
+  if (count === 1) return "#E8A537";
+  return TYPE_FILL[type] || "#00B5AD";
 }
 
 function getBorderColor(count: number, isSelected: boolean): string {
-  if (isSelected) return "#FFFFFF";
+  if (isSelected) return "#00B5AD";
   if (count >= 3) return "#C0392B";
   if (count >= 2) return "#B8941A";
   if (count === 1) return "#CC8A1E";
-  return "#009E97";
+  return "rgba(255,255,255,0.6)";
 }
+
+const UNIT_W = 70;
+const UNIT_H = 44;
 
 export default function SiteMap({ selectedUnits, onToggleUnit }: SiteMapProps) {
   const [counts, setCounts] = useState<UnitCounts>({});
@@ -116,37 +129,94 @@ export default function SiteMap({ selectedUnits, onToggleUnit }: SiteMapProps) {
   return (
     <div className="w-full">
       {/* Legend */}
-      <div className="flex flex-wrap gap-4 mb-6 text-sm font-archivo">
+      <div className="flex flex-wrap gap-4 mb-4 text-sm font-archivo">
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1">
+            {Object.entries(TYPE_FILL).map(([type, fill]) => (
+              <div key={type} className="flex items-center gap-1">
+                <div className="w-3 h-3 rounded-sm" style={{ backgroundColor: fill }} />
+                <span className="text-slate text-[0.6rem]">{type}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="w-px bg-black/10" />
         {[
-          { color: "rgba(0,181,173,0.85)", border: "#009E97", label: "Available" },
-          { color: "rgba(232,165,55,0.88)", border: "#CC8A1E", label: "1 registration" },
-          { color: "rgba(200,169,81,0.88)", border: "#B8941A", label: "2 registrations" },
-          { color: "rgba(232,93,74,0.88)", border: "#C0392B", label: "3+ registrations" },
-          { color: "rgba(26,39,68,0.92)", border: "#FFFFFF", label: "Your selection" },
+          { color: "#E8A537", label: "1 registration" },
+          { color: "#C8A951", label: "2 registrations" },
+          { color: "#E85D4A", label: "3+" },
+          { color: "#1A2744", label: "Your selection" },
         ].map((item) => (
-          <div key={item.label} className="flex items-center gap-2">
+          <div key={item.label} className="flex items-center gap-1.5">
             <div
-              className="w-4 h-4 rounded-sm border-2"
-              style={{ backgroundColor: item.color, borderColor: item.border }}
+              className="w-3 h-3 rounded-sm"
+              style={{ backgroundColor: item.color }}
             />
             <span className="text-slate text-xs">{item.label}</span>
           </div>
         ))}
       </div>
 
-      {/* Interactive site plan */}
-      <div className="relative w-full overflow-x-auto border border-black/10 bg-white">
-        <div className="relative" style={{ minWidth: "700px" }}>
-          {/* Site plan image */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/branscombe/site-plan.jpg"
-            alt="Branscombe Estate site plan — 37 dwelling layout"
-            className="w-full h-auto block"
-            draggable={false}
+      {/* SVG Schematic Site Map */}
+      <div className="border border-black/10 bg-[#F8F7F4] rounded overflow-hidden">
+        <svg
+          viewBox="0 0 1000 820"
+          className="w-full h-auto"
+          role="img"
+          aria-label="Branscombe Estate interactive site map — click a unit to select"
+        >
+          {/* Background */}
+          <rect width="1000" height="820" fill="#F8F7F4" />
+
+          {/* Site boundary */}
+          <path
+            d="M 90,770 L 60,350 130,120 350,30 600,15 870,100 950,350 930,700 850,780 Z"
+            fill="#E8E6E0"
+            stroke="#C5C0B8"
+            strokeWidth="2"
+            strokeDasharray="8,4"
           />
 
-          {/* Clickable unit hotspots */}
+          {/* Internal roads (simplified curves) */}
+          <path
+            d="M 90,770 C 100,600 120,450 170,350 Q 220,260 300,200 Q 400,130 500,100 Q 620,65 750,120"
+            fill="none"
+            stroke="#D5D0C8"
+            strokeWidth="18"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 300,200 Q 380,280 400,380 Q 420,480 380,580 Q 340,680 350,770"
+            fill="none"
+            stroke="#D5D0C8"
+            strokeWidth="16"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 500,100 Q 560,200 600,350 Q 640,500 680,600 Q 720,700 800,770"
+            fill="none"
+            stroke="#D5D0C8"
+            strokeWidth="16"
+            strokeLinecap="round"
+          />
+
+          {/* Road labels */}
+          <text x="100" y="795" fontSize="11" fill="#999" fontFamily="sans-serif" fontWeight="600" letterSpacing="2">
+            BRANSCOMBE ROAD
+          </text>
+
+          {/* North arrow */}
+          <g transform="translate(940,50)">
+            <line x1="0" y1="40" x2="0" y2="0" stroke="#999" strokeWidth="1.5" markerEnd="url(#arrow)" />
+            <text x="0" y="55" fontSize="10" fill="#999" fontFamily="sans-serif" textAnchor="middle">N</text>
+          </g>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#999" />
+            </marker>
+          </defs>
+
+          {/* Unit blocks */}
           {UNITS.map((unit) => {
             const pos = UNIT_POSITIONS[unit.id];
             if (!pos) return null;
@@ -154,73 +224,108 @@ export default function SiteMap({ selectedUnits, onToggleUnit }: SiteMapProps) {
             const count = counts[unit.id] || 0;
             const isSelected = selectedUnits.includes(unit.id);
             const isHovered = hoveredUnit === unit.id;
-            const bg = getStatusColor(count, isSelected);
+            const bg = getStatusColor(count, isSelected, unit.type);
             const border = getBorderColor(count, isSelected);
+            const scale = isHovered ? 1.1 : 1;
 
             return (
-              <button
+              <g
                 key={unit.id}
-                type="button"
+                transform={`translate(${pos.x}, ${pos.y}) scale(${scale})`}
+                style={{
+                  transformOrigin: `${pos.x}px ${pos.y}px`,
+                  cursor: "pointer",
+                  opacity: loaded ? 1 : 0.5,
+                  transition: "transform 0.15s ease",
+                }}
                 onClick={() => onToggleUnit(unit.id)}
                 onMouseEnter={() => setHoveredUnit(unit.id)}
                 onMouseLeave={() => setHoveredUnit(null)}
-                className="absolute flex flex-col items-center justify-center transition-all duration-150"
-                style={{
-                  left: `${pos.x}%`,
-                  top: `${pos.y}%`,
-                  transform: `translate(-50%, -50%) scale(${isHovered ? 1.15 : 1})`,
-                  width: "clamp(36px, 3.5vw, 52px)",
-                  height: "clamp(28px, 2.8vw, 40px)",
-                  backgroundColor: bg,
-                  border: `2px solid ${border}`,
-                  borderRadius: "4px",
-                  zIndex: isHovered || isSelected ? 20 : 10,
-                  boxShadow: isHovered
-                    ? "0 4px 12px rgba(0,0,0,0.3)"
-                    : isSelected
-                    ? "0 0 0 3px rgba(0,181,173,0.5), 0 2px 8px rgba(0,0,0,0.2)"
-                    : "0 1px 4px rgba(0,0,0,0.2)",
-                  opacity: loaded ? 1 : 0.5,
-                  cursor: "pointer",
-                }}
-                aria-label={`Unit ${unit.id}, Type ${unit.type}, ${count} registrations${isSelected ? ", selected" : ""}`}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onToggleUnit(unit.id); }}
+                aria-label={`${unit.id}, Type ${unit.type}, ${count} registrations${isSelected ? ", selected" : ""}`}
               >
-                <span
-                  className="font-archivo font-bold text-white leading-none"
-                  style={{ fontSize: "clamp(9px, 1vw, 13px)" }}
+                {/* Shadow */}
+                <rect
+                  x={-UNIT_W / 2 + 2}
+                  y={-UNIT_H / 2 + 2}
+                  width={UNIT_W}
+                  height={UNIT_H}
+                  rx="4"
+                  fill="rgba(0,0,0,0.15)"
+                />
+                {/* Main rect */}
+                <rect
+                  x={-UNIT_W / 2}
+                  y={-UNIT_H / 2}
+                  width={UNIT_W}
+                  height={UNIT_H}
+                  rx="4"
+                  fill={bg}
+                  stroke={border}
+                  strokeWidth={isSelected ? 3 : isHovered ? 2 : 1.5}
+                />
+                {/* Unit label */}
+                <text
+                  x={0}
+                  y={-3}
+                  textAnchor="middle"
+                  fontSize="13"
+                  fontWeight="bold"
+                  fill="white"
+                  fontFamily="sans-serif"
                 >
                   {unit.id}
-                </span>
+                </text>
+                {/* Type label */}
+                <text
+                  x={0}
+                  y={11}
+                  textAnchor="middle"
+                  fontSize="9"
+                  fill="rgba(255,255,255,0.7)"
+                  fontFamily="sans-serif"
+                >
+                  Type {unit.type}
+                </text>
                 {/* Registration count badge */}
                 {count > 0 && !isSelected && (
-                  <span
-                    className="absolute -top-1.5 -right-1.5 bg-[#1A2744] text-white rounded-full flex items-center justify-center font-archivo font-bold"
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      fontSize: "9px",
-                    }}
-                  >
-                    {count}
-                  </span>
+                  <g>
+                    <circle cx={UNIT_W / 2 - 2} cy={-UNIT_H / 2 + 2} r="9" fill="#1A2744" />
+                    <text
+                      x={UNIT_W / 2 - 2}
+                      y={-UNIT_H / 2 + 6}
+                      textAnchor="middle"
+                      fontSize="9"
+                      fontWeight="bold"
+                      fill="white"
+                      fontFamily="sans-serif"
+                    >
+                      {count}
+                    </text>
+                  </g>
                 )}
                 {/* Selected checkmark */}
                 {isSelected && (
-                  <span
-                    className="absolute -top-1.5 -right-1.5 bg-[#00B5AD] text-white rounded-full flex items-center justify-center"
-                    style={{
-                      width: "16px",
-                      height: "16px",
-                      fontSize: "10px",
-                    }}
-                  >
-                    ✓
-                  </span>
+                  <g>
+                    <circle cx={UNIT_W / 2 - 2} cy={-UNIT_H / 2 + 2} r="9" fill="#00B5AD" />
+                    <text
+                      x={UNIT_W / 2 - 2}
+                      y={-UNIT_H / 2 + 6}
+                      textAnchor="middle"
+                      fontSize="11"
+                      fill="white"
+                      fontFamily="sans-serif"
+                    >
+                      ✓
+                    </text>
+                  </g>
                 )}
-              </button>
+              </g>
             );
           })}
-        </div>
+        </svg>
       </div>
 
       {/* Hover tooltip */}
@@ -237,9 +342,21 @@ export default function SiteMap({ selectedUnits, onToggleUnit }: SiteMapProps) {
         </div>
       )}
 
-      <p className="text-xs text-slate/50 font-archivo mt-2 text-center">
-        Click a unit on the site plan to select it. Click again to deselect.
-      </p>
+      {/* Original site plan link */}
+      <div className="mt-3 flex items-center justify-between">
+        <p className="text-xs text-slate/50 font-archivo">
+          Click a unit to select it. Click again to deselect.
+          Units are colour-coded by house type.
+        </p>
+        <a
+          href="/branscombe/site-plan.jpg"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs text-[#00B5AD] hover:underline font-archivo shrink-0 ml-4"
+        >
+          View full architectural site plan →
+        </a>
+      </div>
     </div>
   );
 }
