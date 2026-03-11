@@ -93,7 +93,7 @@ export default function BranscombeEstatePage() {
               { value: "3 Bed / 2 Bath", label: "Per home" },
               { value: "104–114m²", label: "Home area" },
               { value: "350–550m²", label: "Land size" },
-              { value: "2026", label: "Construction start" },
+              { value: "2026–2028", label: "Construction" },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="font-playfair text-2xl md:text-3xl font-black text-deep-blue">
@@ -143,6 +143,7 @@ export default function BranscombeEstatePage() {
                 { label: "Site Area", value: "19,981 m²" },
                 { label: "Energy Rating", value: "7 Star" },
                 { label: "Designer", value: "Unison" },
+                { label: "Timeline", value: "Construction 2026 — Estimated completion late 2027 to mid-2028" },
               ].map((item) => (
                 <div
                   key={item.label}

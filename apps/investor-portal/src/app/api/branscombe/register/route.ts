@@ -160,39 +160,56 @@ export async function POST(request: Request) {
         process.env.RESEND_FROM_EMAIL ||
         "Branscombe Estate <onboarding@resend.dev>",
       to: d.email,
-      subject: "Branscombe Estate — Registration of Interest Confirmed",
+      subject: "Branscombe Estate — Thank You for Your Interest",
       html: `
         <div style="max-width:600px;font-family:sans-serif">
           <div style="background:#1A2744;padding:24px 32px">
             <h1 style="color:#FFFFFF;margin:0;font-size:24px">Branscombe Estate</h1>
-            <p style="color:#00B5AD;margin:4px 0 0;font-size:13px">A Factory2Key Development</p>
+            <p style="color:#00B5AD;margin:4px 0 0;font-size:13px">A Factory2Key Development &middot; Claremont, Tasmania</p>
           </div>
           <div style="padding:32px;background:#FFFFFF">
             <p style="font-size:16px;color:#1A2744">Hi ${d.first_name},</p>
             <p style="font-size:14px;color:#4A5568;line-height:1.6">
-              Thank you for registering your interest in Branscombe Estate, Claremont TAS.
-              We've noted your interest in the following unit(s):
+              Thank you so much for your interest in Branscombe Estate! We're excited to have you on board and we'll make sure to keep you updated every step of the way.
+            </p>
+            <p style="font-size:14px;color:#4A5568;line-height:1.6">
+              We've noted your interest in the following home(s):
             </p>
             <div style="background:#F5F3EE;padding:16px 20px;margin:16px 0;font-size:16px;font-weight:bold;color:#1A2744">
               ${unitList}
             </div>
-            <p style="font-size:14px;color:#4A5568;line-height:1.6">
-              This is a registration of interest only — no deposit or commitment is required.
-              We'll keep you informed as the project progresses.
+
+            <h3 style="color:#1A2744;font-size:15px;margin:24px 0 8px">What happens next?</h3>
+            <ul style="font-size:14px;color:#4A5568;line-height:1.8;padding-left:20px">
+              <li>We'll send you <strong>monthly progress updates</strong> on the development so you're always in the loop.</li>
+              <li>Construction is expected to commence in <strong>2026</strong>, with an estimated completion timeframe of <strong>late 2027 to mid-2028</strong>.</li>
+              <li>As we get within <strong>6 months of completion</strong>, we'll reach out to you personally to discuss next steps, contracts, and settlement timing.</li>
+            </ul>
+
+            <p style="font-size:14px;color:#4A5568;line-height:1.6;margin-top:16px">
+              This is a registration of interest only — no deposit or commitment is required at this stage. You're under no obligation, and we simply want to make sure you have first access to updates and opportunities as the project progresses.
             </p>
+
+            <div style="background:#E6FAF9;border-left:4px solid #00B5AD;padding:16px 20px;margin:20px 0">
+              <p style="font-size:14px;color:#1A2744;margin:0;line-height:1.6">
+                <strong>Have questions?</strong> We'd love to hear from you. Feel free to reach out anytime — we're here to help.
+              </p>
+            </div>
+
             <p style="font-size:14px;color:#4A5568;line-height:1.6">
-              If you have any questions, contact Dennis McMahon at
-              <a href="mailto:dennis@factory2key.com.au">dennis@factory2key.com.au</a>
-              or +61 402 612 471.
+              Dennis McMahon<br>
+              <a href="mailto:dennis@factory2key.com.au" style="color:#00B5AD">dennis@factory2key.com.au</a><br>
+              <a href="tel:+61402612471" style="color:#00B5AD">+61 402 612 471</a>
             </p>
             <p style="font-size:14px;color:#1A2744;margin-top:24px">
-              Kind regards,<br>
-              <strong>Factory2Key Pty Ltd</strong>
+              Warm regards,<br>
+              <strong>The Factory2Key Team</strong>
             </p>
           </div>
-          <div style="background:#F5F3EE;padding:16px 32px;font-size:11px;color:#999">
-            Branscombe Estate — 122–124 Branscombe Road, Claremont TAS 7011<br>
-            F2K Fund Tokenisation Project
+          <div style="background:#F5F3EE;padding:16px 32px;font-size:11px;color:#999;line-height:1.6">
+            Branscombe Estate — 37 homes at 122–124 Branscombe Road, Claremont TAS 7011<br>
+            You're receiving this email because you registered your interest via the Factory2Key website.<br>
+            Factory2Key Pty Ltd &middot; <a href="https://factory2key.com.au" style="color:#999">factory2key.com.au</a>
           </div>
         </div>
       `,

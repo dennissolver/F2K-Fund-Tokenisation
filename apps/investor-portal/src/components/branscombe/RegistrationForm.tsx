@@ -220,19 +220,23 @@ export default function RegistrationForm() {
           </svg>
         </div>
         <h3 className="font-playfair text-2xl font-black text-deep-blue mb-3">
-          Registration Received
+          Thank You for Your Interest!
         </h3>
         <p className="text-slate font-archivo leading-relaxed max-w-md mx-auto mb-2">
-          Thank you for your interest in Branscombe Estate. We&apos;ve recorded
-          your interest in{" "}
+          We&apos;re excited to have you on board! We&apos;ve recorded your
+          interest in{" "}
           <strong>
             {selectedUnits.length} home{selectedUnits.length > 1 ? "s" : ""}
           </strong>{" "}
           ({selectedUnits.join(", ")}).
         </p>
+        <p className="text-slate font-archivo text-sm leading-relaxed max-w-md mx-auto mb-2">
+          You&apos;ll receive <strong>monthly progress updates</strong> and
+          we&apos;ll contact you personally as we get within 6 months of
+          completion to discuss next steps.
+        </p>
         <p className="text-slate/70 font-archivo text-sm">
-          A confirmation has been sent to <strong>{email}</strong>. We&apos;ll be
-          in touch as the project progresses.
+          A confirmation has been sent to <strong>{email}</strong>.
         </p>
       </div>
     );
@@ -943,7 +947,9 @@ export default function RegistrationForm() {
             <span className="text-sm text-slate font-archivo leading-relaxed">
               I understand this is a Registration of Interest only — no deposit or
               commitment is required or implied. Pricing shown is indicative and
-              relates to a complete house and land package.
+              relates to a complete house and land package. I agree to have my
+              details added to the Factory2Key database and to receive project
+              updates, news, and development progress communications.
             </span>
           </label>
 
