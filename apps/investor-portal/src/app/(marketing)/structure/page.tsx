@@ -131,7 +131,7 @@ export default function StructurePage() {
                 {[
                   {
                     role: "Chair",
-                    desc: "Aboriginal & First Nations Housing Leader",
+                    desc: "Oversight of all F2K fund structures and entities",
                     status: "Recruiting",
                   },
                   {
