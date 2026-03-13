@@ -22,7 +22,7 @@ export default function AFSLPartnersPage() {
             Tokenised Housing Fund
           </h1>
           <p className="text-lg text-off-white/70 leading-relaxed font-archivo max-w-[750px]">
-            F2K is seeking an established AFSL licence holder to host our $600M
+            F2K is seeking an established AFSL licence holder to host our $400M
             tokenised housing fund under a Corporate Authorised Representative
             arrangement. This is a unique opportunity to partner with a
             first-mover in blockchain-native fund management for Australian
@@ -50,7 +50,7 @@ export default function AFSLPartnersPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
             {[
               {
-                stat: "$600M",
+                stat: "$400M",
                 label: "Target Fund Size",
                 desc: "A substantial AUM opportunity growing through phased capital raises",
               },
@@ -157,7 +157,7 @@ export default function AFSLPartnersPage() {
                   "Familiarity with digital assets or tokenised securities",
                   "Existing compliance monitoring infrastructure",
                   "Wholesale-only fund experience (s708)",
-                  "Capacity to support a fund targeting $600M AUM",
+                  "Capacity to support a fund targeting $400M AUM",
                   "Willingness to partner on a novel fund structure (ERC-3643 security tokens, on-chain NAV, USDC distributions)",
                 ].map((item) => (
                   <div
@@ -361,7 +361,7 @@ export default function AFSLPartnersPage() {
                   },
                   {
                     criterion:
-                      "Capacity to support growing AUM ($1M seed to $600M target)",
+                      "Capacity to support growing AUM ($1M seed to $400M target)",
                     weight: "Medium",
                   },
                   {

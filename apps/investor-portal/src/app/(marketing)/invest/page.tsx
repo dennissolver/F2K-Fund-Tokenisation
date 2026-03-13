@@ -141,10 +141,10 @@ export default function InvestPage() {
               </div>
               <div className="text-center">
                 <p className="text-2xl font-playfair font-bold text-ember">
-                  8-12%
+                  8%
                 </p>
                 <p className="text-xs text-slate font-ibm-mono tracking-wider uppercase mt-1">
-                  Target Yield
+                  Preferred Return
                 </p>
               </div>
               <div className="text-center">
@@ -172,13 +172,15 @@ export default function InvestPage() {
               allowlisted wallets can hold or transfer tokens.
             </p>
             <p className="text-slate leading-relaxed font-archivo">
-              The 8-12% target yield comes from two sources: a 12% of GDV
-              integration fee earned during construction, and the sale of each
-              completed, lease-backed project to a REIT or institutional
-              investor at a premium over development cost. Because each project
-              uses construction finance (60-70% senior debt), every $1 of
-              investor equity funds $2.50-$3.00 of housing — amplifying returns
-              without recourse to the wider fund.
+              The 8% preferred return is funded by two sources: a 12% of GDV
+              integration fee ($265M over the fund&apos;s 5,400-home pipeline)
+              earned during construction, and the sale of each completed,
+              lease-backed project to a REIT at a premium over development
+              cost. The fund deploys 2-3x subscribed capital: ~40% cash equity
+              from token investors plus a hard asset collateral pool enables
+              access to institutional construction debt. Blockchain and AI make
+              this capital structure auditable and scalable in ways traditional
+              funds cannot replicate.
             </p>
           </div>
 
@@ -221,9 +223,10 @@ export default function InvestPage() {
                 On-Chain Compliance
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                Identity verification enforced at the smart contract level. Only
-                allowlisted wallets can hold tokens. Gnosis Safe 3-of-5 multisig
-                treasury. Quarterly audited accounts.
+                Identity verification enforced at the smart contract level via
+                ONCHAINID. Only allowlisted wallets can hold tokens. Gnosis Safe
+                3-of-5 multisig treasury. Secondary trading via Securitize
+                Markets ATS and permissioned Uniswap V3 DEX.
               </p>
             </div>
           </div>
@@ -291,7 +294,7 @@ export default function InvestPage() {
                     Performance Fee
                   </td>
                   <td className="px-6 py-4 text-right font-ibm-mono text-slate">
-                    20% above hurdle
+                    20% above 8% hurdle (high-water mark protected)
                   </td>
                 </tr>
                 <tr>
@@ -323,7 +326,7 @@ export default function InvestPage() {
                     Target Fund Size
                   </td>
                   <td className="px-6 py-4 text-right font-ibm-mono text-slate">
-                    $600M
+                    $400M
                   </td>
                 </tr>
               </tbody>
@@ -484,14 +487,15 @@ export default function InvestPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-archivo text-sm">
               <div>
                 <p className="text-brass font-ibm-mono text-xs uppercase tracking-wider mb-2">
-                  Government Regional Housing
+                  Government Regional Employee Housing (GREH)
                 </p>
                 <p className="text-off-white/70 leading-relaxed">
-                  Housing for regional government staff — teachers, nurses,
-                  police, and essential workers posted to regional and remote
-                  communities. Government departments commit to 10-year
-                  take-or-pay leases. No capital outlay for government — just an
-                  operating lease.
+                  Housing for regional government employees — police, nurses,
+                  teachers, defence personnel, and Aboriginal community workers
+                  posted to regional, remote, and growth areas where private
+                  supply is structurally inadequate. Government departments
+                  commit to 10-year take-or-pay leases. No capital outlay for
+                  government — just an operating lease.
                 </p>
               </div>
               <div>
@@ -589,9 +593,11 @@ export default function InvestPage() {
                 Stake Real Assets
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo mb-6">
-                Contribute qualifying assets — property, bonds, art, or cash —
-                to the fund. Each asset is independently appraised and tokens are
-                minted based on the collateral value at current NAV.
+                Stake real assets — property, crypto (BTC/ETH), promissory
+                notes, mortgage notes, art, or cash. An AI valuation engine
+                independently assesses each asset and applies risk-appropriate
+                haircuts (0-45% depending on asset class). The Contributions
+                Committee approves, and tokens are minted at collateral value.
               </p>
               <ol className="space-y-3 font-archivo text-sm text-slate">
                 <li className="flex gap-3">
@@ -610,7 +616,7 @@ export default function InvestPage() {
                   <span className="w-6 h-6 rounded-full bg-deep-blue text-brass text-xs font-bold flex items-center justify-center shrink-0">
                     3
                   </span>
-                  <span>F2K team reviews, appraises, and registers lien</span>
+                  <span>AI valuation engine assesses value; Contributions Committee approves and registers lien</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="w-6 h-6 rounded-full bg-deep-blue text-brass text-xs font-bold flex items-center justify-center shrink-0">
@@ -621,6 +627,20 @@ export default function InvestPage() {
                   </span>
                 </li>
               </ol>
+              <div className="mt-6 pt-4 border-t border-black/10">
+                <p className="font-ibm-mono text-[0.6rem] tracking-wider uppercase text-brass mb-3">
+                  Accepted Asset Classes & Haircuts
+                </p>
+                <div className="space-y-1 text-xs font-archivo text-slate">
+                  <div className="flex justify-between"><span>USDC / USDT</span><span className="text-deep-blue font-semibold">0% haircut</span></div>
+                  <div className="flex justify-between"><span>BTC / ETH</span><span className="text-deep-blue font-semibold">10-15%</span></div>
+                  <div className="flex justify-between"><span>Fiat AUD / USD</span><span className="text-deep-blue font-semibold">0%</span></div>
+                  <div className="flex justify-between"><span>Promissory Notes</span><span className="text-deep-blue font-semibold">15-25%</span></div>
+                  <div className="flex justify-between"><span>Mortgage Notes</span><span className="text-deep-blue font-semibold">25-40%</span></div>
+                  <div className="flex justify-between"><span>Real Property</span><span className="text-deep-blue font-semibold">30-45%</span></div>
+                  <div className="flex justify-between"><span>Art / Other Hard Assets</span><span className="text-deep-blue font-semibold">AI-assessed</span></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -653,7 +673,7 @@ export default function InvestPage() {
               {
                 step: "03",
                 title: "Complete KYC",
-                desc: "Identity verification through our KYC provider (Sumsub). Upload government-issued ID and proof of address. Verified within 24 hours.",
+                desc: "Identity verification via ONCHAINID on-chain identity. Upload government-issued ID and proof of address. Verified within 24 hours.",
                 time: "10 minutes",
               },
               {
@@ -715,7 +735,7 @@ export default function InvestPage() {
               },
               {
                 label: "KYC/AML",
-                value: "Sumsub Verification",
+                value: "ONCHAINID On-Chain Identity",
               },
               {
                 label: "Audit",

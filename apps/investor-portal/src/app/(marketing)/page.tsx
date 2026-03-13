@@ -15,7 +15,7 @@ export default function MarketingHome() {
             F2K Housing Fund
           </h1>
           <p className="font-playfair text-[clamp(1.6rem,4vw,2.8rem)] font-bold text-brass leading-tight">
-            $600M Tokenised Housing Fund
+            $400M Tokenised Housing Fund
           </p>
 
           {/* Beat 2: What the fund does — one line */}
@@ -29,6 +29,11 @@ export default function MarketingHome() {
             recycling capital into the next build.
           </p>
 
+          <p className="font-archivo text-base text-off-white/80 max-w-[650px] mx-auto leading-relaxed mt-4 border-l-2 border-brass pl-4 text-left">
+            <strong className="text-off-white">F2K pays for all construction upfront</strong>{" "}
+            the moment a government lease is signed. No progress claims. No construction finance risk for the tenant. Investors stake cash or hard assets — valued by AI — and the fund deploys 2-3x subscribed capital against signed leases.
+          </p>
+
           {/* Beat 3: The token is how you participate */}
           <p className="font-archivo text-base text-off-white/60 max-w-[650px] mx-auto leading-relaxed mt-4">
             The F2K Housing Token (ERC-3643) lets wholesale investors
@@ -39,10 +44,10 @@ export default function MarketingHome() {
           {/* Stats strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-12">
             {[
-              { value: "$600M", label: "Fund Target" },
-              { value: "$2.50", label: "Per $1 Equity" },
-              { value: "10yr", label: "Take-or-Pay Leases" },
-              { value: "14-16wk", label: "Factory to Key" },
+              { value: "$400M", label: "Fund Target" },
+              { value: "5,400", label: "Homes Over 5 Years" },
+              { value: "$2.2B", label: "Gross Development Value" },
+              { value: "10yr", label: "Government Leases" },
             ].map((stat) => (
               <div key={stat.label}>
                 <p className="text-3xl font-bold text-brass font-playfair">
@@ -89,7 +94,7 @@ export default function MarketingHome() {
             {[
               {
                 title: "Investors",
-                text: "Invest with USDC or qualifying assets. Receive tokens. Earn distributions as stabilised assets are sold.",
+                text: "Subscribe with USDC or stake hard assets (property, crypto, promissory notes) — AI-valued, with appropriate haircuts. Earn quarterly distributions.",
                 href: "/invest",
                 cta: "Apply to Invest",
               },
@@ -454,10 +459,10 @@ export default function MarketingHome() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
             <div className="bg-white p-6 border border-black/5">
               <p className="font-ibm-mono text-[0.6rem] tracking-wider uppercase text-ember mb-2">
-                Government Regional Housing
+                Government Regional Employee Housing (GREH)
               </p>
               <h3 className="font-archivo font-bold text-deep-blue mb-2">
-                Teachers, Nurses, Police
+                Police, Nurses, Teachers, Defence
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
                 Housing for essential government staff posted to regional and
@@ -624,8 +629,8 @@ export default function MarketingHome() {
           <p className="text-lg text-off-white/70 leading-relaxed mb-10 font-archivo max-w-[800px]">
             To be credible as Australia&apos;s impartial national housing
             integrator, the F2K board must represent every critical domain:
-            Indigenous leadership, MMC industry authority, government procurement
-            expertise, housing finance, and remote logistics.
+            MMC industry authority, government procurement
+            expertise, housing finance, remote logistics, and institutional governance.
           </p>
 
           {/* Governance tiers */}
@@ -636,7 +641,7 @@ export default function MarketingHome() {
                 color: "ember",
                 desc: "Strategic oversight, stakeholder relationships, government engagement",
                 items: [
-                  "Chair + 7 Directors + CEO",
+                  "Chair + Directors + CEO",
                   "Quarterly board meetings",
                   "Aboriginal Advisory Sub-Committee",
                   "Audit & Risk Sub-Committee",

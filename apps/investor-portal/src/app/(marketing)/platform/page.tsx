@@ -114,7 +114,7 @@ export default function PlatformPage() {
               {
                 step: "1",
                 title: "Register & Verify Identity",
-                desc: "Create an account, complete KYC verification via Sumsub (wholesale investor status confirmed), and connect your Ethereum wallet.",
+                desc: "Create an account, complete KYC verification via ONCHAINID on-chain identity (wholesale investor status confirmed), and connect your Ethereum wallet.",
                 detail: "On-chain: wallet added to ERC-3643 identity registry",
               },
               {
@@ -315,7 +315,7 @@ export default function PlatformPage() {
               { category: "Blockchain", tech: "Solidity, Hardhat, viem, wagmi" },
               { category: "Token Standard", tech: "ERC-3643 (T-REX) by Tokeny" },
               { category: "AI", tech: "Claude Sonnet (Anthropic)" },
-              { category: "KYC", tech: "Sumsub" },
+              { category: "KYC", tech: "ONCHAINID" },
               { category: "Hosting", tech: "Vercel (Edge, Sydney region)" },
               { category: "Chain", tech: "Ethereum (Sepolia testnet → Mainnet)" },
             ].map((item) => (
@@ -349,7 +349,7 @@ export default function PlatformPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { name: "Dashboard", desc: "Live AUM, token supply, NAV, pipeline metrics, $600M fundraise tracker" },
+              { name: "Dashboard", desc: "Live AUM, token supply, NAV, pipeline metrics, $400M fundraise tracker" },
               { name: "Investors", desc: "Full investor register with KYC status, wallet, subscription history" },
               { name: "Allowlist", desc: "Approve/deny wallets for on-chain identity registry" },
               { name: "Subscriptions", desc: "Confirm USDC payments and mint tokens to investor wallets" },

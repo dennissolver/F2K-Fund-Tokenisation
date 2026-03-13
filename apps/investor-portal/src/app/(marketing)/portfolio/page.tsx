@@ -36,8 +36,8 @@ const projects = [
 ];
 
 const stats = [
-  { label: "Target Fund Size", value: "$600M" },
-  { label: "Target Dwellings", value: "4,000+" },
+  { label: "Target Fund Size", value: "$400M" },
+  { label: "Target Dwellings", value: "5,400" },
   { label: "States Active", value: "All" },
   { label: "Construction Method", value: "Modular / MMC" },
 ];
@@ -58,10 +58,11 @@ export default function PortfolioPage() {
             Our Projects
           </h1>
           <p className="text-lg text-off-white/70 leading-relaxed font-archivo max-w-[750px]">
-            The F2K Housing Token fund invests in modular housing projects
-            across Australia — social housing, affordable housing, NDIS SDA,
-            and build-to-rent. Each project is delivered through a dedicated
-            SPV using modern methods of construction.
+            The F2K Housing Token fund finances Government Regional Employee
+            Housing (GREH) — housing for police, nurses, teachers, defence
+            personnel, and essential workers in regional, remote, and growth
+            areas. Each project is delivered through a dedicated SPV using
+            modern methods of construction.
           </p>
         </div>
       </section>

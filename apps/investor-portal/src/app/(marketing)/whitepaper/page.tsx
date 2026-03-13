@@ -46,11 +46,11 @@ export default function WhitepaperPage() {
             },
             {
               title: "Subscription & Entry",
-              desc: "Subscribe with USDC or contribute qualifying assets (property, bonds, cash) to the fund. Independent appraisal determines contribution value. Tokens minted proportionally at current NAV per unit.",
+              desc: "Subscribe with USDC or stake hard assets (property, crypto, promissory notes, mortgage notes, art, cash). AI valuation engine assesses each asset with risk-appropriate haircuts (0-45%). Contributions Committee approves. Tokens minted at current NAV per unit.",
             },
             {
               title: "Security Architecture",
-              desc: "Gnosis Safe multisig treasury. KYC/AML via Sumsub. On-chain allowlisting. Smart contract audited. Role-based access controls throughout.",
+              desc: "Gnosis Safe multisig treasury. KYC/AML via ONCHAINID on-chain identity. On-chain allowlisting. Smart contract audited. Role-based access controls throughout.",
             },
           ].map((section) => (
             <div
@@ -81,13 +81,13 @@ export default function WhitepaperPage() {
                 Capital Deployment
               </h3>
               <p className="text-sm text-slate leading-relaxed font-archivo">
-                The fund finances design and construction costs through
-                ring-fenced Special Purpose Vehicles (SPVs) — one per project.
-                Each SPV raises senior construction debt (60-70%), so every $1
-                of investor equity funds $2.50-$3.00 of housing. By self-funding
-                the build, F2K removes all capital cost from the procurement
-                process — governments and employers simply sign an operating
-                lease.
+                F2K pays for all construction works upfront the moment a
+                government lease is signed — no progress claims, no construction
+                finance risk for the tenant. Each project sits in a ring-fenced
+                SPV. ~40% cash equity from token investors plus a hard asset
+                collateral pool enables access to institutional construction
+                debt, deploying $2.50-$3.00 of housing per $1 of investor
+                equity.
               </p>
             </div>
             <div className="bg-white p-6 border border-black/5 hover:border-ember transition-colors">
