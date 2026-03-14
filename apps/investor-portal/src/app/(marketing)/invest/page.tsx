@@ -173,7 +173,7 @@ export default function InvestPage() {
             </p>
             <p className="text-slate leading-relaxed font-archivo">
               The 8% preferred return is funded by two sources: a 12% of GDV
-              integration fee ($265M over the fund&apos;s 5,400-home pipeline)
+              integration fee ($530M over the fund&apos;s 10,800-home pipeline)
               earned during construction, and the sale of each completed,
               lease-backed project to a REIT at a premium over development
               cost. The fund deploys 2-3x subscribed capital: ~40% cash equity
@@ -326,7 +326,7 @@ export default function InvestPage() {
                     Target Fund Size
                   </td>
                   <td className="px-6 py-4 text-right font-ibm-mono text-slate">
-                    $400M
+                    $600M
                   </td>
                 </tr>
               </tbody>

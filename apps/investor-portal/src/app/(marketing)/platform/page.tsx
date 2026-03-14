@@ -349,7 +349,7 @@ export default function PlatformPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { name: "Dashboard", desc: "Live AUM, token supply, NAV, pipeline metrics, $400M fundraise tracker" },
+              { name: "Dashboard", desc: "Live AUM, token supply, NAV, pipeline metrics, $600M fundraise tracker" },
               { name: "Investors", desc: "Full investor register with KYC status, wallet, subscription history" },
               { name: "Allowlist", desc: "Approve/deny wallets for on-chain identity registry" },
               { name: "Subscriptions", desc: "Confirm USDC payments and mint tokens to investor wallets" },

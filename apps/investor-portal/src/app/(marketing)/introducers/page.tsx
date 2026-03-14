@@ -501,7 +501,7 @@ export default function IntroducersPage() {
             The Fund Is Ready.
           </h2>
           <p className="text-lg text-white/85 leading-relaxed font-archivo mb-8">
-            $400M fund. $70B+ addressable market. Government-backed leases.
+            $600M fund. $70B+ addressable market. Government-backed leases.
             Tokenised for transparency. Your wholesale clients need exposure to
             real assets with contracted income &mdash; this is it.
           </p>

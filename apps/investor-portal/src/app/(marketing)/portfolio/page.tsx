@@ -36,8 +36,8 @@ const projects = [
 ];
 
 const stats = [
-  { label: "Target Fund Size", value: "$400M" },
-  { label: "Target Dwellings", value: "5,400" },
+  { label: "Target Fund Size", value: "$600M" },
+  { label: "Target Dwellings", value: "10,800" },
   { label: "States Active", value: "All" },
   { label: "Construction Method", value: "Modular / MMC" },
 ];

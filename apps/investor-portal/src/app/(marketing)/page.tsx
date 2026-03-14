@@ -15,7 +15,7 @@ export default function MarketingHome() {
             F2K Housing Fund
           </h1>
           <p className="font-playfair text-[clamp(1.6rem,4vw,2.8rem)] font-bold text-brass leading-tight">
-            $400M Tokenised Housing Fund
+            $600M Tokenised Housing Fund
           </p>
 
           {/* Beat 2: What the fund does — one line */}
@@ -44,8 +44,8 @@ export default function MarketingHome() {
           {/* Stats strip */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto mt-12">
             {[
-              { value: "$400M", label: "Fund Target" },
-              { value: "5,400", label: "Homes Over 5 Years" },
+              { value: "$600M", label: "Fund Target" },
+              { value: "10,800", label: "Homes Over 5 Years" },
               { value: "$2.2B", label: "Gross Development Value" },
               { value: "10yr", label: "Government Leases" },
             ].map((stat) => (
